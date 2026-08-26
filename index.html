@@ -7,6 +7,9 @@
 
   <title>EPSS Warehouse Logistics Dashboard</title>
 
+  <!-- ================= SUPABASE ================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
 
     * {
@@ -19,6 +22,7 @@
       font-family: Arial, sans-serif;
       background: #f4f7fb;
       color: #172033;
+      line-height: 1.5;
     }
 
     /* ================= HEADER ================= */
@@ -41,37 +45,20 @@
     }
 
     .container {
-      width: 95%;
+      width: 94%;
       max-width: 1200px;
       margin: 20px auto;
     }
 
-    /* ================= PLANT / CENTER ================= */
+    /* ================= CARDS ================= */
 
-    .plant-box {
+    .card {
       background: white;
-      padding: 20px;
       border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 22px;
       margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
-
-    .plant-box h2 {
-      color: #123a91;
-      margin-bottom: 12px;
-      font-size: 20px;
-    }
-
-    .plant-box select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ccd4e0;
-      border-radius: 8px;
-      font-size: 16px;
-      background: white;
-    }
-
-    /* ================= SECTION TITLES ================= */
 
     .section-title {
       color: #123a91;
@@ -79,19 +66,50 @@
       font-size: 21px;
     }
 
-    /* ================= TOTAL ACTIVITY ================= */
+    /* ================= PLANT ================= */
 
-    .activity-box {
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      padding: 22px;
-      text-align: center;
+    .plant-box h2 {
+      color: #123a91;
+      margin-bottom: 12px;
+      font-size: 20px;
     }
 
-    .activity-box h2 {
+    /* ================= INPUTS ================= */
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd4e0;
+      border-radius: 8px;
+      font-size: 15px;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1746b0;
+      box-shadow: 0 0 0 2px rgba(23,70,176,0.1);
+    }
+
+    /* ================= TOTAL ACTIVITY ================= */
+
+    .activity-card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .activity-title {
+      text-align: center;
       color: #123a91;
       margin-bottom: 20px;
+      font-size: 21px;
     }
 
     .activity-stats {
@@ -101,6 +119,7 @@
     }
 
     .stat {
+      text-align: center;
       padding: 20px;
       border-radius: 12px;
       background: #f5f7fc;
@@ -111,8 +130,8 @@
       margin-bottom: 8px;
     }
 
-    .stat .number {
-      font-size: 32px;
+    .stat-number {
+      font-size: 34px;
       font-weight: bold;
       color: #123a91;
     }
@@ -122,41 +141,40 @@
     .table-card {
       background: white;
       border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       overflow-x: auto;
     }
 
     table {
       width: 100%;
-      min-width: 750px;
+      min-width: 850px;
       border-collapse: collapse;
     }
 
     th {
       background: #123a91;
       color: white;
-      padding: 14px;
+      padding: 13px;
       text-align: left;
+      white-space: nowrap;
     }
 
     td {
-      padding: 13px;
+      padding: 12px;
       border-bottom: 1px solid #e5e8ee;
+      vertical-align: top;
     }
 
-    /* ================= DAILY FORM ================= */
-
-    .form-card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    tr:hover td {
+      background: #f7f9fd;
     }
+
+    /* ================= FORM ================= */
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      gap: 16px;
     }
 
     .form-group {
@@ -164,7 +182,7 @@
       flex-direction: column;
     }
 
-    .form-group.full {
+    .full {
       grid-column: 1 / -1;
     }
 
@@ -174,39 +192,29 @@
       color: #34405a;
     }
 
-    input,
-    select,
-    textarea {
-      padding: 12px;
-      border: 1px solid #ccd4e0;
-      border-radius: 8px;
-      font-size: 15px;
-      width: 100%;
-    }
-
     textarea {
       min-height: 90px;
       resize: vertical;
     }
 
-    /* HUB MULTI SELECT */
+    /* ================= HUB SELECT ================= */
 
-    #hubs {
-      min-height: 150px;
-      background: white;
+    .hub-select {
+      min-height: 170px;
     }
 
     .help-text {
-      margin-top: 6px;
       font-size: 12px;
       color: #667085;
+      margin-top: 6px;
     }
 
-    /* SAVE BUTTON */
+    /* ================= BUTTON ================= */
 
     .save-button {
+      width: 100%;
       margin-top: 18px;
-      padding: 14px 25px;
+      padding: 14px;
       border: none;
       border-radius: 8px;
       background: #123a91;
@@ -214,21 +222,40 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      width: 100%;
     }
 
     .save-button:hover {
       background: #0b2d78;
     }
 
-    /* ================= SEARCH ================= */
-
-    .search-card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    .save-button:disabled {
+      background: #8b96aa;
+      cursor: not-allowed;
     }
+
+    /* ================= MESSAGE ================= */
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .success {
+      display: block;
+      background: #e7f7ed;
+      color: #176b36;
+    }
+
+    .error {
+      display: block;
+      background: #fdecec;
+      color: #a51d1d;
+    }
+
+    /* ================= SEARCH ================= */
 
     .search-row {
       display: flex;
@@ -236,13 +263,27 @@
     }
 
     .search-button {
-      padding: 12px 20px;
+      padding: 12px 22px;
       border: none;
       border-radius: 8px;
       background: #123a91;
       color: white;
       font-weight: bold;
       cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .search-button:hover {
+      background: #0b2d78;
+    }
+
+    /* ================= STATUS ================= */
+
+    .status {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 13px;
+      color: #667085;
     }
 
     /* ================= FOOTER ================= */
@@ -250,7 +291,6 @@
     footer {
       text-align: center;
       padding: 30px 15px;
-      margin-top: 30px;
       color: #667085;
       font-size: 14px;
     }
@@ -259,24 +299,45 @@
 
     @media (max-width: 700px) {
 
+      .header {
+        padding: 22px 12px;
+      }
+
       .header h1 {
         font-size: 22px;
+      }
+
+      .header p {
+        font-size: 13px;
       }
 
       .container {
         width: 94%;
       }
 
-      .activity-stats {
-        grid-template-columns: 1fr 1fr;
+      .card,
+      .activity-card {
+        padding: 16px;
       }
 
       .form-grid {
         grid-template-columns: 1fr;
       }
 
-      .form-group.full {
+      .full {
         grid-column: auto;
+      }
+
+      .activity-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat {
+        padding: 15px 8px;
+      }
+
+      .stat-number {
+        font-size: 28px;
       }
 
       .search-row {
@@ -288,8 +349,9 @@
       }
 
       table {
-        min-width: 750px;
+        min-width: 850px;
       }
+
     }
 
   </style>
@@ -314,7 +376,7 @@
 
     <!-- ================= PLANT / CENTER ================= -->
 
-    <section class="plant-box">
+    <section class="card plant-box">
 
       <h2>Plant / Center</h2>
 
@@ -347,16 +409,16 @@
       Total Activity
     </h2>
 
-    <section class="activity-box">
+    <section class="activity-card">
 
       <div class="activity-stats">
 
         <div class="stat">
 
-          <h3>📦 Loaded</h3>
+          <h3>Loaded</h3>
 
           <div
-            class="number"
+            class="stat-number"
             id="loadedTotal">
             0
           </div>
@@ -366,10 +428,10 @@
 
         <div class="stat">
 
-          <h3>🚚 Offloaded</h3>
+          <h3>Offloaded</h3>
 
           <div
-            class="number"
+            class="stat-number"
             id="offloadedTotal">
             0
           </div>
@@ -394,7 +456,6 @@
         <thead>
 
           <tr>
-
             <th>Date</th>
             <th>Activity</th>
             <th>Load Count</th>
@@ -402,24 +463,16 @@
             <th>Items</th>
             <th>Vehicle</th>
             <th>Challenges</th>
-
           </tr>
 
         </thead>
 
-
         <tbody id="recentActivity">
 
           <tr>
-
-            <td
-              colspan="7"
-              style="text-align:center;">
-
-              No activity recorded yet
-
+            <td colspan="7" style="text-align:center;">
+              Loading...
             </td>
-
           </tr>
 
         </tbody>
@@ -429,13 +482,13 @@
     </section>
 
 
-    <!-- ================= DAILY ACTIVITY ================= -->
+    <!-- ================= DAILY FORM ================= -->
 
     <h2 class="section-title">
       Daily Activity Entry
     </h2>
 
-    <section class="form-card">
+    <section class="card">
 
       <div class="form-grid">
 
@@ -455,7 +508,7 @@
         </div>
 
 
-        <!-- ACTIVITY TYPE -->
+        <!-- ACTIVITY -->
 
         <div class="form-group">
 
@@ -489,8 +542,8 @@
           <input
             type="number"
             id="loadCount"
-            min="0"
-            placeholder="e.g. 3">
+            min="1"
+            placeholder="Example: 3">
 
         </div>
 
@@ -505,88 +558,29 @@
 
           <select
             id="hubs"
-            multiple
-            size="6">
+            class="hub-select"
+            multiple>
 
-            <option value="AA1hp">
-              AA1hp
-            </option>
-
-            <option value="AA1 MainWH">
-              AA1 MainWH
-            </option>
-
-            <option value="AA2">
-              AA2
-            </option>
-
-            <option value="Adama">
-              Adama
-            </option>
-
-            <option value="Hawasa">
-              Hawasa
-            </option>
-
-            <option value="Negelle">
-              Negelle
-            </option>
-
-            <option value="Nekemte">
-              Nekemte
-            </option>
-
-            <option value="Jimma">
-              Jimma
-            </option>
-
-            <option value="D.Dawa">
-              D.Dawa
-            </option>
-
-            <option value="Jigjiga">
-              Jigjiga
-            </option>
-
-            <option value="Arbaminch">
-              Arbaminch
-            </option>
-
-            <option value="Semera">
-              Semera
-            </option>
-
-            <option value="Gambella">
-              Gambella
-            </option>
-
-            <option value="Asosa">
-              Asosa
-            </option>
-
-            <option value="Bahir Dar">
-              Bahir Dar
-            </option>
-
-            <option value="Gondar">
-              Gondar
-            </option>
-
-            <option value="Dessie">
-              Dessie
-            </option>
-
-            <option value="Kebridar">
-              Kebridar
-            </option>
-
-            <option value="Mekele">
-              Mekele
-            </option>
-
-            <option value="Shire">
-              Shire
-            </option>
+            <option value="AA1hp">AA1hp</option>
+            <option value="AA1 MainWH">AA1 MainWH</option>
+            <option value="AA2">AA2</option>
+            <option value="Adama">Adama</option>
+            <option value="Hawasa">Hawasa</option>
+            <option value="Negelle">Negelle</option>
+            <option value="Nekemte">Nekemte</option>
+            <option value="Jimma">Jimma</option>
+            <option value="D.Dawa">D.Dawa</option>
+            <option value="Jigjiga">Jigjiga</option>
+            <option value="Arbaminch">Arbaminch</option>
+            <option value="Semera">Semera</option>
+            <option value="Gambella">Gambella</option>
+            <option value="Asosa">Asosa</option>
+            <option value="Bahir Dar">Bahir Dar</option>
+            <option value="Gondar">Gondar</option>
+            <option value="Dessie">Dessie</option>
+            <option value="Kebridar">Kebridar</option>
+            <option value="Mekele">Mekele</option>
+            <option value="Shire">Shire</option>
 
           </select>
 
@@ -607,8 +601,7 @@
 
           <textarea
             id="items"
-            placeholder="Enter items transported">
-          </textarea>
+            placeholder="Enter items transported"></textarea>
 
         </div>
 
@@ -670,26 +663,31 @@
       </div>
 
 
-      <!-- SAVE -->
-
       <button
         class="save-button"
+        id="saveButton"
         onclick="saveActivity()">
 
         SAVE ACTIVITY
 
       </button>
 
+
+      <div
+        id="message"
+        class="message">
+      </div>
+
     </section>
 
 
-    <!-- ================= SEARCH HUB HISTORY ================= -->
+    <!-- ================= SEARCH ================= -->
 
     <h2 class="section-title">
       Search Hub History
     </h2>
 
-    <section class="search-card">
+    <section class="card">
 
       <div class="search-row">
 
@@ -697,7 +695,6 @@
           type="text"
           id="hubSearch"
           placeholder="Enter hub name, e.g. Shire">
-
 
         <button
           class="search-button"
@@ -719,383 +716,6 @@
           <thead>
 
             <tr>
-
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody id="historyResults">
-
-            <tr>
-
-              <td
-                colspan="7"
-                style="text-align:center;">
-
-                Search for a hub to view history
-
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer>
-
-    EPSS Warehouse Logistics Dashboard © 2026
-
-  </footer>
-
-
-  <!-- ================= JAVASCRIPT ================= -->
-
-  <script>
-
-    /* Set today's date automatically */
-
-    document.getElementById("activityDate").value =
-      new Date().toISOString().split("T")[0];
-
-
-    /* Temporary save function */
-
-    function saveActivity() {
-
-      alert(
-        "The form is working. Supabase connection will be added next."
-      );
-
-    }
-
-
-    /* Temporary search function */
-
-    function searchHub() {
-
-      alert(
-        "Hub search is ready. We will connect it to Supabase next."
-      );
-
-    }
-
-  </script>
-
-</body>
-
-              </html>    }
-
-    /* DAILY FORM */
-    .form-card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-weight: bold;
-      margin-bottom: 7px;
-      color: #34405a;
-    }
-
-    input,
-    select,
-    textarea {
-      padding: 12px;
-      border: 1px solid #ccd4e0;
-      border-radius: 8px;
-      font-size: 15px;
-      width: 100%;
-    }
-
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .save-button {
-      margin-top: 18px;
-      padding: 14px 25px;
-      border: none;
-      border-radius: 8px;
-      background: #123a91;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .save-button:hover {
-      background: #0b2d78;
-    }
-
-    /* SEARCH */
-    .search-card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .search-button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #123a91;
-      color: white;
-      font-weight: bold;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      margin-top: 30px;
-      color: #667085;
-      font-size: 14px;
-    }
-
-    /* MOBILE */
-    @media (max-width: 700px) {
-
-      .header h1 {
-        font-size: 22px;
-      }
-
-      .container {
-        width: 94%;
-      }
-
-      .activity-stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-group.full {
-        grid-column: auto;
-      }
-
-      .search-row {
-        flex-direction: column;
-      }
-
-      .search-button {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- HEADER -->
-  <header class="header">
-    <h1>EPSS Warehouse Logistics Dashboard</h1>
-    <p>Warehouse Activity Monitoring System</p>
-  </header>
-
-  <main class="container">
-
-    <!-- PLANT / CENTER -->
-    <section class="plant-box">
-      <h2>Plant / Center</h2>
-
-      <select id="plantCenter">
-        <option value="">Select Plant / Center</option>
-        <option>Modjo</option>
-        <option>Central Warehouse</option>
-        <option>Other</option>
-      </select>
-    </section>
-
-
-    <!-- TOTAL ACTIVITY -->
-    <h2 class="section-title">Total Activity</h2>
-
-    <section class="activity-box">
-
-      <div class="activity-stats">
-
-        <div class="stat">
-          <h3>📦 Loaded</h3>
-          <div class="number" id="loadedTotal">0</div>
-        </div>
-
-        <div class="stat">
-          <h3>🚚 Offloaded</h3>
-          <div class="number" id="offloadedTotal">0</div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- RECENT 7 DAYS -->
-    <h2 class="section-title">Recent 7 Days Activity</h2>
-
-    <section class="table-card">
-
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Activity</th>
-            <th>Load Count</th>
-            <th>Hubs</th>
-            <th>Items</th>
-            <th>Vehicle</th>
-            <th>Challenges</th>
-          </tr>
-        </thead>
-
-        <tbody id="recentActivity">
-          <tr>
-            <td colspan="7" style="text-align:center;">
-              No activity recorded yet
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
-
-    </section>
-
-
-    <!-- DAILY ACTIVITY -->
-    <h2 class="section-title">Daily Activity Entry</h2>
-
-    <section class="form-card">
-
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label>Activity Date</label>
-          <input type="date" id="activityDate">
-        </div>
-
-        <div class="form-group">
-          <label>Activity Type</label>
-
-          <select id="activityType">
-            <option value="Loaded">Loaded</option>
-            <option value="Offloaded">Offloaded</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Load Count</label>
-          <input type="number" id="loadCount" min="0" placeholder="e.g. 3">
-        </div>
-
-        <div class="form-group">
-          <label>Hubs</label>
-          <input
-            type="text"
-            id="hubs"
-            placeholder="e.g. Shire, Mekele, Nekemte">
-        </div>
-
-        <div class="form-group full">
-          <label>Items</label>
-          <textarea
-            id="items"
-            placeholder="Enter items transported"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Vehicle</label>
-          <input
-            type="text"
-            id="vehicle"
-            placeholder="e.g. Iveco">
-        </div>
-
-        <div class="form-group">
-          <label>Challenges</label>
-          <input
-            type="text"
-            id="challenges"
-            placeholder="Enter challenges if any">
-        </div>
-
-      </div>
-
-      <button class="save-button" onclick="saveActivity()">
-        SAVE ACTIVITY
-      </button>
-
-    </section>
-
-
-    <!-- SEARCH HISTORY -->
-    <h2 class="section-title">Search Hub History</h2>
-
-    <section class="search-card">
-
-      <div class="search-row">
-
-        <input
-          type="text"
-          id="hubSearch"
-          placeholder="Enter hub name, e.g. Shire">
-
-        <button class="search-button" onclick="searchHub()">
-          SEARCH
-        </button>
-
-      </div>
-
-      <div class="table-card" style="margin-top:20px;">
-
-        <table>
-
-          <thead>
-            <tr>
               <th>Date</th>
               <th>Activity</th>
               <th>Load Count</th>
@@ -1104,6 +724,7 @@
               <th>Vehicle</th>
               <th>Challenges</th>
             </tr>
+
           </thead>
 
           <tbody id="historyResults">
@@ -1122,42 +743,569 @@
 
     </section>
 
+
   </main>
 
 
+  <!-- ================= FOOTER ================= -->
+
   <footer>
+
     EPSS Warehouse Logistics Dashboard © 2026
+
   </footer>
 
 
+  <!-- ================= JAVASCRIPT ================= -->
+
   <script>
 
-    // Set today's date automatically
+    /*
+     * ============================================================
+     * SUPABASE SETTINGS
+     * ============================================================
+     *
+     * IMPORTANT:
+     * Replace the two values below with your existing
+     * Supabase Project URL and anon/public key.
+     */
+
+    const SUPABASE_URL =
+      "https://uxtrykyvivhejqfojiwm.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      htt"ps://uxtrykyvivhejqfojiwm.supabase.co";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+
+    /* ================= DATE ================= */
+
     document.getElementById("activityDate").value =
       new Date().toISOString().split("T")[0];
 
 
-    // Temporary function
-    // We will connect this to Supabase in the next step.
-    function saveActivity() {
+    /* ================= MESSAGE ================= */
 
-      alert(
-        "The form is working. Supabase connection will be added next."
-      );
+    function showMessage(text, type) {
+
+      const message =
+        document.getElementById("message");
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    /* ================= GET SELECTED HUBS ================= */
+
+    function getSelectedHubs() {
+
+      const select =
+        document.getElementById("hubs");
+
+      const selected = [];
+
+      for (const option of select.options) {
+
+        if (option.selected) {
+          selected.push(option.value);
+        }
+
+      }
+
+      return selected.join(", ");
 
     }
 
 
-    // Temporary search function
-    function searchHub() {
+    /* ================= SAVE ACTIVITY ================= */
 
-      alert(
-        "Hub search is ready. We will connect it to Supabase next."
-      );
+    async function saveActivity() {
+
+      const saveButton =
+        document.getElementById("saveButton");
+
+      const activityDate =
+        document.getElementById("activityDate").value;
+
+      const activityType =
+        document.getElementById("activityType").value;
+
+      const loadCount =
+        document.getElementById("loadCount").value;
+
+      const hubs =
+        getSelectedHubs();
+
+      const items =
+        document.getElementById("items").value.trim();
+
+      const vehicle =
+        document.getElementById("vehicle").value;
+
+      const challenges =
+        document.getElementById("challenges").value.trim();
+
+
+      if (!activityDate) {
+        showMessage(
+          "Please select the activity date.",
+          "error"
+        );
+        return;
+      }
+
+
+      if (!loadCount || Number(loadCount) <= 0) {
+        showMessage(
+          "Please enter the load count.",
+          "error"
+        );
+        return;
+      }
+
+
+      if (!hubs) {
+        showMessage(
+          "Please select at least one hub.",
+          "error"
+        );
+        return;
+      }
+
+
+      if (!vehicle) {
+        showMessage(
+          "Please select a vehicle.",
+          "error"
+        );
+        return;
+      }
+
+
+      saveButton.disabled = true;
+
+      saveButton.textContent = "SAVING...";
+
+
+      const record = {
+
+        activity_date: activityDate,
+
+        activity_type: activityType,
+
+        load_count: Number(loadCount),
+
+        hubs: hubs,
+
+        items: items || "-",
+
+        vehicle: vehicle,
+
+        challenges: challenges || "-"
+
+      };
+
+
+      const { data, error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .insert([record])
+          .select();
+
+
+      if (error) {
+
+        console.error(error);
+
+        showMessage(
+          "Error saving activity: " +
+          error.message,
+          "error"
+        );
+
+      } else {
+
+        showMessage(
+          "Activity saved successfully!",
+          "success"
+        );
+
+
+        document.getElementById("loadCount").value = "";
+
+        document.getElementById("items").value = "";
+
+        document.getElementById("vehicle").value = "";
+
+        document.getElementById("challenges").value = "";
+
+
+        document
+          .querySelectorAll("#hubs option")
+          .forEach(option => {
+            option.selected = false;
+          });
+
+
+        await loadDashboard();
+
+      }
+
+
+      saveButton.disabled = false;
+
+      saveButton.textContent = "SAVE ACTIVITY";
 
     }
+
+
+    /* ================= LOAD RECENT 7 DAYS ================= */
+
+    async function loadRecentActivity() {
+
+      const today =
+        new Date();
+
+      const sevenDaysAgo =
+        new Date();
+
+      sevenDaysAgo.setDate(
+        today.getDate() - 6
+      );
+
+
+      const fromDate =
+        sevenDaysAgo
+          .toISOString()
+          .split("T")[0];
+
+
+      const { data, error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .select("*")
+          .gte("activity_date", fromDate)
+          .order("activity_date", {
+            ascending: false
+          })
+          .order("created_at", {
+            ascending: false
+          });
+
+
+      const tbody =
+        document.getElementById(
+          "recentActivity"
+        );
+
+
+      if (error) {
+
+        console.error(error);
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              Error loading activities
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      if (!data || data.length === 0) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              No activity recorded in the last 7 days
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        data.map(row => `
+
+          <tr>
+
+            <td>${escapeHtml(
+              row.activity_date || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.activity_type || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              String(row.load_count ?? "-")
+            )}</td>
+
+            <td>${escapeHtml(
+              row.hubs || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.items || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.vehicle || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.challenges || "-"
+            )}</td>
+
+          </tr>
+
+        `).join("");
+
+    }
+
+
+    /* ================= TOTALS ================= */
+
+    async function loadTotals() {
+
+      const { data, error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .select(
+            "activity_type, load_count"
+          );
+
+
+      if (error) {
+
+        console.error(error);
+
+        return;
+
+      }
+
+
+      let loaded = 0;
+
+      let offloaded = 0;
+
+
+      (data || []).forEach(row => {
+
+        const count =
+          Number(row.load_count) || 0;
+
+
+        if (
+          String(row.activity_type)
+            .toLowerCase() === "loaded"
+        ) {
+
+          loaded += count;
+
+        }
+
+
+        if (
+          String(row.activity_type)
+            .toLowerCase() === "offloaded"
+        ) {
+
+          offloaded += count;
+
+        }
+
+      });
+
+
+      document.getElementById(
+        "loadedTotal"
+      ).textContent = loaded;
+
+
+      document.getElementById(
+        "offloadedTotal"
+      ).textContent = offloaded;
+
+    }
+
+
+    /* ================= SEARCH HUB ================= */
+
+    async function searchHub() {
+
+      const search =
+        document
+          .getElementById("hubSearch")
+          .value
+          .trim();
+
+
+      const tbody =
+        document.getElementById(
+          "historyResults"
+        );
+
+
+      if (!search) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              Please enter a hub name
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7"
+              style="text-align:center;">
+            Searching...
+          </td>
+        </tr>
+      `;
+
+
+      const { data, error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .select("*")
+          .ilike("hubs", "%" + search + "%")
+          .order("activity_date", {
+            ascending: false
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              Error searching history
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      if (!data || data.length === 0) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              No history found for "${escapeHtml(search)}"
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        data.map(row => `
+
+          <tr>
+
+            <td>${escapeHtml(
+              row.activity_date || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.activity_type || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              String(row.load_count ?? "-")
+            )}</td>
+
+            <td>${escapeHtml(
+              row.hubs || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.items || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.vehicle || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.challenges || "-"
+            )}</td>
+
+          </tr>
+
+        `).join("");
+
+    }
+
+
+    /* ================= SECURITY ================= */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ================= DASHBOARD ================= */
+
+    async function loadDashboard() {
+
+      await loadRecentActivity();
+
+      await loadTotals();
+
+    }
+
+
+    /* ================= START ================= */
+
+    loadDashboard();
 
   </script>
 
 </body>
-</html>
+
+  </html>
