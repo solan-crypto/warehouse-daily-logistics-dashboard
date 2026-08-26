@@ -1,20 +1,128 @@
-<div class="form-group">
-  <label>Vehicle</label>
+<!DOCTYPE html>
+<html lang="en">
 
-  <select id="vehicle">
-    <option value="">Select Vehicle</option>
-    <option value="Tesabi">Tesabi</option>
-    <option value="Iveco">Iveco</option>
-    <option value="Lowbed">Lowbed</option>
-    <option value="Van">Van</option>
-    <option value="Shelto">Shelto</option>
-  </select>
-</div>
-    /* TABLE */
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EPSS Warehouse Logistics Dashboard</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      background: linear-gradient(135deg, #09245f, #1746b0);
+      color: white;
+      text-align: center;
+      padding: 28px 15px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+
+    /* ================= PLANT / CENTER ================= */
+
+    .plant-box {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .plant-box h2 {
+      color: #123a91;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .plant-box select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccd4e0;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+    }
+
+    /* ================= SECTION TITLES ================= */
+
+    .section-title {
+      color: #123a91;
+      margin: 25px 0 12px;
+      font-size: 21px;
+    }
+
+    /* ================= TOTAL ACTIVITY ================= */
+
+    .activity-box {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 22px;
+      text-align: center;
+    }
+
+    .activity-box h2 {
+      color: #123a91;
+      margin-bottom: 20px;
+    }
+
+    .activity-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .stat {
+      padding: 20px;
+      border-radius: 12px;
+      background: #f5f7fc;
+    }
+
+    .stat h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .stat .number {
+      font-size: 32px;
+      font-weight: bold;
+      color: #123a91;
+    }
+
+    /* ================= TABLE ================= */
+
     .table-card {
       background: white;
       border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
       overflow-x: auto;
     }
 
@@ -35,6 +143,666 @@
       padding: 13px;
       border-bottom: 1px solid #e5e8ee;
     }
+
+    /* ================= DAILY FORM ================= */
+
+    .form-card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: #34405a;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 12px;
+      border: 1px solid #ccd4e0;
+      border-radius: 8px;
+      font-size: 15px;
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    /* HUB MULTI SELECT */
+
+    #hubs {
+      min-height: 150px;
+      background: white;
+    }
+
+    .help-text {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #667085;
+    }
+
+    /* SAVE BUTTON */
+
+    .save-button {
+      margin-top: 18px;
+      padding: 14px 25px;
+      border: none;
+      border-radius: 8px;
+      background: #123a91;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .save-button:hover {
+      background: #0b2d78;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .search-card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #123a91;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      margin-top: 30px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .activity-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .search-row {
+        flex-direction: column;
+      }
+
+      .search-button {
+        width: 100%;
+      }
+
+      table {
+        min-width: 750px;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <h1>EPSS Warehouse Logistics Dashboard</h1>
+
+    <p>Warehouse Activity Monitoring System</p>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- ================= PLANT / CENTER ================= -->
+
+    <section class="plant-box">
+
+      <h2>Plant / Center</h2>
+
+      <select id="plantCenter">
+
+        <option value="">
+          Select Plant / Center
+        </option>
+
+        <option value="Modjo">
+          Modjo
+        </option>
+
+        <option value="Central Warehouse">
+          Central Warehouse
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+
+      </select>
+
+    </section>
+
+
+    <!-- ================= TOTAL ACTIVITY ================= -->
+
+    <h2 class="section-title">
+      Total Activity
+    </h2>
+
+    <section class="activity-box">
+
+      <div class="activity-stats">
+
+        <div class="stat">
+
+          <h3>📦 Loaded</h3>
+
+          <div
+            class="number"
+            id="loadedTotal">
+            0
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <h3>🚚 Offloaded</h3>
+
+          <div
+            class="number"
+            id="offloadedTotal">
+            0
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= RECENT 7 DAYS ================= -->
+
+    <h2 class="section-title">
+      Recent 7 Days Activity
+    </h2>
+
+    <section class="table-card">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Load Count</th>
+            <th>Hubs</th>
+            <th>Items</th>
+            <th>Vehicle</th>
+            <th>Challenges</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="recentActivity">
+
+          <tr>
+
+            <td
+              colspan="7"
+              style="text-align:center;">
+
+              No activity recorded yet
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+
+    <!-- ================= DAILY ACTIVITY ================= -->
+
+    <h2 class="section-title">
+      Daily Activity Entry
+    </h2>
+
+    <section class="form-card">
+
+      <div class="form-grid">
+
+
+        <!-- DATE -->
+
+        <div class="form-group">
+
+          <label>
+            Activity Date
+          </label>
+
+          <input
+            type="date"
+            id="activityDate">
+
+        </div>
+
+
+        <!-- ACTIVITY TYPE -->
+
+        <div class="form-group">
+
+          <label>
+            Activity Type
+          </label>
+
+          <select id="activityType">
+
+            <option value="Loaded">
+              Loaded
+            </option>
+
+            <option value="Offloaded">
+              Offloaded
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- LOAD COUNT -->
+
+        <div class="form-group">
+
+          <label>
+            Load Count
+          </label>
+
+          <input
+            type="number"
+            id="loadCount"
+            min="0"
+            placeholder="e.g. 3">
+
+        </div>
+
+
+        <!-- HUBS -->
+
+        <div class="form-group">
+
+          <label>
+            Hub(s)
+          </label>
+
+          <select
+            id="hubs"
+            multiple
+            size="6">
+
+            <option value="AA1hp">
+              AA1hp
+            </option>
+
+            <option value="AA1 MainWH">
+              AA1 MainWH
+            </option>
+
+            <option value="AA2">
+              AA2
+            </option>
+
+            <option value="Adama">
+              Adama
+            </option>
+
+            <option value="Hawasa">
+              Hawasa
+            </option>
+
+            <option value="Negelle">
+              Negelle
+            </option>
+
+            <option value="Nekemte">
+              Nekemte
+            </option>
+
+            <option value="Jimma">
+              Jimma
+            </option>
+
+            <option value="D.Dawa">
+              D.Dawa
+            </option>
+
+            <option value="Jigjiga">
+              Jigjiga
+            </option>
+
+            <option value="Arbaminch">
+              Arbaminch
+            </option>
+
+            <option value="Semera">
+              Semera
+            </option>
+
+            <option value="Gambella">
+              Gambella
+            </option>
+
+            <option value="Asosa">
+              Asosa
+            </option>
+
+            <option value="Bahir Dar">
+              Bahir Dar
+            </option>
+
+            <option value="Gondar">
+              Gondar
+            </option>
+
+            <option value="Dessie">
+              Dessie
+            </option>
+
+            <option value="Kebridar">
+              Kebridar
+            </option>
+
+            <option value="Mekele">
+              Mekele
+            </option>
+
+            <option value="Shire">
+              Shire
+            </option>
+
+          </select>
+
+          <div class="help-text">
+            Select one or more hubs.
+          </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+
+        <div class="form-group full">
+
+          <label>
+            Items
+          </label>
+
+          <textarea
+            id="items"
+            placeholder="Enter items transported">
+          </textarea>
+
+        </div>
+
+
+        <!-- VEHICLE -->
+
+        <div class="form-group">
+
+          <label>
+            Vehicle
+          </label>
+
+          <select id="vehicle">
+
+            <option value="">
+              Select Vehicle
+            </option>
+
+            <option value="Tesabi">
+              Tesabi
+            </option>
+
+            <option value="Iveco">
+              Iveco
+            </option>
+
+            <option value="Lowbed">
+              Lowbed
+            </option>
+
+            <option value="Van">
+              Van
+            </option>
+
+            <option value="Shelto">
+              Shelto
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- CHALLENGES -->
+
+        <div class="form-group">
+
+          <label>
+            Challenges
+          </label>
+
+          <input
+            type="text"
+            id="challenges"
+            placeholder="Enter challenges if any">
+
+        </div>
+
+      </div>
+
+
+      <!-- SAVE -->
+
+      <button
+        class="save-button"
+        onclick="saveActivity()">
+
+        SAVE ACTIVITY
+
+      </button>
+
+    </section>
+
+
+    <!-- ================= SEARCH HUB HISTORY ================= -->
+
+    <h2 class="section-title">
+      Search Hub History
+    </h2>
+
+    <section class="search-card">
+
+      <div class="search-row">
+
+        <input
+          type="text"
+          id="hubSearch"
+          placeholder="Enter hub name, e.g. Shire">
+
+
+        <button
+          class="search-button"
+          onclick="searchHub()">
+
+          SEARCH
+
+        </button>
+
+      </div>
+
+
+      <div
+        class="table-card"
+        style="margin-top:20px;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Date</th>
+              <th>Activity</th>
+              <th>Load Count</th>
+              <th>Hubs</th>
+              <th>Items</th>
+              <th>Vehicle</th>
+              <th>Challenges</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="historyResults">
+
+            <tr>
+
+              <td
+                colspan="7"
+                style="text-align:center;">
+
+                Search for a hub to view history
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    EPSS Warehouse Logistics Dashboard © 2026
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /* Set today's date automatically */
+
+    document.getElementById("activityDate").value =
+      new Date().toISOString().split("T")[0];
+
+
+    /* Temporary save function */
+
+    function saveActivity() {
+
+      alert(
+        "The form is working. Supabase connection will be added next."
+      );
+
+    }
+
+
+    /* Temporary search function */
+
+    function searchHub() {
+
+      alert(
+        "Hub search is ready. We will connect it to Supabase next."
+      );
+
+    }
+
+  </script>
+
+</body>
+
+              </html>    }
 
     /* DAILY FORM */
     .form-card {
