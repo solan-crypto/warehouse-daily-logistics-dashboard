@@ -769,20 +769,17 @@
      * Replace the two values below with your existing
      * Supabase Project URL and anon/public key.
      */
+const SUPABASE_URL =
+  "https://uxtrykyvivhejqfojiwm.supabase.co";
 
-    const SUPABASE_URL =
-      "https://uxtrykyvivhejqfojiwm.supabase.co";
+const SUPABASE_ANON_KEY =
+  "sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
 
-    const SUPABASE_ANON_KEY =
-      htt"sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
-
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
     /* ================= DATE ================= */
 
     document.getElementById("activityDate").value =
