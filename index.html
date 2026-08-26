@@ -1391,7 +1391,80 @@ const supabaseClient =
     /* ================= START ================= */
 
     loadDashboard();
+/* ================= ADMIN LOGIN ================= */
 
+function toggleAdminLogin() {
+
+  const box = document.getElementById("adminLoginBox");
+
+  if (box.style.display === "none" || box.style.display === "") {
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+
+}
+
+
+async function adminLogin() {
+
+  const email =
+    document.getElementById("adminEmail").value.trim();
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+  const loginMessage =
+    document.getElementById("loginMessage");
+
+
+  if (!email || !password) {
+
+    loginMessage.textContent =
+      "Please enter email and password.";
+
+    loginMessage.style.color = "#a51d1d";
+
+    return;
+
+  }
+
+
+  loginMessage.textContent = "Logging in...";
+  loginMessage.style.color = "#667085";
+
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+
+  if (error) {
+
+    console.error(error);
+
+    loginMessage.textContent =
+      "Login failed: " + error.message;
+
+    loginMessage.style.color = "#a51d1d";
+
+    return;
+
+  }
+
+
+  loginMessage.textContent =
+    "Login successful! ✅";
+
+  loginMessage.style.color = "#176b36";
+
+
+  document.getElementById("adminLoginButton").textContent =
+    "🔓 Admin Logged In";
+
+}
   </script>
 
 </body>
