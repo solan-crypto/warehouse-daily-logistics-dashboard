@@ -353,9 +353,100 @@
       }
 
     }
+    /* ================= ADMIN LOGIN ================= */
+
+.admin-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: #123a91;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-button:hover {
+  background: #eef3ff;
+}
+
+.admin-login-box {
+  display: none;
+  width: 94%;
+  max-width: 450px;
+  margin: 20px auto;
+  padding: 22px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.admin-login-box h2 {
+  color: #123a91;
+  margin-bottom: 15px;
+}
+
+.admin-login-box input {
+  margin-bottom: 12px;
+}
+
+.login-button,
+.cancel-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.login-button {
+  background: #123a91;
+  color: white;
+}
+
+.cancel-button {
+  background: #e5e8ee;
+  color: #34405a;
+}
+
+#loginMessage {
+  margin-top: 12px;
+  font-weight: bold;
+}
 
   </style>
 </head>
+  <div id="adminLoginBox" class="admin-login-box">
+
+  <h2>🔐 Admin Login</h2>
+
+  <input
+    type="email"
+    id="adminEmail"
+    placeholder="Admin email">
+
+  <input
+    type="password"
+    id="adminPassword"
+    placeholder="Password">
+
+  <button
+    class="login-button"
+    onclick="adminLogin()">
+    LOGIN
+  </button>
+
+  <button
+    class="cancel-button"
+    onclick="toggleAdminLogin()">
+    CANCEL
+  </button>
+
+  <div id="loginMessage"></div>
+
+  </div>
 
 
 <body>
@@ -364,12 +455,18 @@
 
   <header class="header">
 
-    <h1>EPSS Warehouse Logistics Dashboard</h1>
+  <h1>EPSS Warehouse Logistics Dashboard</h1>
 
-    <p>Warehouse Activity Monitoring System</p>
+  <p>Warehouse Activity Monitoring System</p>
 
-  </header>
+  <button
+    id="adminLoginButton"
+    class="admin-button"
+    onclick="toggleAdminLogin()">
+    🔐 Admin Login
+  </button>
 
+</header>
 
   <main class="container">
 
