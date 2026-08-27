@@ -240,6 +240,55 @@
       background: #0b2d78;
     }
 
+    /* ================= EDIT / DELETE ================= */
+
+    .action-buttons {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .edit-button,
+    .delete-button {
+      border: none;
+      border-radius: 6px;
+      padding: 8px 11px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .edit-button {
+      background: #e8f0ff;
+      color: #123a91;
+    }
+
+    .edit-button:hover {
+      background: #d6e3ff;
+    }
+
+    .delete-button {
+      background: #fdecec;
+      color: #a51d1d;
+    }
+
+    .delete-button:hover {
+      background: #f8d6d6;
+    }
+
+    .cancel-edit-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e5e8ee;
+      color: #34405a;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+
     /* ================= MESSAGE ================= */
 
     .message {
@@ -566,6 +615,9 @@
             <th>Items</th>
             <th>Vehicle</th>
             <th>Challenges</th>
+            <th id="recentActionsHeader" style="display:none;">
+              Actions
+            </th>
           </tr>
 
         </thead>
@@ -573,7 +625,7 @@
         <tbody id="recentActivity">
 
           <tr>
-            <td colspan="7" style="text-align:center;">
+            <td colspan="8" style="text-align:center;">
               Loading...
             </td>
           </tr>
@@ -586,10 +638,12 @@
 
 
     <!-- =====================================================
-         ADMIN ONLY DAILY ACTIVITY ENTRY
+         ADMIN ONLY SECTION
          ===================================================== -->
 
     <div id="adminActivitySection" style="display:none;">
+
+      <!-- ================= DAILY ACTIVITY ENTRY ================= -->
 
       <h2 class="section-title">
         Daily Activity Entry
@@ -778,6 +832,16 @@
         </button>
 
 
+        <button
+          class="cancel-edit-button"
+          id="cancelEditButton"
+          onclick="cancelEdit()">
+
+          CANCEL EDIT
+
+        </button>
+
+
         <div
           id="message"
           class="message">
@@ -785,238 +849,236 @@
 
       </section>
 
-    </div>
 
+      <!-- ================= SEARCH HUB HISTORY ================= -->
 
-    <!-- =====================================================
-         SEARCH HUB HISTORY
-         ===================================================== -->
+      <h2 class="section-title">
+        Search Hub History
+      </h2>
 
-    <h2 class="section-title">
-      Search Hub History
-    </h2>
+      <section class="card">
 
-    <section class="card">
+        <div class="form-grid">
 
-      <div class="form-grid">
+          <div class="form-group">
 
-        <div class="form-group">
-
-          <label>
-            Select Hub
-          </label>
-
-          <select id="hubSearch">
-
-            <option value="">
+            <label>
               Select Hub
-            </option>
+            </label>
 
-            <option value="AA1hp">AA1hp</option>
-            <option value="AA1 MainWH">AA1 MainWH</option>
-            <option value="AA2">AA2</option>
-            <option value="Adama">Adama</option>
-            <option value="Hawasa">Hawasa</option>
-            <option value="Negelle">Negelle</option>
-            <option value="Nekemte">Nekemte</option>
-            <option value="Jimma">Jimma</option>
-            <option value="D.Dawa">D.Dawa</option>
-            <option value="Jigjiga">Jigjiga</option>
-            <option value="Arbaminch">Arbaminch</option>
-            <option value="Semera">Semera</option>
-            <option value="Gambella">Gambella</option>
-            <option value="Asosa">Asosa</option>
-            <option value="Bahir Dar">Bahir Dar</option>
-            <option value="Gondar">Gondar</option>
-            <option value="Dessie">Dessie</option>
-            <option value="Kebridar">Kebridar</option>
-            <option value="Mekele">Mekele</option>
-            <option value="Shire">Shire</option>
+            <select id="hubSearch">
 
-          </select>
+              <option value="">
+                Select Hub
+              </option>
 
-        </div>
+              <option value="AA1hp">AA1hp</option>
+              <option value="AA1 MainWH">AA1 MainWH</option>
+              <option value="AA2">AA2</option>
+              <option value="Adama">Adama</option>
+              <option value="Hawasa">Hawasa</option>
+              <option value="Negelle">Negelle</option>
+              <option value="Nekemte">Nekemte</option>
+              <option value="Jimma">Jimma</option>
+              <option value="D.Dawa">D.Dawa</option>
+              <option value="Jigjiga">Jigjiga</option>
+              <option value="Arbaminch">Arbaminch</option>
+              <option value="Semera">Semera</option>
+              <option value="Gambella">Gambella</option>
+              <option value="Asosa">Asosa</option>
+              <option value="Bahir Dar">Bahir Dar</option>
+              <option value="Gondar">Gondar</option>
+              <option value="Dessie">Dessie</option>
+              <option value="Kebridar">Kebridar</option>
+              <option value="Mekele">Mekele</option>
+              <option value="Shire">Shire</option>
 
+            </select>
 
-        <div class="form-group">
-
-          <label>
-            From Date
-          </label>
-
-          <input
-            type="date"
-            id="hubFromDate">
-
-        </div>
+          </div>
 
 
-        <div class="form-group">
+          <div class="form-group">
 
-          <label>
-            To Date
-          </label>
+            <label>
+              From Date
+            </label>
 
-          <input
-            type="date"
-            id="hubToDate">
+            <input
+              type="date"
+              id="hubFromDate">
 
-        </div>
-
-      </div>
+          </div>
 
 
-      <button
-        class="search-button"
-        style="width:100%; margin-top:18px;"
-        onclick="searchHub()">
+          <div class="form-group">
 
-        SEARCH HISTORY
+            <label>
+              To Date
+            </label>
 
-      </button>
+            <input
+              type="date"
+              id="hubToDate">
 
-
-      <div
-        class="table-card"
-        style="margin-top:20px;">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="historyResults">
-
-            <tr>
-
-              <td
-                colspan="7"
-                style="text-align:center;">
-
-                Select a hub and date range to search
-
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         SEARCH BY DATE
-         ===================================================== -->
-
-    <h2 class="section-title">
-      Search Activity by Date
-    </h2>
-
-    <section class="card">
-
-      <div class="date-search-grid">
-
-        <div class="form-group">
-
-          <label>
-            From Date
-          </label>
-
-          <input
-            type="date"
-            id="dateFrom">
+          </div>
 
         </div>
 
 
-        <div class="form-group">
+        <button
+          class="search-button"
+          style="width:100%; margin-top:18px;"
+          onclick="searchHub()">
 
-          <label>
-            To Date
-          </label>
+          SEARCH HISTORY
 
-          <input
-            type="date"
-            id="dateTo">
+        </button>
+
+
+        <div
+          class="table-card"
+          style="margin-top:20px;">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Date</th>
+                <th>Activity</th>
+                <th>Load Count</th>
+                <th>Hubs</th>
+                <th>Items</th>
+                <th>Vehicle</th>
+                <th>Challenges</th>
+                <th>Actions</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="historyResults">
+
+              <tr>
+
+                <td
+                  colspan="8"
+                  style="text-align:center;">
+
+                  Select a hub and date range to search
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
 
         </div>
 
-      </div>
+      </section>
 
 
-      <div class="help-text">
+      <!-- ================= SEARCH BY DATE ================= -->
 
-        Select one date for a single-day search,
-        or select two dates for a date range.
+      <h2 class="section-title">
+        Search Activity by Date
+      </h2>
 
-      </div>
+      <section class="card">
+
+        <div class="date-search-grid">
+
+          <div class="form-group">
+
+            <label>
+              From Date
+            </label>
+
+            <input
+              type="date"
+              id="dateFrom">
+
+          </div>
 
 
-      <button
-        class="search-button date-search-button"
-        onclick="searchByDate()">
+          <div class="form-group">
 
-        SEARCH BY DATE
+            <label>
+              To Date
+            </label>
 
-      </button>
+            <input
+              type="date"
+              id="dateTo">
+
+          </div>
+
+        </div>
 
 
-      <div
-        class="table-card"
-        style="margin-top:20px;">
+        <div class="help-text">
 
-        <table>
+          Select one date for a single-day search,
+          or select two dates for a date range.
 
-          <thead>
+        </div>
 
-            <tr>
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
-            </tr>
 
-          </thead>
+        <button
+          class="search-button date-search-button"
+          onclick="searchByDate()">
 
-          <tbody id="dateSearchResults">
+          SEARCH BY DATE
 
-            <tr>
+        </button>
 
-              <td
-                colspan="7"
-                style="text-align:center;">
 
-                Select a date and search
+        <div
+          class="table-card"
+          style="margin-top:20px;">
 
-              </td>
+          <table>
 
-            </tr>
+            <thead>
 
-          </tbody>
+              <tr>
+                <th>Date</th>
+                <th>Activity</th>
+                <th>Load Count</th>
+                <th>Hubs</th>
+                <th>Items</th>
+                <th>Vehicle</th>
+                <th>Challenges</th>
+                <th>Actions</th>
+              </tr>
 
-        </table>
+            </thead>
 
-      </div>
+            <tbody id="dateSearchResults">
 
-    </section>
+              <tr>
+
+                <td
+                  colspan="8"
+                  style="text-align:center;">
+
+                  Select a date and search
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </div>
 
   </main>
 
@@ -1044,11 +1106,19 @@
     const SUPABASE_ANON_KEY =
       "sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
 
+
     const supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
       );
+
+
+    /* =========================================================
+       EDIT STATE
+       ========================================================= */
+
+    let editingId = null;
 
 
     /* =========================================================
@@ -1117,6 +1187,32 @@
 
 
     /* =========================================================
+       SET SELECTED HUBS
+       ========================================================= */
+
+    function setSelectedHubs(hubString) {
+
+      const select =
+        document.getElementById("hubs");
+
+      const selectedHubs =
+        String(hubString || "")
+          .split(",")
+          .map(hub => hub.trim())
+          .filter(Boolean);
+
+
+      for (const option of select.options) {
+
+        option.selected =
+          selectedHubs.includes(option.value);
+
+      }
+
+    }
+
+
+    /* =========================================================
        ADMIN LOGIN BOX
        ========================================================= */
 
@@ -1153,10 +1249,16 @@
       const loginBox =
         document.getElementById("adminLoginBox");
 
+      const recentActionsHeader =
+        document.getElementById("recentActionsHeader");
+
 
       if (user) {
 
         adminSection.style.display = "block";
+
+        recentActionsHeader.style.display =
+          "table-cell";
 
         loginButton.textContent =
           "🔓 Admin Logged In";
@@ -1167,9 +1269,14 @@
         loginBox.style.display =
           "none";
 
+        loadRecentActivity();
+
       } else {
 
         adminSection.style.display =
+          "none";
+
+        recentActionsHeader.style.display =
           "none";
 
         loginButton.textContent =
@@ -1280,6 +1387,8 @@
       }
 
 
+      cancelEdit();
+
       showAdminSection(null);
 
     }
@@ -1317,16 +1426,27 @@
 
 
     /* =========================================================
-       SAVE ACTIVITY
+       CHECK ADMIN BEFORE ACTION
+       ========================================================= */
+
+    async function isAdminLoggedIn() {
+
+      const { data } =
+        await supabaseClient.auth.getSession();
+
+      return !!data.session;
+
+    }
+
+
+    /* =========================================================
+       SAVE / UPDATE ACTIVITY
        ========================================================= */
 
     async function saveActivity() {
 
       const saveButton =
         document.getElementById("saveButton");
-
-
-      /* Make sure user is logged in */
 
       const { data: sessionData } =
         await supabaseClient.auth.getSession();
@@ -1428,8 +1548,11 @@
 
       saveButton.disabled = true;
 
+
       saveButton.textContent =
-        "SAVING...";
+        editingId
+          ? "UPDATING..."
+          : "SAVING...";
 
 
       const record = {
@@ -1458,54 +1581,65 @@
       };
 
 
-      const { error } =
-        await supabaseClient
-          .from("warehouse_activities")
-          .insert([record]);
+      let result;
 
 
-      if (error) {
+      /* ================= UPDATE ================= */
 
-        console.error(error);
+      if (editingId) {
+
+        result =
+          await supabaseClient
+            .from("warehouse_activities")
+            .update(record)
+            .eq("id", editingId);
+
+
+      /* ================= INSERT ================= */
+
+      } else {
+
+        result =
+          await supabaseClient
+            .from("warehouse_activities")
+            .insert([record]);
+
+      }
+
+
+      if (result.error) {
+
+        console.error(result.error);
 
         showMessage(
-          "Error saving activity: " +
-          error.message,
+          "Error: " +
+          result.error.message,
           "error"
         );
 
       } else {
 
         showMessage(
-          "Activity saved successfully! ✅",
+          editingId
+            ? "Activity updated successfully! ✅"
+            : "Activity saved successfully! ✅",
           "success"
         );
 
 
-        document.getElementById(
-          "loadCount"
-        ).value = "";
+        clearActivityForm();
+
+        editingId = null;
 
         document.getElementById(
-          "items"
-        ).value = "";
+          "saveButton"
+        ).textContent =
+          "SAVE ACTIVITY";
 
         document.getElementById(
-          "vehicle"
-        ).value = "";
-
-        document.getElementById(
-          "challenges"
-        ).value = "";
-
-
-        document
-          .querySelectorAll("#hubs option")
-          .forEach(option => {
-
-            option.selected = false;
-
-          });
+          "cancelEditButton"
+        ).style.display =
+          "none";
 
 
         await loadDashboard();
@@ -1517,6 +1651,301 @@
 
       saveButton.textContent =
         "SAVE ACTIVITY";
+
+    }
+
+
+    /* =========================================================
+       CLEAR FORM
+       ========================================================= */
+
+    function clearActivityForm() {
+
+      document.getElementById(
+        "activityDate"
+      ).value =
+        new Date().toISOString().split("T")[0];
+
+
+      document.getElementById(
+        "activityType"
+      ).value =
+        "Loaded";
+
+
+      document.getElementById(
+        "loadCount"
+      ).value = "";
+
+
+      document.getElementById(
+        "items"
+      ).value = "";
+
+
+      document.getElementById(
+        "vehicle"
+      ).value = "";
+
+
+      document.getElementById(
+        "challenges"
+      ).value = "";
+
+
+      document
+        .querySelectorAll("#hubs option")
+        .forEach(option => {
+
+          option.selected = false;
+
+        });
+
+    }
+
+
+    /* =========================================================
+       EDIT ACTIVITY
+       ========================================================= */
+
+    async function editActivity(id) {
+
+      if (!await isAdminLoggedIn()) {
+
+        alert(
+          "Please log in as Admin to edit an activity."
+        );
+
+        return;
+
+      }
+
+
+      const { data, error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          "Unable to load this activity."
+        );
+
+        return;
+
+      }
+
+
+      editingId = id;
+
+
+      document.getElementById(
+        "activityDate"
+      ).value =
+        data.activity_date || "";
+
+
+      document.getElementById(
+        "activityType"
+      ).value =
+        data.activity_type || "Loaded";
+
+
+      document.getElementById(
+        "loadCount"
+      ).value =
+        data.load_count || "";
+
+
+      setSelectedHubs(
+        data.hubs || ""
+      );
+
+
+      document.getElementById(
+        "items"
+      ).value =
+        data.items === "-"
+          ? ""
+          : (data.items || "");
+
+
+      document.getElementById(
+        "vehicle"
+      ).value =
+        data.vehicle || "";
+
+
+      document.getElementById(
+        "challenges"
+      ).value =
+        data.challenges === "-"
+          ? ""
+          : (data.challenges || "");
+
+
+      document.getElementById(
+        "saveButton"
+      ).textContent =
+        "UPDATE ACTIVITY";
+
+
+      document.getElementById(
+        "cancelEditButton"
+      ).style.display =
+        "block";
+
+
+      showMessage(
+        "Editing activity #" + id,
+        "success"
+      );
+
+
+      window.scrollTo({
+        top:
+          document.getElementById(
+            "adminActivitySection"
+          ).offsetTop - 20,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* =========================================================
+       CANCEL EDIT
+       ========================================================= */
+
+    function cancelEdit() {
+
+      editingId = null;
+
+      clearActivityForm();
+
+
+      document.getElementById(
+        "saveButton"
+      ).textContent =
+        "SAVE ACTIVITY";
+
+
+      document.getElementById(
+        "cancelEditButton"
+      ).style.display =
+        "none";
+
+
+      const message =
+        document.getElementById("message");
+
+      message.className =
+        "message";
+
+      message.textContent = "";
+
+    }
+
+
+    /* =========================================================
+       DELETE ACTIVITY
+       ========================================================= */
+
+    async function deleteActivity(id) {
+
+      if (!await isAdminLoggedIn()) {
+
+        alert(
+          "Please log in as Admin to delete an activity."
+        );
+
+        return;
+
+      }
+
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to delete activity #" +
+          id +
+          "?\n\nThis action cannot be undone."
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("warehouse_activities")
+          .delete()
+          .eq("id", id);
+
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          "Delete failed: " +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      if (editingId === id) {
+        cancelEdit();
+      }
+
+
+      alert(
+        "Activity deleted successfully. ✅"
+      );
+
+
+      await loadDashboard();
+
+    }
+
+
+    /* =========================================================
+       ACTION BUTTONS
+       ========================================================= */
+
+    function actionButtons(id) {
+
+      return `
+        <div class="action-buttons">
+
+          <button
+            class="edit-button"
+            onclick="editActivity(${id})">
+
+            ✏️ Edit
+
+          </button>
+
+          <button
+            class="delete-button"
+            onclick="deleteActivity(${id})">
+
+            🗑️ Delete
+
+          </button>
+
+        </div>
+      `;
 
     }
 
@@ -1568,13 +1997,20 @@
         );
 
 
+      const { data: sessionData } =
+        await supabaseClient.auth.getSession();
+
+      const adminLoggedIn =
+        !!sessionData.session;
+
+
       if (error) {
 
         console.error(error);
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="${adminLoggedIn ? 8 : 7}"
                 style="text-align:center;color:#a51d1d;">
               Error loading activities
             </td>
@@ -1590,7 +2026,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="${adminLoggedIn ? 8 : 7}"
                 style="text-align:center;">
               No activity recorded in the last 7 days
             </td>
@@ -1650,6 +2086,16 @@
                 row.challenges || "-"
               )}
             </td>
+
+            ${
+              adminLoggedIn
+                ? `
+                  <td>
+                    ${actionButtons(row.id)}
+                  </td>
+                `
+                : ""
+            }
 
           </tr>
 
@@ -1757,7 +2203,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;color:#a51d1d;">
               Please select a hub.
             </td>
@@ -1777,7 +2223,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;color:#a51d1d;">
               From Date cannot be later than To Date.
             </td>
@@ -1791,7 +2237,7 @@
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="7"
+          <td colspan="8"
               style="text-align:center;">
             Searching history...
           </td>
@@ -1849,7 +2295,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;color:#a51d1d;">
               Error searching history.
             </td>
@@ -1865,7 +2311,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;">
               No history found.
             </td>
@@ -1912,6 +2358,10 @@
               row.challenges || "-"
             )}</td>
 
+            <td>
+              ${actionButtons(row.id)}
+            </td>
+
           </tr>
 
         `).join("");
@@ -1945,7 +2395,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;">
               Please select a date.
             </td>
@@ -1965,7 +2415,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;color:#a51d1d;">
               To Date cannot be earlier than From Date.
             </td>
@@ -1979,7 +2429,7 @@
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="7"
+          <td colspan="8"
               style="text-align:center;">
             Searching...
           </td>
@@ -2049,7 +2499,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;color:#a51d1d;">
               Error searching activities.
             </td>
@@ -2065,7 +2515,7 @@
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7"
+            <td colspan="8"
                 style="text-align:center;">
               No activity found for the selected date.
             </td>
@@ -2112,6 +2562,10 @@
               row.challenges || "-"
             )}</td>
 
+            <td>
+              ${actionButtons(row.id)}
+            </td>
+
           </tr>
 
         `).join("");
@@ -2144,4 +2598,4 @@
 
 </body>
 
-  </html>
+</html>
