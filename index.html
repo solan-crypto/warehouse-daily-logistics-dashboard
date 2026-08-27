@@ -105,13 +105,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .activity-title {
-      text-align: center;
-      color: #123a91;
-      margin-bottom: 20px;
-      font-size: 21px;
-    }
-
     .activity-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -209,7 +202,7 @@
       margin-top: 6px;
     }
 
-    /* ================= BUTTON ================= */
+    /* ================= BUTTONS ================= */
 
     .save-button {
       width: 100%;
@@ -231,6 +224,20 @@
     .save-button:disabled {
       background: #8b96aa;
       cursor: not-allowed;
+    }
+
+    .search-button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #123a91;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background: #0b2d78;
     }
 
     /* ================= MESSAGE ================= */
@@ -255,35 +262,87 @@
       color: #a51d1d;
     }
 
-    /* ================= SEARCH ================= */
+    /* ================= ADMIN ================= */
 
-    .search-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .search-button {
-      padding: 12px 22px;
+    .admin-button {
+      margin-top: 15px;
+      padding: 10px 20px;
       border: none;
       border-radius: 8px;
-      background: #123a91;
-      color: white;
+      background: white;
+      color: #123a91;
       font-weight: bold;
       cursor: pointer;
-      white-space: nowrap;
     }
 
-    .search-button:hover {
-      background: #0b2d78;
+    .admin-button:hover {
+      background: #eef3ff;
     }
 
-    /* ================= STATUS ================= */
+    .admin-login-box {
+      display: none;
+      width: 94%;
+      max-width: 450px;
+      margin: 20px auto;
+      padding: 22px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
 
-    .status {
-      text-align: center;
-      margin: 10px 0;
-      font-size: 13px;
-      color: #667085;
+    .admin-login-box h2 {
+      color: #123a91;
+      margin-bottom: 15px;
+    }
+
+    .admin-login-box input {
+      margin-bottom: 12px;
+    }
+
+    .login-button,
+    .cancel-button,
+    .logout-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .login-button {
+      background: #123a91;
+      color: white;
+    }
+
+    .cancel-button {
+      background: #e5e8ee;
+      color: #34405a;
+    }
+
+    .logout-button {
+      background: #a51d1d;
+      color: white;
+    }
+
+    #loginMessage {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    /* ================= DATE SEARCH ================= */
+
+    .date-search-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .date-search-button {
+      width: 100%;
+      margin-top: 18px;
     }
 
     /* ================= FOOTER ================= */
@@ -340,114 +399,17 @@
         font-size: 28px;
       }
 
-      .search-row {
-        flex-direction: column;
-      }
-
-      .search-button {
-        width: 100%;
+      .date-search-grid {
+        grid-template-columns: 1fr;
       }
 
       table {
         min-width: 850px;
       }
-
     }
-    /* ================= ADMIN LOGIN ================= */
-
-.admin-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: white;
-  color: #123a91;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.admin-button:hover {
-  background: #eef3ff;
-}
-
-.admin-login-box {
-  display: none;
-  width: 94%;
-  max-width: 450px;
-  margin: 20px auto;
-  padding: 22px;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.admin-login-box h2 {
-  color: #123a91;
-  margin-bottom: 15px;
-}
-
-.admin-login-box input {
-  margin-bottom: 12px;
-}
-
-.login-button,
-.cancel-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-.login-button {
-  background: #123a91;
-  color: white;
-}
-
-.cancel-button {
-  background: #e5e8ee;
-  color: #34405a;
-}
-
-#loginMessage {
-  margin-top: 12px;
-  font-weight: bold;
-}
 
   </style>
 </head>
-  <div id="adminLoginBox" class="admin-login-box">
-
-  <h2>🔐 Admin Login</h2>
-
-  <input
-    type="email"
-    id="adminEmail"
-    placeholder="Admin email">
-
-  <input
-    type="password"
-    id="adminPassword"
-    placeholder="Password">
-
-  <button
-    class="login-button"
-    onclick="adminLogin()">
-    LOGIN
-  </button>
-
-  <button
-    class="cancel-button"
-    onclick="toggleAdminLogin()">
-    CANCEL
-  </button>
-
-  <div id="loginMessage"></div>
-
-  </div>
-
 
 <body>
 
@@ -455,21 +417,62 @@
 
   <header class="header">
 
-  <h1>EPSS Warehouse Logistics Dashboard</h1>
+    <h1>EPSS Warehouse Logistics Dashboard</h1>
 
-  <p>Warehouse Activity Monitoring System</p>
+    <p>Warehouse Activity Monitoring System</p>
 
-  <button
-    id="adminLoginButton"
-    class="admin-button"
-    onclick="toggleAdminLogin()">
-    🔐 Admin Login
-  </button>
+    <button
+      id="adminLoginButton"
+      class="admin-button"
+      onclick="toggleAdminLogin()">
 
-</header>
+      🔐 Admin Login
+
+    </button>
+
+  </header>
+
+
+  <!-- ================= ADMIN LOGIN ================= -->
+
+  <div
+    id="adminLoginBox"
+    class="admin-login-box">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+      type="email"
+      id="adminEmail"
+      placeholder="Admin email">
+
+    <input
+      type="password"
+      id="adminPassword"
+      placeholder="Password">
+
+    <button
+      class="login-button"
+      onclick="adminLogin()">
+
+      LOGIN
+
+    </button>
+
+    <button
+      class="cancel-button"
+      onclick="toggleAdminLogin()">
+
+      CANCEL
+
+    </button>
+
+    <div id="loginMessage"></div>
+
+  </div>
+
 
   <main class="container">
-
 
     <!-- ================= PLANT / CENTER ================= -->
 
@@ -517,11 +520,12 @@
           <div
             class="stat-number"
             id="loadedTotal">
+
             0
+
           </div>
 
         </div>
-
 
         <div class="stat">
 
@@ -530,7 +534,9 @@
           <div
             class="stat-number"
             id="offloadedTotal">
+
             0
+
           </div>
 
         </div>
@@ -579,83 +585,230 @@
     </section>
 
 
-    <!-- ================= DAILY FORM ================= -->
+    <!-- =====================================================
+         ADMIN ONLY DAILY ACTIVITY ENTRY
+         ===================================================== -->
+
+    <div id="adminActivitySection" style="display:none;">
+
+      <h2 class="section-title">
+        Daily Activity Entry
+      </h2>
+
+      <section class="card">
+
+        <div class="form-grid">
+
+          <!-- DATE -->
+
+          <div class="form-group">
+
+            <label>
+              Activity Date
+            </label>
+
+            <input
+              type="date"
+              id="activityDate">
+
+          </div>
+
+
+          <!-- ACTIVITY -->
+
+          <div class="form-group">
+
+            <label>
+              Activity Type
+            </label>
+
+            <select id="activityType">
+
+              <option value="Loaded">
+                Loaded
+              </option>
+
+              <option value="Offloaded">
+                Offloaded
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- LOAD COUNT -->
+
+          <div class="form-group">
+
+            <label>
+              Load Count
+            </label>
+
+            <input
+              type="number"
+              id="loadCount"
+              min="1">
+
+          </div>
+
+
+          <!-- HUBS -->
+
+          <div class="form-group">
+
+            <label>
+              Hub(s)
+            </label>
+
+            <select
+              id="hubs"
+              class="hub-select"
+              multiple>
+
+              <option value="AA1hp">AA1hp</option>
+              <option value="AA1 MainWH">AA1 MainWH</option>
+              <option value="AA2">AA2</option>
+              <option value="Adama">Adama</option>
+              <option value="Hawasa">Hawasa</option>
+              <option value="Negelle">Negelle</option>
+              <option value="Nekemte">Nekemte</option>
+              <option value="Jimma">Jimma</option>
+              <option value="D.Dawa">D.Dawa</option>
+              <option value="Jigjiga">Jigjiga</option>
+              <option value="Arbaminch">Arbaminch</option>
+              <option value="Semera">Semera</option>
+              <option value="Gambella">Gambella</option>
+              <option value="Asosa">Asosa</option>
+              <option value="Bahir Dar">Bahir Dar</option>
+              <option value="Gondar">Gondar</option>
+              <option value="Dessie">Dessie</option>
+              <option value="Kebridar">Kebridar</option>
+              <option value="Mekele">Mekele</option>
+              <option value="Shire">Shire</option>
+
+            </select>
+
+            <div class="help-text">
+              Select one or more hubs.
+            </div>
+
+          </div>
+
+
+          <!-- ITEMS -->
+
+          <div class="form-group full">
+
+            <label>
+              Items
+            </label>
+
+            <textarea
+              id="items"
+              placeholder="Enter items transported"></textarea>
+
+          </div>
+
+
+          <!-- VEHICLE -->
+
+          <div class="form-group">
+
+            <label>
+              Vehicle
+            </label>
+
+            <select id="vehicle">
+
+              <option value="">
+                Select Vehicle
+              </option>
+
+              <option value="Tesabi">
+                Tesabi
+              </option>
+
+              <option value="Iveco">
+                Iveco
+              </option>
+
+              <option value="Lowbed">
+                Lowbed
+              </option>
+
+              <option value="Van">
+                Van
+              </option>
+
+              <option value="Shelto">
+                Shelto
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- CHALLENGES -->
+
+          <div class="form-group">
+
+            <label>
+              Challenges
+            </label>
+
+            <input
+              type="text"
+              id="challenges"
+              placeholder="Enter challenges if any">
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="save-button"
+          id="saveButton"
+          onclick="saveActivity()">
+
+          SAVE ACTIVITY
+
+        </button>
+
+
+        <div
+          id="message"
+          class="message">
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ================= SEARCH HUB HISTORY ================= -->
 
     <h2 class="section-title">
-      Daily Activity Entry
+      Search Hub History
     </h2>
 
     <section class="card">
 
       <div class="form-grid">
 
-
-        <!-- DATE -->
-
         <div class="form-group">
 
           <label>
-            Activity Date
+            Select Hub
           </label>
 
-          <input
-            type="date"
-            id="activityDate">
+          <select id="hubSearch">
 
-        </div>
-
-
-        <!-- ACTIVITY -->
-
-        <div class="form-group">
-
-          <label>
-            Activity Type
-          </label>
-
-          <select id="activityType">
-
-            <option value="Loaded">
-              Loaded
+            <option value="">
+              Select Hub
             </option>
-
-            <option value="Offloaded">
-              Offloaded
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <!-- LOAD COUNT -->
-
-        <div class="form-group">
-
-          <label>
-            Load Count
-          </label>
-
-          <input
-            type="number"
-            id="loadCount"
-            min="1">
-
-        </div>
-
-
-        <!-- HUBS -->
-
-        <div class="form-group">
-
-          <label>
-            Hub(s)
-          </label>
-
-          <select
-            id="hubs"
-            class="hub-select"
-            multiple>
 
             <option value="AA1hp">AA1hp</option>
             <option value="AA1 MainWH">AA1 MainWH</option>
@@ -680,327 +833,187 @@
 
           </select>
 
-          <div class="help-text">
-            Select one or more hubs.
-          </div>
-
         </div>
 
-
-        <!-- ITEMS -->
-
-        <div class="form-group full">
-
-          <label>
-            Items
-          </label>
-
-          <textarea
-            id="items"
-            placeholder="Enter items transported"></textarea>
-
-        </div>
-
-
-        <!-- VEHICLE -->
 
         <div class="form-group">
 
           <label>
-            Vehicle
-          </label>
-
-          <select id="vehicle">
-
-            <option value="">
-              Select Vehicle
-            </option>
-
-            <option value="Tesabi">
-              Tesabi
-            </option>
-
-            <option value="Iveco">
-              Iveco
-            </option>
-
-            <option value="Lowbed">
-              Lowbed
-            </option>
-
-            <option value="Van">
-              Van
-            </option>
-
-            <option value="Shelto">
-              Shelto
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <!-- CHALLENGES -->
-
-        <div class="form-group">
-
-          <label>
-            Challenges
+            From Date
           </label>
 
           <input
-            type="text"
-            id="challenges"
-            placeholder="Enter challenges if any">
+            type="date"
+            id="hubFromDate">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            To Date
+          </label>
+
+          <input
+            type="date"
+            id="hubToDate">
 
         </div>
 
       </div>
-<button
-  class="save-button"
-  id="saveButton"
-  onclick="saveActivity()">
-  SAVE ACTIVITY
-</button>      
+
+
+      <button
+        class="search-button"
+        style="width:100%; margin-top:18px;"
+        onclick="searchHub()">
+
+        SEARCH HISTORY
+
+      </button>
+
 
       <div
-        id="message"
-        class="message">
+        class="table-card"
+        style="margin-top:20px;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Date</th>
+              <th>Activity</th>
+              <th>Load Count</th>
+              <th>Hubs</th>
+              <th>Items</th>
+              <th>Vehicle</th>
+              <th>Challenges</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="historyResults">
+
+            <tr>
+
+              <td
+                colspan="7"
+                style="text-align:center;">
+
+                Select a hub and date range to search
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
       </div>
 
     </section>
 
-<!-- ================= SEARCH HUB HISTORY ================= -->
 
-<h2 class="section-title">
-  Search Hub History
-</h2>
+    <!-- ================= SEARCH BY DATE ================= -->
 
-<section class="card">
+    <h2 class="section-title">
+      Search Activity by Date
+    </h2>
 
-  <div class="form-grid">
+    <section class="card">
 
-    <!-- HUB -->
-    <div class="form-group">
+      <div class="date-search-grid">
 
-      <label>
-        Select Hub
-      </label>
+        <div class="form-group">
 
-      <select id="hubSearch">
+          <label>
+            From Date
+          </label>
 
-        <option value="">
-          Select Hub
-        </option>
+          <input
+            type="date"
+            id="dateFrom">
 
-        <option value="AA1hp">AA1hp</option>
-        <option value="AA1 MainWH">AA1 MainWH</option>
-        <option value="AA2">AA2</option>
-        <option value="Adama">Adama</option>
-        <option value="Hawasa">Hawasa</option>
-        <option value="Negelle">Negelle</option>
-        <option value="Nekemte">Nekemte</option>
-        <option value="Jimma">Jimma</option>
-        <option value="D.Dawa">D.Dawa</option>
-        <option value="Jigjiga">Jigjiga</option>
-        <option value="Arbaminch">Arbaminch</option>
-        <option value="Semera">Semera</option>
-        <option value="Gambella">Gambella</option>
-        <option value="Asosa">Asosa</option>
-        <option value="Bahir Dar">Bahir Dar</option>
-        <option value="Gondar">Gondar</option>
-        <option value="Dessie">Dessie</option>
-        <option value="Kebridar">Kebridar</option>
-        <option value="Mekele">Mekele</option>
-        <option value="Shire">Shire</option>
-
-      </select>
-
-    </div>
+        </div>
 
 
-    <!-- FROM DATE -->
-    <div class="form-group">
+        <div class="form-group">
 
-      <label>
-        From Date
-      </label>
+          <label>
+            To Date
+          </label>
 
-      <input
-        type="date"
-        id="searchFromDate">
+          <input
+            type="date"
+            id="dateTo">
 
-    </div>
+        </div>
 
-
-    <!-- TO DATE -->
-    <div class="form-group">
-
-      <label>
-        To Date
-      </label>
-
-      <input
-        type="date"
-        id="searchToDate">
-
-    </div>
-
-  </div>
+      </div>
 
 
-  <button
-    class="search-button"
-    style="width:100%; margin-top:18px;"
-    onclick="searchHub()">
+      <div class="help-text">
 
-    SEARCH HISTORY
+        Select one date for a single-day search,
+        or select two dates for a date range.
 
-  </button>
+      </div>
 
 
-  <!-- RESULTS -->
+      <button
+        class="search-button date-search-button"
+        onclick="searchByDate()">
 
-  <div
-    class="table-card"
-    style="margin-top:20px;">
+        SEARCH BY DATE
 
-    <table>
+      </button>
 
-      <thead>
 
-        <tr>
+      <div
+        class="table-card"
+        style="margin-top:20px;">
 
-          <th>Date</th>
-          <th>Activity</th>
-          <th>Load Count</th>
-          <th>Hubs</th>
-          <th>Items</th>
-          <th>Vehicle</th>
-          <th>Challenges</th>
+        <table>
 
-        </tr>
+          <thead>
 
-      </thead>
+            <tr>
+              <th>Date</th>
+              <th>Activity</th>
+              <th>Load Count</th>
+              <th>Hubs</th>
+              <th>Items</th>
+              <th>Vehicle</th>
+              <th>Challenges</th>
+            </tr>
 
-      <tbody id="historyResults">
+          </thead>
 
-        <tr>
+          <tbody id="dateSearchResults">
 
-          <td
-            colspan="7"
-            style="text-align:center;">
+            <tr>
 
-            Select a hub and date range to search
+              <td
+                colspan="7"
+                style="text-align:center;">
 
-          </td>
+                Select a date and search
 
-        </tr>
+              </td>
 
-      </tbody>
+            </tr>
 
-    </table>
+          </tbody>
 
-  </div>
+        </table>
+
+      </div>
 
     </section>
 
-<!-- ================= SEARCH BY DATE ================= -->
-
-<h2 class="section-title">
-  Search Activity by Date
-</h2>
-
-<section class="card">
-
-  <div class="date-search-grid">
-
-    <!-- FROM DATE -->
-
-    <div class="form-group">
-
-      <label>
-        From Date
-      </label>
-
-      <input
-        type="date"
-        id="searchFromDate">
-
-    </div>
-
-
-    <!-- TO DATE -->
-
-    <div class="form-group">
-
-      <label>
-        To Date
-      </label>
-
-      <input
-        type="date"
-        id="searchToDate">
-
-    </div>
-
-  </div>
-
-
-  <div class="help-text">
-    Select one date for a single-day search, or select two dates for a date range.
-  </div>
-
-
-  <button
-    class="search-button date-search-button"
-    onclick="searchByDate()">
-
-    SEARCH BY DATE
-
-  </button>
-
-
-  <div
-    class="table-card"
-    style="margin-top:20px;">
-
-    <table>
-
-      <thead>
-
-        <tr>
-          <th>Date</th>
-          <th>Activity</th>
-          <th>Load Count</th>
-          <th>Hubs</th>
-          <th>Items</th>
-          <th>Vehicle</th>
-          <th>Challenges</th>
-        </tr>
-
-      </thead>
-
-      <tbody id="dateSearchResults">
-
-        <tr>
-          <td
-            colspan="7"
-            style="text-align:center;">
-
-            Select a date and search
-
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</section>
   </main>
 
 
@@ -1017,33 +1030,35 @@
 
   <script>
 
-    /*
-     * ============================================================
-     * SUPABASE SETTINGS
-     * ============================================================
-     *
-     * IMPORTANT:
-     * Replace the two values below with your existing
-     * Supabase Project URL and anon/public key.
-     */
-const SUPABASE_URL =
-  "https://uxtrykyvivhejqfojiwm.supabase.co";
+    /* =========================================================
+       SUPABASE SETTINGS
+       ========================================================= */
 
-const SUPABASE_ANON_KEY =
-  "sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
+    const SUPABASE_URL =
+      "PASTE_YOUR_EXISTING_SUPABASE_URL_HERE";
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-    /* ================= DATE ================= */
+    const SUPABASE_ANON_KEY =
+      "PASTE_YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+
+    /* =========================================================
+       DATE
+       ========================================================= */
 
     document.getElementById("activityDate").value =
       new Date().toISOString().split("T")[0];
 
 
-    /* ================= MESSAGE ================= */
+    /* =========================================================
+       MESSAGE
+       ========================================================= */
 
     function showMessage(text, type) {
 
@@ -1058,7 +1073,25 @@ const supabaseClient =
     }
 
 
-    /* ================= GET SELECTED HUBS ================= */
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================================
+       GET SELECTED HUBS
+       ========================================================= */
 
     function getSelectedHubs() {
 
@@ -1080,100 +1113,352 @@ const supabaseClient =
     }
 
 
-    /* ================= SAVE ACTIVITY ================= */
+    /* =========================================================
+       ADMIN LOGIN BOX
+       ========================================================= */
+
+    function toggleAdminLogin() {
+
+      const box =
+        document.getElementById("adminLoginBox");
+
+      if (box.style.display === "block") {
+
+        box.style.display = "none";
+
+      } else {
+
+        box.style.display = "block";
+
+      }
+
+    }
+
+
+    /* =========================================================
+       SHOW / HIDE ADMIN SECTION
+       ========================================================= */
+
+    function showAdminSection(user) {
+
+      const adminSection =
+        document.getElementById("adminActivitySection");
+
+      const loginButton =
+        document.getElementById("adminLoginButton");
+
+      const loginBox =
+        document.getElementById("adminLoginBox");
+
+
+      if (user) {
+
+        adminSection.style.display = "block";
+
+        loginButton.textContent =
+          "🔓 Admin Logged In";
+
+        loginButton.onclick =
+          adminLogout;
+
+        loginBox.style.display =
+          "none";
+
+      } else {
+
+        adminSection.style.display =
+          "none";
+
+        loginButton.textContent =
+          "🔐 Admin Login";
+
+        loginButton.onclick =
+          toggleAdminLogin;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ADMIN LOGIN
+       ========================================================= */
+
+    async function adminLogin() {
+
+      const email =
+        document
+          .getElementById("adminEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("adminPassword")
+          .value;
+
+      const loginMessage =
+        document.getElementById("loginMessage");
+
+
+      if (!email || !password) {
+
+        loginMessage.textContent =
+          "Please enter email and password.";
+
+        loginMessage.style.color =
+          "#a51d1d";
+
+        return;
+
+      }
+
+
+      loginMessage.textContent =
+        "Logging in...";
+
+      loginMessage.style.color =
+        "#667085";
+
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (error) {
+
+        console.error(error);
+
+        loginMessage.textContent =
+          "Login failed: " + error.message;
+
+        loginMessage.style.color =
+          "#a51d1d";
+
+        return;
+
+      }
+
+
+      loginMessage.textContent =
+        "Login successful! ✅";
+
+      loginMessage.style.color =
+        "#176b36";
+
+
+      showAdminSection(data.user);
+
+    }
+
+
+    /* =========================================================
+       ADMIN LOGOUT
+       ========================================================= */
+
+    async function adminLogout() {
+
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+
+      if (error) {
+
+        console.error(error);
+
+        return;
+
+      }
+
+
+      showAdminSection(null);
+
+    }
+
+
+    /* =========================================================
+       CHECK CURRENT LOGIN SESSION
+       ========================================================= */
+
+    async function checkAdminSession() {
+
+      const { data } =
+        await supabaseClient.auth.getSession();
+
+      showAdminSection(
+        data.session
+          ? data.session.user
+          : null
+      );
+
+
+      supabaseClient.auth.onAuthStateChange(
+        (_event, session) => {
+
+          showAdminSection(
+            session
+              ? session.user
+              : null
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SAVE ACTIVITY
+       ========================================================= */
 
     async function saveActivity() {
 
       const saveButton =
         document.getElementById("saveButton");
 
+
+      /* Make sure user is logged in */
+
+      const { data: sessionData } =
+        await supabaseClient.auth.getSession();
+
+
+      if (!sessionData.session) {
+
+        showMessage(
+          "Please log in as Admin before saving.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
       const activityDate =
-        document.getElementById("activityDate").value;
+        document.getElementById(
+          "activityDate"
+        ).value;
 
       const activityType =
-        document.getElementById("activityType").value;
+        document.getElementById(
+          "activityType"
+        ).value;
 
       const loadCount =
-        document.getElementById("loadCount").value;
+        document.getElementById(
+          "loadCount"
+        ).value;
 
       const hubs =
         getSelectedHubs();
 
       const items =
-        document.getElementById("items").value.trim();
+        document.getElementById(
+          "items"
+        ).value.trim();
 
       const vehicle =
-        document.getElementById("vehicle").value;
+        document.getElementById(
+          "vehicle"
+        ).value;
 
       const challenges =
-        document.getElementById("challenges").value.trim();
+        document.getElementById(
+          "challenges"
+        ).value.trim();
 
 
       if (!activityDate) {
+
         showMessage(
           "Please select the activity date.",
           "error"
         );
+
         return;
+
       }
 
 
       if (!loadCount || Number(loadCount) <= 0) {
+
         showMessage(
           "Please enter the load count.",
           "error"
         );
+
         return;
+
       }
 
 
       if (!hubs) {
+
         showMessage(
           "Please select at least one hub.",
           "error"
         );
+
         return;
+
       }
 
 
       if (!vehicle) {
+
         showMessage(
           "Please select a vehicle.",
           "error"
         );
+
         return;
+
       }
 
 
       saveButton.disabled = true;
 
-      saveButton.textContent = "SAVING...";
+      saveButton.textContent =
+        "SAVING...";
 
 
       const record = {
 
-        activity_date: activityDate,
+        activity_date:
+          activityDate,
 
-        activity_type: activityType,
+        activity_type:
+          activityType,
 
-        load_count: Number(loadCount),
+        load_count:
+          Number(loadCount),
 
-        hubs: hubs,
+        hubs:
+          hubs,
 
-        items: items || "-",
+        items:
+          items || "-",
 
-        vehicle: vehicle,
+        vehicle:
+          vehicle,
 
-        challenges: challenges || "-"
+        challenges:
+          challenges || "-"
 
       };
 
 
-      const { data, error } =
+      const { error } =
         await supabaseClient
           .from("warehouse_activities")
-          .insert([record])
-          .select();
+          .insert([record]);
 
 
       if (error) {
@@ -1189,24 +1474,34 @@ const supabaseClient =
       } else {
 
         showMessage(
-          "Activity saved successfully!",
+          "Activity saved successfully! ✅",
           "success"
         );
 
 
-        document.getElementById("loadCount").value = "";
+        document.getElementById(
+          "loadCount"
+        ).value = "";
 
-        document.getElementById("items").value = "";
+        document.getElementById(
+          "items"
+        ).value = "";
 
-        document.getElementById("vehicle").value = "";
+        document.getElementById(
+          "vehicle"
+        ).value = "";
 
-        document.getElementById("challenges").value = "";
+        document.getElementById(
+          "challenges"
+        ).value = "";
 
 
         document
           .querySelectorAll("#hubs option")
           .forEach(option => {
+
             option.selected = false;
+
           });
 
 
@@ -1217,12 +1512,15 @@ const supabaseClient =
 
       saveButton.disabled = false;
 
-      saveButton.textContent = "SAVE ACTIVITY";
+      saveButton.textContent =
+        "SAVE ACTIVITY";
 
     }
 
 
-    /* ================= LOAD RECENT 7 DAYS ================= */
+    /* =========================================================
+       LOAD RECENT 7 DAYS
+       ========================================================= */
 
     async function loadRecentActivity() {
 
@@ -1247,13 +1545,18 @@ const supabaseClient =
         await supabaseClient
           .from("warehouse_activities")
           .select("*")
-          .gte("activity_date", fromDate)
-          .order("activity_date", {
-            ascending: false
-          })
-          .order("created_at", {
-            ascending: false
-          });
+          .gte(
+            "activity_date",
+            fromDate
+          )
+          .order(
+            "activity_date",
+            { ascending: false }
+          )
+          .order(
+            "created_at",
+            { ascending: false }
+          );
 
 
       const tbody =
@@ -1301,33 +1604,49 @@ const supabaseClient =
 
           <tr>
 
-            <td>${escapeHtml(
-              row.activity_date || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.activity_date || "-"
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              row.activity_type || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.activity_type || "-"
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              String(row.load_count ?? "-")
-            )}</td>
+            <td>
+              ${escapeHtml(
+                String(
+                  row.load_count ?? "-"
+                )
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              row.hubs || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.hubs || "-"
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              row.items || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.items || "-"
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              row.vehicle || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.vehicle || "-"
+              )}
+            </td>
 
-            <td>${escapeHtml(
-              row.challenges || "-"
-            )}</td>
+            <td>
+              ${escapeHtml(
+                row.challenges || "-"
+              )}
+            </td>
 
           </tr>
 
@@ -1336,7 +1655,9 @@ const supabaseClient =
     }
 
 
-    /* ================= TOTALS ================= */
+    /* =========================================================
+       TOTALS
+       ========================================================= */
 
     async function loadTotals() {
 
@@ -1400,245 +1721,404 @@ const supabaseClient =
       ).textContent = offloaded;
 
     }
-/* ================= DATE SEARCH ================= */
 
-.date-search-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 8px;
-}
 
-.date-search-button {
-  width: 100%;
-  margin-top: 18px;
-}
+    /* =========================================================
+       SEARCH HUB HISTORY
+       ========================================================= */
 
+    async function searchHub() {
 
-@media (max-width: 700px) {
+      const search =
+        document.getElementById(
+          "hubSearch"
+        ).value.trim();
 
-  .date-search-grid {
-    grid-template-columns: 1fr;
-  }
+      const fromDate =
+        document.getElementById(
+          "hubFromDate"
+        ).value;
 
-  }
+      const toDate =
+        document.getElementById(
+          "hubToDate"
+        ).value;
 
-    /* ================= SEARCH HUB HISTORY ================= */
+      const tbody =
+        document.getElementById(
+          "historyResults"
+        );
 
-async function searchHub() {
 
-  const search =
-    document.getElementById("hubSearch").value.trim();
+      if (!search) {
 
-  const fromDate =
-    document.getElementById("searchFromDate").value;
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              Please select a hub.
+            </td>
+          </tr>
+        `;
 
-  const toDate =
-    document.getElementById("searchToDate").value;
+        return;
 
-  const tbody =
-    document.getElementById("historyResults");
+      }
 
 
-  /* ================= VALIDATION ================= */
+      if (
+        fromDate &&
+        toDate &&
+        fromDate > toDate
+      ) {
 
-  if (!search) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              From Date cannot be later than To Date.
+            </td>
+          </tr>
+        `;
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7"
-            style="text-align:center;color:#a51d1d;">
-          Please select a hub.
-        </td>
-      </tr>
-    `;
+        return;
 
-    return;
-  }
+      }
 
 
-  if (fromDate && toDate && fromDate > toDate) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7"
+              style="text-align:center;">
+            Searching history...
+          </td>
+        </tr>
+      `;
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7"
-            style="text-align:center;color:#a51d1d;">
-          From Date cannot be later than To Date.
-        </td>
-      </tr>
-    `;
 
-    return;
-  }
+      let query =
+        supabaseClient
+          .from("warehouse_activities")
+          .select("*")
+          .ilike(
+            "hubs",
+            "%" + search + "%"
+          );
 
 
-  /* ================= SEARCHING MESSAGE ================= */
+      if (fromDate) {
 
-  tbody.innerHTML = `
-    <tr>
-      <td colspan="7"
-          style="text-align:center;">
-        Searching history...
-      </td>
-    </tr>
-  `;
+        query =
+          query.gte(
+            "activity_date",
+            fromDate
+          );
 
+      }
 
-  /* ================= BUILD QUERY ================= */
 
-  let query =
-    supabaseClient
-      .from("warehouse_activities")
-      .select("*")
-      .ilike("hubs", "%" + search + "%");
+      if (toDate) {
 
+        query =
+          query.lte(
+            "activity_date",
+            toDate
+          );
 
-  /* ================= DATE FILTER ================= */
+      }
 
-  if (fromDate) {
 
-    query =
-      query.gte(
-        "activity_date",
-        fromDate
-      );
+      const { data, error } =
+        await query
+          .order(
+            "activity_date",
+            { ascending: false }
+          )
+          .order(
+            "created_at",
+            { ascending: false }
+          );
 
-  }
 
+      if (error) {
 
-  if (toDate) {
+        console.error(error);
 
-    query =
-      query.lte(
-        "activity_date",
-        toDate
-      );
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              Error searching history.
+            </td>
+          </tr>
+        `;
 
-  }
+        return;
 
+      }
 
-  /* ================= RUN QUERY ================= */
 
-  const { data, error } =
-    await query
-      .order("activity_date", {
-        ascending: false
-      })
-      .order("created_at", {
-        ascending: false
-      });
+      if (!data || data.length === 0) {
 
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              No history found.
+            </td>
+          </tr>
+        `;
 
-  /* ================= ERROR ================= */
+        return;
 
-  if (error) {
+      }
 
-    console.error(error);
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7"
-            style="text-align:center;color:#a51d1d;">
-          Error searching history.
-        </td>
-      </tr>
-    `;
+      tbody.innerHTML =
+        data.map(row => `
 
-    return;
-  }
+          <tr>
 
+            <td>${escapeHtml(
+              row.activity_date || "-"
+            )}</td>
 
-  /* ================= NO RESULTS ================= */
+            <td>${escapeHtml(
+              row.activity_type || "-"
+            )}</td>
 
-  if (!data || data.length === 0) {
+            <td>${escapeHtml(
+              String(
+                row.load_count ?? "-"
+              )
+            )}</td>
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7"
-            style="text-align:center;">
-          No history found for ${escapeHtml(search)}
-          ${fromDate ? " from " + escapeHtml(fromDate) : ""}
-          ${toDate ? " to " + escapeHtml(toDate) : ""}
-        </td>
-      </tr>
-    `;
+            <td>${escapeHtml(
+              row.hubs || "-"
+            )}</td>
 
-    return;
-  }
+            <td>${escapeHtml(
+              row.items || "-"
+            )}</td>
 
+            <td>${escapeHtml(
+              row.vehicle || "-"
+            )}</td>
 
-  /* ================= DISPLAY RESULTS ================= */
+            <td>${escapeHtml(
+              row.challenges || "-"
+            )}</td>
 
-  tbody.innerHTML =
-    data.map(row => `
+          </tr>
 
-      <tr>
-
-        <td>
-          ${escapeHtml(
-            row.activity_date || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.activity_type || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            String(row.load_count ?? "-")
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.hubs || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.items || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.vehicle || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.challenges || "-"
-          )}
-        </td>
-
-      </tr>
-
-    `).join("");
-
-             
-    }
-
-
-    /* ================= SECURITY ================= */
-
-    function escapeHtml(value) {
-
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        `).join("");
 
     }
 
 
-    /* ================= DASHBOARD ================= */
+    /* =========================================================
+       SEARCH BY DATE
+       ========================================================= */
+
+    async function searchByDate() {
+
+      const fromDate =
+        document.getElementById(
+          "dateFrom"
+        ).value;
+
+      const toDate =
+        document.getElementById(
+          "dateTo"
+        ).value;
+
+      const tbody =
+        document.getElementById(
+          "dateSearchResults"
+        );
+
+
+      if (!fromDate && !toDate) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              Please select a date.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      if (
+        fromDate &&
+        toDate &&
+        toDate < fromDate
+      ) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              To Date cannot be earlier than From Date.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7"
+              style="text-align:center;">
+            Searching...
+          </td>
+        </tr>
+      `;
+
+
+      let query =
+        supabaseClient
+          .from("warehouse_activities")
+          .select("*");
+
+
+      if (fromDate && !toDate) {
+
+        query =
+          query.eq(
+            "activity_date",
+            fromDate
+          );
+
+      }
+
+
+      if (!fromDate && toDate) {
+
+        query =
+          query.eq(
+            "activity_date",
+            toDate
+          );
+
+      }
+
+
+      if (fromDate && toDate) {
+
+        query =
+          query
+            .gte(
+              "activity_date",
+              fromDate
+            )
+            .lte(
+              "activity_date",
+              toDate
+            );
+
+      }
+
+
+      const { data, error } =
+        await query
+          .order(
+            "activity_date",
+            { ascending: false }
+          )
+          .order(
+            "created_at",
+            { ascending: false }
+          );
+
+
+      if (error) {
+
+        console.error(error);
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;color:#a51d1d;">
+              Error searching activities.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      if (!data || data.length === 0) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7"
+                style="text-align:center;">
+              No activity found for the selected date.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        data.map(row => `
+
+          <tr>
+
+            <td>${escapeHtml(
+              row.activity_date || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.activity_type || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              String(
+                row.load_count ?? "-"
+              )
+            )}</td>
+
+            <td>${escapeHtml(
+              row.hubs || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.items || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.vehicle || "-"
+            )}</td>
+
+            <td>${escapeHtml(
+              row.challenges || "-"
+            )}</td>
+
+          </tr>
+
+        `).join("");
+
+    }
+
+
+    /* =========================================================
+       DASHBOARD
+       ========================================================= */
 
     async function loadDashboard() {
 
@@ -1649,342 +2129,15 @@ async function searchHub() {
     }
 
 
-    /* ================= START ================= */
+    /* =========================================================
+       START
+       ========================================================= */
+
+    checkAdminSession();
 
     loadDashboard();
-/* ================= ADMIN LOGIN ================= */
 
-function toggleAdminLogin() {
-
-  const box = document.getElementById("adminLoginBox");
-
-  if (box.style.display === "none" || box.style.display === "") {
-    box.style.display = "block";
-  } else {
-    box.style.display = "none";
-  }
-
-}
-
-
-async function adminLogin() {
-
-  const email =
-    document.getElementById("adminEmail").value.trim();
-
-  const password =
-    document.getElementById("adminPassword").value;
-
-  const loginMessage =
-    document.getElementById("loginMessage");
-
-
-  if (!email || !password) {
-
-    loginMessage.textContent =
-      "Please enter email and password.";
-
-    loginMessage.style.color = "#a51d1d";
-
-    return;
-
-  }
-
-
-  loginMessage.textContent = "Logging in...";
-  loginMessage.style.color = "#667085";
-
-
-  const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-
-  if (error) {
-
-    console.error(error);
-
-    loginMessage.textContent =
-      "Login failed: " + error.message;
-
-    loginMessage.style.color = "#a51d1d";
-
-    return;
-
-  }
-
-
-  loginMessage.textContent =
-    "Login successful! ✅";
-
-  loginMessage.style.color = "#176b36";
-
-
-  document.getElementById("adminLoginButton").textContent =
-    "🔓 Admin Logged In";
-
-}
-loadDashboard();
-
-
-/* ================= SEARCH BY DATE ================= */
-
-async function searchByDate() {
-
-  const fromDate =
-    document
-      .getElementById("searchFromDate")
-      .value;
-
-  const toDate =
-    document
-      .getElementById("searchToDate")
-      .value;
-
-
-  const tbody =
-    document.getElementById(
-      "dateSearchResults"
-    );
-
-
-  /* No date selected */
-
-  if (!fromDate && !toDate) {
-
-    tbody.innerHTML = `
-      <tr>
-        <td
-          colspan="7"
-          style="text-align:center;">
-          Please select a date.
-        </td>
-      </tr>
-    `;
-
-    return;
-  }
-
-
-  /* To date cannot be before From date */
-
-  if (
-    fromDate &&
-    toDate &&
-    toDate < fromDate
-  ) {
-
-    tbody.innerHTML = `
-      <tr>
-        <td
-          colspan="7"
-          style="text-align:center;color:#a51d1d;">
-          To Date cannot be earlier than From Date.
-        </td>
-      </tr>
-    `;
-
-    return;
-  }
-
-
-  tbody.innerHTML = `
-    <tr>
-      <td
-        colspan="7"
-        style="text-align:center;">
-        Searching...
-      </td>
-    </tr>
-  `;
-
-
-  try {
-
-    let query =
-      supabaseClient
-        .from("warehouse_activities")
-        .select("*");
-
-
-    /*
-     * SINGLE DATE
-     *
-     * If only From Date is selected,
-     * search that exact date.
-     */
-
-    if (fromDate && !toDate) {
-
-      query = query
-        .eq("activity_date", fromDate);
-
-    }
-
-
-    /*
-     * DATE RANGE
-     *
-     * If both dates are selected,
-     * search between them.
-     */
-
-    if (fromDate && toDate) {
-
-      query = query
-        .gte("activity_date", fromDate)
-        .lte("activity_date", toDate);
-
-    }
-
-
-    /*
-     * ONLY TO DATE
-     *
-     * If the user selects only To Date,
-     * search that exact date.
-     */
-
-    if (!fromDate && toDate) {
-
-      query = query
-        .eq("activity_date", toDate);
-
-    }
-
-
-    const { data, error } =
-      await query
-        .order("activity_date", {
-          ascending: false
-        })
-        .order("created_at", {
-          ascending: false
-        });
-
-
-    if (error) {
-
-      console.error(error);
-
-      tbody.innerHTML = `
-        <tr>
-          <td
-            colspan="7"
-            style="text-align:center;color:#a51d1d;">
-
-            Error searching activities.
-
-          </td>
-        </tr>
-      `;
-
-      return;
-
-    }
-
-
-    /* No results */
-
-    if (!data || data.length === 0) {
-
-      tbody.innerHTML = `
-        <tr>
-          <td
-            colspan="7"
-            style="text-align:center;">
-
-            No activity found for the selected date.
-
-          </td>
-        </tr>
-      `;
-
-      return;
-
-    }
-
-
-    /* Display results */
-
-    tbody.innerHTML =
-      data.map(row => `
-
-        <tr>
-
-          <td>
-            ${escapeHtml(
-              row.activity_date || "-"
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              row.activity_type || "-"
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              String(
-                row.load_count ?? "-"
-              )
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              row.hubs || "-"
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              row.items || "-"
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              row.vehicle || "-"
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              row.challenges || "-"
-            )}
-          </td>
-
-        </tr>
-
-      `).join("");
-
-  }
-
-  catch (error) {
-
-    console.error(error);
-
-    tbody.innerHTML = `
-      <tr>
-        <td
-          colspan="7"
-          style="text-align:center;color:#a51d1d;">
-
-          Something went wrong. Please try again.
-
-        </td>
-      </tr>
-    `;
-
-  }
-
-}
   </script>
 
 </body>
-
   </html>
