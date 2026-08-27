@@ -834,7 +834,101 @@
 
     </section>
 
+<!-- ================= SEARCH BY DATE ================= -->
 
+<h2 class="section-title">
+  Search Activity by Date
+</h2>
+
+<section class="card">
+
+  <div class="date-search-grid">
+
+    <!-- FROM DATE -->
+
+    <div class="form-group">
+
+      <label>
+        From Date
+      </label>
+
+      <input
+        type="date"
+        id="searchFromDate">
+
+    </div>
+
+
+    <!-- TO DATE -->
+
+    <div class="form-group">
+
+      <label>
+        To Date
+      </label>
+
+      <input
+        type="date"
+        id="searchToDate">
+
+    </div>
+
+  </div>
+
+
+  <div class="help-text">
+    Select one date for a single-day search, or select two dates for a date range.
+  </div>
+
+
+  <button
+    class="search-button date-search-button"
+    onclick="searchByDate()">
+
+    SEARCH BY DATE
+
+  </button>
+
+
+  <div
+    class="table-card"
+    style="margin-top:20px;">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Load Count</th>
+          <th>Hubs</th>
+          <th>Items</th>
+          <th>Vehicle</th>
+          <th>Challenges</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="dateSearchResults">
+
+        <tr>
+          <td
+            colspan="7"
+            style="text-align:center;">
+
+            Select a date and search
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
   </main>
 
 
@@ -1234,7 +1328,28 @@ const supabaseClient =
       ).textContent = offloaded;
 
     }
+/* ================= DATE SEARCH ================= */
 
+.date-search-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.date-search-button {
+  width: 100%;
+  margin-top: 18px;
+}
+
+
+@media (max-width: 700px) {
+
+  .date-search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  }
 
     /* ================= SEARCH HUB ================= */
 
