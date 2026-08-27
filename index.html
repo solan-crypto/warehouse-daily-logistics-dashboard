@@ -125,20 +125,28 @@
     /* ================= TABLE ================= */
 
     .table-card {
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+     .empty-row td {
+  height: 55px;
+  background: #ffffff;
+}
 
-      /* horizontal movement */
-      overflow-x: auto;
-      overflow-y: auto;
-    }
+.empty-row:hover td {
+  background: #ffffff;
+}
 
     /* Recent 7 days fixed-height area */
     .recent-table-card {
       max-height: 470px;
       overflow: auto;
     }
+      .empty-row td {
+  height: 55px;
+  background: #ffffff;
+}
+
+.empty-row:hover td {
+  background: #ffffff;
+}
 
     table {
       width: 100%;
