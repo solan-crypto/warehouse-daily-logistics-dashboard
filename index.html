@@ -578,13 +578,13 @@
     <p>Warehouse Activity Monitoring System</p>
 
     <button
-      id="adminLoginButton"
-      class="admin-button"
-      onclick="toggleAdminLogin()">
+  id="adminLoginButton"
+  class="admin-button"
+  type="button">
 
-      🔐 Admin Login
+  🔐 Admin Login
 
-    </button>
+</button>
 
   </header>
 
@@ -1459,37 +1459,28 @@
 
     function toggleAdminLogin() {
 
-      const box =
-        document.getElementById(
-          "adminLoginBox"
-        );
+  const box =
+    document.getElementById("adminLoginBox");
 
-      if (
-        box.style.display === "block"
-      ) {
+  if (!box) {
+    console.error("Admin login box not found.");
+    return;
+  }
 
-        box.style.display =
-          "none";
+  if (
+    box.style.display === "none" ||
+    box.style.display === ""
+  ) {
 
-      } else {
+    box.style.display = "block";
 
-        box.style.display =
-          "block";
+  } else {
 
-        setTimeout(() => {
+    box.style.display = "none";
 
-          document
-            .getElementById(
-              "adminEmail"
-            )
-            .focus();
-
-        }, 100);
-
-      }
+  }
 
     }
-
 
     /* =====================================================
        UPDATE ACTION HEADERS
