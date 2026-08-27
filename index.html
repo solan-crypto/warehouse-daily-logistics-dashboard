@@ -2405,285 +2405,251 @@
        LOAD RECENT 7 DAYS
        ===================================================== */
 
-    async function loadRecentActivity() {
+  
+async function loadRecentActivity() {
 
-      const tbody =
-        document.getElementById(
-          "recentActivity"
-        );
+  const tbody = document.getElementById("recentActivity");
 
+  /* ================= GET CURRENT ADMIN STATUS ================= */
 
-      /* Get current login state */
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
 
-      const {
-        data: sessionData
-      } =
-        await supabaseClient.auth
-          .getSession();
+  const loggedIn =
+    !!sessionData.session;
 
 
-      const currentAdminLoggedIn =
-        !!sessionData.session;
+  /* ================= LOCAL DATE ================= */
+
+  function getLocalDateString(date) {
+
+    const year = date.getFullYear();
+
+    const month =
+      String(date.getMonth() + 1).padStart(2, "0");
+
+    const day =
+      String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
 
 
-      /* ===================================================
-         LOCAL DATE FUNCTION
-         =================================================== */
+  /* ================= LAST 7 DAYS ================= */
 
-      function getLocalDateString(
-        date
-      ) {
+  const today = new Date();
 
-        const year =
-          date.getFullYear();
+  const sevenDaysAgo = new Date();
 
-        const month =
-          String(
-            date.getMonth() + 1
-          ).padStart(2, "0");
+  sevenDaysAgo.setDate(
+    today.getDate() - 6
+  );
 
-        const day =
-          String(
-            date.getDate()
-          ).padStart(2, "0");
 
-        return `${year}-${month}-${day}`;
+  const fromDate =
+    getLocalDateString(sevenDaysAgo);
 
+  const toDate =
+    getLocalDateString(today);
+
+
+  console.log(
+    "RECENT 7 DAYS:",
+    fromDate,
+    "to",
+    toDate
+  );
+
+
+  /* ================= SHOW LOADING ================= */
+
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="${loggedIn ? 8 : 7}"
+          style="text-align:center;">
+        Loading recent activities...
+      </td>
+    </tr>
+  `;
+
+
+  /* =========================================================
+     IMPORTANT:
+     DO NOT FILTER activity_date IN SUPABASE.
+     GET RECENT RECORDS FIRST.
+     ========================================================= */
+
+  const { data, error } =
+    await supabaseClient
+      .from("warehouse_activities")
+      .select("*")
+      .order(
+        "activity_date",
+        {
+          ascending: false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      })
+      .limit(100);
+
+
+  /* ================= ERROR ================= */
+
+  if (error) {
+
+    console.error(
+      "RECENT ACTIVITY ERROR:",
+      error
+    );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${loggedIn ? 8 : 7}"
+            style="text-align:center;color:#a51d1d;">
+          Error loading recent activities.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  console.log(
+    "ALL ACTIVITY DATA FROM SUPABASE:",
+    data
+  );
+
+
+  /* =========================================================
+     FILTER LAST 7 DAYS IN JAVASCRIPT
+     Works for DATE or TIMESTAMP values
+     ========================================================= */
+
+  const recentData =
+    (data || []).filter(row => {
+
+      if (!row.activity_date) {
+        return false;
       }
-
-
-      /* ===================================================
-         DATE RANGE
-         =================================================== */
-
-      const today =
-        new Date();
-
-
-      const sevenDaysAgo =
-        new Date();
-
-
-      sevenDaysAgo.setDate(
-        today.getDate() - 6
-      );
-
-
-      const fromDate =
-        getLocalDateString(
-          sevenDaysAgo
-        );
-
-
-      const toDate =
-        getLocalDateString(
-          today
-        );
-
 
       /*
-       * Create tomorrow date.
-       * Using LESS THAN tomorrow makes the query work
-       * correctly even if activity_date is timestamp/date.
+       * Converts:
+       * 2026-08-26
+       * 2026-08-26T00:00:00
+       * 2026-08-26T00:00:00+00:00
+       *
+       * into:
+       * 2026-08-26
        */
 
-      const tomorrow =
-        new Date(today);
+      const activityDate =
+        String(row.activity_date)
+          .substring(0, 10);
 
-      tomorrow.setDate(
-        tomorrow.getDate() + 1
+
+      return (
+        activityDate >= fromDate &&
+        activityDate <= toDate
       );
 
-
-      const tomorrowDate =
-        getLocalDateString(
-          tomorrow
-        );
+    });
 
 
-      console.log(
-        "Recent activity range:",
-        fromDate,
-        "to",
-        toDate
-      );
+  console.log(
+    "FILTERED RECENT 7 DAYS DATA:",
+    recentData
+  );
 
 
-      /* ===================================================
-         GET DATA
-         =================================================== */
+  /* ================= NO DATA ================= */
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*")
-          .gte(
-            "activity_date",
-            fromDate
-          )
-          .lt(
-            "activity_date",
-            tomorrowDate
-          )
-          .order(
-            "activity_date",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+  if (
+    !recentData ||
+    recentData.length === 0
+  ) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${loggedIn ? 8 : 7}"
+            style="text-align:center;padding:25px;">
+          No activity recorded in the last 7 days.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
 
-      console.log(
-        "Recent activity DATA:",
-        data
-      );
+  /* ================= DISPLAY DATA ================= */
 
-      console.log(
-        "Recent activity ERROR:",
-        error
-      );
+  tbody.innerHTML =
+    recentData
+      .map(row => {
 
-
-      /* ===================================================
-         ERROR
-         =================================================== */
-
-      if (error) {
-
-        console.error(
-          "Recent activity error:",
-          error
-        );
-
-
-        tbody.innerHTML = `
+        return `
 
           <tr>
 
-            <td
-              colspan="${
-                currentAdminLoggedIn
-                  ? 8
-                  : 7
-              }"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
-
-              Error loading activities.
-
+            <td>
+              ${escapeHtml(
+                String(
+                  row.activity_date || "-"
+                ).substring(0, 10)
+              )}
             </td>
 
-          </tr>
-
-        `;
-
-        return;
-
-      }
-
-
-      /* ===================================================
-         NO DATA
-         =================================================== */
-
-      if (
-        !data ||
-        data.length === 0
-      ) {
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${
-                currentAdminLoggedIn
-                  ? 8
-                  : 7
-              }"
-              style="
-                text-align:center;
-                padding:20px;
-              ">
-
-              No activity recorded in the last 7 days.
-
+            <td>
+              ${escapeHtml(
+                row.activity_type || "-"
+              )}
             </td>
 
-          </tr>
+            <td>
+              ${escapeHtml(
+                String(
+                  row.load_count ?? "-"
+                )
+              )}
+            </td>
 
-        `;
+            <td>
+              ${escapeHtml(
+                row.hubs || "-"
+              )}
+            </td>
 
-        return;
+            <td>
+              ${escapeHtml(
+                row.items || "-"
+              )}
+            </td>
 
-      }
+            <td>
+              ${escapeHtml(
+                row.vehicle || "-"
+              )}
+            </td>
 
-
-      /* ===================================================
-         DISPLAY DATA
-         =================================================== */
-
-      tbody.innerHTML =
-        data
-          .map(row => {
-
-            return renderRow(
-              row,
-              true
-            );
-
-          })
-          .join("");
-
-
-      /* ===================================================
-         ADD EMPTY ROWS
-         =================================================== */
-
-      const minimumRows = 7;
-
-
-      const emptyRows =
-        Math.max(
-          0,
-          minimumRows - data.length
-        );
-
-
-      for (
-        let i = 0;
-        i < emptyRows;
-        i++
-      ) {
-
-        tbody.innerHTML += `
-
-          <tr class="empty-row">
-
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>
+              ${escapeHtml(
+                row.challenges || "-"
+              )}
+            </td>
 
             ${
-              currentAdminLoggedIn
-                ? `<td>&nbsp;</td>`
+              loggedIn
+                ? `
+                  <td>
+                    ${actionButtons(row.id)}
+                  </td>
+                `
                 : ""
             }
 
@@ -2691,10 +2657,348 @@
 
         `;
 
+      })
+      .join("");
+
+
+  /* ================= KEEP 7 ROWS VISIBLE ================= */
+
+  const minimumRows = 7;
+
+  const emptyRows =
+    Math.max(
+      0,
+      minimumRows - recentData.length
+    );
+
+
+  for (
+    let i = 0;
+    i < emptyRows;
+    i++
+  ) {
+
+    tbody.innerHTML += `
+
+      <tr class="empty-row">
+
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+
+        ${
+          loggedIn
+            ? `<td>&nbsp;</td>`
+            : ""
+        }
+
+      </tr>
+
+    `;
+
+  }
+
+    }async function loadRecentActivity() {
+
+  const tbody = document.getElementById("recentActivity");
+
+  /* ================= GET CURRENT ADMIN STATUS ================= */
+
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
+
+  const loggedIn =
+    !!sessionData.session;
+
+
+  /* ================= LOCAL DATE ================= */
+
+  function getLocalDateString(date) {
+
+    const year = date.getFullYear();
+
+    const month =
+      String(date.getMonth() + 1).padStart(2, "0");
+
+    const day =
+      String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+
+  /* ================= LAST 7 DAYS ================= */
+
+  const today = new Date();
+
+  const sevenDaysAgo = new Date();
+
+  sevenDaysAgo.setDate(
+    today.getDate() - 6
+  );
+
+
+  const fromDate =
+    getLocalDateString(sevenDaysAgo);
+
+  const toDate =
+    getLocalDateString(today);
+
+
+  console.log(
+    "RECENT 7 DAYS:",
+    fromDate,
+    "to",
+    toDate
+  );
+
+
+  /* ================= SHOW LOADING ================= */
+
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="${loggedIn ? 8 : 7}"
+          style="text-align:center;">
+        Loading recent activities...
+      </td>
+    </tr>
+  `;
+
+
+  /* =========================================================
+     IMPORTANT:
+     DO NOT FILTER activity_date IN SUPABASE.
+     GET RECENT RECORDS FIRST.
+     ========================================================= */
+
+  const { data, error } =
+    await supabaseClient
+      .from("warehouse_activities")
+      .select("*")
+      .order(
+        "activity_date",
+        {
+          ascending: false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      })
+      .limit(100);
+
+
+  /* ================= ERROR ================= */
+
+  if (error) {
+
+    console.error(
+      "RECENT ACTIVITY ERROR:",
+      error
+    );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${loggedIn ? 8 : 7}"
+            style="text-align:center;color:#a51d1d;">
+          Error loading recent activities.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  console.log(
+    "ALL ACTIVITY DATA FROM SUPABASE:",
+    data
+  );
+
+
+  /* =========================================================
+     FILTER LAST 7 DAYS IN JAVASCRIPT
+     Works for DATE or TIMESTAMP values
+     ========================================================= */
+
+  const recentData =
+    (data || []).filter(row => {
+
+      if (!row.activity_date) {
+        return false;
       }
 
-    }
+      /*
+       * Converts:
+       * 2026-08-26
+       * 2026-08-26T00:00:00
+       * 2026-08-26T00:00:00+00:00
+       *
+       * into:
+       * 2026-08-26
+       */
 
+      const activityDate =
+        String(row.activity_date)
+          .substring(0, 10);
+
+
+      return (
+        activityDate >= fromDate &&
+        activityDate <= toDate
+      );
+
+    });
+
+
+  console.log(
+    "FILTERED RECENT 7 DAYS DATA:",
+    recentData
+  );
+
+
+  /* ================= NO DATA ================= */
+
+  if (
+    !recentData ||
+    recentData.length === 0
+  ) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${loggedIn ? 8 : 7}"
+            style="text-align:center;padding:25px;">
+          No activity recorded in the last 7 days.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  /* ================= DISPLAY DATA ================= */
+
+  tbody.innerHTML =
+    recentData
+      .map(row => {
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                String(
+                  row.activity_date || "-"
+                ).substring(0, 10)
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.activity_type || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                String(
+                  row.load_count ?? "-"
+                )
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.hubs || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.items || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.vehicle || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.challenges || "-"
+              )}
+            </td>
+
+            ${
+              loggedIn
+                ? `
+                  <td>
+                    ${actionButtons(row.id)}
+                  </td>
+                `
+                : ""
+            }
+
+          </tr>
+
+        `;
+
+      })
+      .join("");
+
+
+  /* ================= KEEP 7 ROWS VISIBLE ================= */
+
+  const minimumRows = 7;
+
+  const emptyRows =
+    Math.max(
+      0,
+      minimumRows - recentData.length
+    );
+
+
+  for (
+    let i = 0;
+    i < emptyRows;
+    i++
+  ) {
+
+    tbody.innerHTML += `
+
+      <tr class="empty-row">
+
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+
+        ${
+          loggedIn
+            ? `<td>&nbsp;</td>`
+            : ""
+        }
+
+      </tr>
+
+    `;
+
+  }
+
+}
 
     /* =====================================================
        TOTALS
