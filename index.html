@@ -1541,28 +1541,28 @@
 
       if (user) {
 
-        adminSection.style.display =
-          "block";
+  adminSection.style.display = "block";
 
-        loginButton.textContent =
-          "🔓 Admin Logged In";
+  loginButton.textContent =
+    "🔓 Admin Logged In";
 
-        loginButton.onclick =
-          adminLogout;
+  loginButton.onclick = function () {
+    adminLogout();
+  };
 
-        loginBox.style.display =
-          "none";
+  loginBox.style.display = "none";
 
-      } else {
+} else {
 
-        adminSection.style.display =
-          "none";
+  adminSection.style.display = "none";
 
-        loginButton.textContent =
-          "🔐 Admin Login";
+  loginButton.textContent =
+    "🔐 Admin Login";
 
-        loginButton.onclick =
-          toggleAdminLogin;
+  loginButton.onclick = function () {
+    toggleAdminLogin();
+  };
+
 
       }
 
