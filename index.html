@@ -1577,87 +1577,77 @@
     /* =====================================================
        ADMIN LOGIN
        ===================================================== */
+async function adminLogin() {
 
-    async function adminLogin() {
+  console.log("ADMIN LOGIN BUTTON CLICKED");
 
-      const email =
-        document.getElementById(
-          "adminEmail"
-        ).value.trim();
+  const email =
+    document.getElementById("adminEmail").value.trim();
 
-      const password =
-        document.getElementById(
-          "adminPassword"
-        ).value;
+  const password =
+    document.getElementById("adminPassword").value;
 
-      const loginMessage =
-        document.getElementById(
-          "loginMessage"
-        );
+  const loginMessage =
+    document.getElementById("loginMessage");
 
+  console.log("Email:", email);
+  console.log("Password entered:", password.length > 0);
 
-      if (!email || !password) {
+  if (!email || !password) {
 
-        loginMessage.textContent =
-          "Please enter email and password.";
+    loginMessage.textContent =
+      "Please enter email and password.";
 
-        loginMessage.style.color =
-          "#a51d1d";
+    loginMessage.style.color = "#a51d1d";
 
-        return;
+    return;
+  }
 
-      }
+  loginMessage.textContent = "Logging in...";
+  loginMessage.style.color = "#667085";
 
+  console.log("Calling Supabase Auth...");
 
-      loginMessage.textContent =
-        "Logging in...";
+  try {
 
-      loginMessage.style.color =
-        "#667085";
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
 
+    console.log("SUPABASE LOGIN RESULT:", data);
+    console.log("SUPABASE LOGIN ERROR:", error);
 
-      const { data, error } =
-        await supabaseClient.auth
-          .signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
-
-
-      if (error) {
-
-        console.error(error);
-
-        loginMessage.textContent =
-          "Login failed: " +
-          error.message;
-
-        loginMessage.style.color =
-          "#a51d1d";
-
-        return;
-
-      }
-
+    if (error) {
 
       loginMessage.textContent =
-        "Login successful! ✅";
+        "Login failed: " + error.message;
 
-      loginMessage.style.color =
-        "#176b36";
+      loginMessage.style.color = "#a51d1d";
 
-
-      showAdminSection(
-        data.user
-      );
-
-
-      await refreshExistingSearches();
-
+      return;
     }
+
+    loginMessage.textContent =
+      "Login successful! ✅";
+
+    loginMessage.style.color = "#176b36";
+
+    showAdminSection(data.user);
+
+    await refreshExistingSearches();
+
+  } catch (err) {
+
+    console.error("LOGIN CRASH:", err);
+
+    loginMessage.textContent =
+      "Login error: " + err.message;
+
+    loginMessage.style.color = "#a51d1d";
+  }
+}
 
 
     /* =====================================================
