@@ -771,66 +771,138 @@
 
     </section>
 
+<!-- ================= SEARCH HUB HISTORY ================= -->
 
-    <!-- ================= SEARCH ================= -->
+<h2 class="section-title">
+  Search Hub History
+</h2>
 
-    <h2 class="section-title">
-      Search Hub History
-    </h2>
+<section class="card">
 
-    <section class="card">
+  <div class="form-grid">
 
-      <div class="search-row">
+    <!-- HUB -->
+    <div class="form-group">
 
-        <input
-          type="text"
-          id="hubSearch"
-          placeholder="Enter hub name, e.g. Shire">
+      <label>
+        Select Hub
+      </label>
 
-        <button
-          class="search-button"
-          onclick="searchHub()">
+      <select id="hubSearch">
 
-          SEARCH
+        <option value="">
+          Select Hub
+        </option>
 
-        </button>
+        <option value="AA1hp">AA1hp</option>
+        <option value="AA1 MainWH">AA1 MainWH</option>
+        <option value="AA2">AA2</option>
+        <option value="Adama">Adama</option>
+        <option value="Hawasa">Hawasa</option>
+        <option value="Negelle">Negelle</option>
+        <option value="Nekemte">Nekemte</option>
+        <option value="Jimma">Jimma</option>
+        <option value="D.Dawa">D.Dawa</option>
+        <option value="Jigjiga">Jigjiga</option>
+        <option value="Arbaminch">Arbaminch</option>
+        <option value="Semera">Semera</option>
+        <option value="Gambella">Gambella</option>
+        <option value="Asosa">Asosa</option>
+        <option value="Bahir Dar">Bahir Dar</option>
+        <option value="Gondar">Gondar</option>
+        <option value="Dessie">Dessie</option>
+        <option value="Kebridar">Kebridar</option>
+        <option value="Mekele">Mekele</option>
+        <option value="Shire">Shire</option>
 
-      </div>
+      </select>
+
+    </div>
 
 
-      <div
-        class="table-card"
-        style="margin-top:20px;">
+    <!-- FROM DATE -->
+    <div class="form-group">
 
-        <table>
+      <label>
+        From Date
+      </label>
 
-          <thead>
+      <input
+        type="date"
+        id="searchFromDate">
 
-            <tr>
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
-            </tr>
+    </div>
 
-          </thead>
 
-          <tbody id="historyResults">
+    <!-- TO DATE -->
+    <div class="form-group">
 
-            <tr>
-              <td colspan="7" style="text-align:center;">
-                Search for a hub to view history
-              </td>
-            </tr>
+      <label>
+        To Date
+      </label>
 
-          </tbody>
+      <input
+        type="date"
+        id="searchToDate">
 
-        </table>
+    </div>
 
-      </div>
+  </div>
+
+
+  <button
+    class="search-button"
+    style="width:100%; margin-top:18px;"
+    onclick="searchHub()">
+
+    SEARCH HISTORY
+
+  </button>
+
+
+  <!-- RESULTS -->
+
+  <div
+    class="table-card"
+    style="margin-top:20px;">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Load Count</th>
+          <th>Hubs</th>
+          <th>Items</th>
+          <th>Vehicle</th>
+          <th>Challenges</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="historyResults">
+
+        <tr>
+
+          <td
+            colspan="7"
+            style="text-align:center;">
+
+            Select a hub and date range to search
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
 
     </section>
 
@@ -1351,130 +1423,204 @@ const supabaseClient =
 
   }
 
-    /* ================= SEARCH HUB ================= */
+    /* ================= SEARCH HUB HISTORY ================= */
 
-    async function searchHub() {
+async function searchHub() {
 
-      const search =
-        document
-          .getElementById("hubSearch")
-          .value
-          .trim();
+  const search =
+    document.getElementById("hubSearch").value.trim();
 
+  const fromDate =
+    document.getElementById("searchFromDate").value;
 
-      const tbody =
-        document.getElementById(
-          "historyResults"
-        );
+  const toDate =
+    document.getElementById("searchToDate").value;
 
-
-      if (!search) {
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7"
-                style="text-align:center;">
-              Please enter a hub name
-            </td>
-          </tr>
-        `;
-
-        return;
-
-      }
+  const tbody =
+    document.getElementById("historyResults");
 
 
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="7"
-              style="text-align:center;">
-            Searching...
-          </td>
-        </tr>
-      `;
+  /* ================= VALIDATION ================= */
+
+  if (!search) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7"
+            style="text-align:center;color:#a51d1d;">
+          Please select a hub.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
 
-      const { data, error } =
-        await supabaseClient
-          .from("warehouse_activities")
-          .select("*")
-          .ilike("hubs", "%" + search + "%")
-          .order("activity_date", {
-            ascending: false
-          });
+  if (fromDate && toDate && fromDate > toDate) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7"
+            style="text-align:center;color:#a51d1d;">
+          From Date cannot be later than To Date.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
 
-      if (error) {
+  /* ================= SEARCHING MESSAGE ================= */
 
-        console.error(error);
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7"
-                style="text-align:center;color:#a51d1d;">
-              Error searching history
-            </td>
-          </tr>
-        `;
-
-        return;
-
-      }
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="7"
+          style="text-align:center;">
+        Searching history...
+      </td>
+    </tr>
+  `;
 
 
-      if (!data || data.length === 0) {
+  /* ================= BUILD QUERY ================= */
 
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7"
-                style="text-align:center;">
-              No history found for "${escapeHtml(search)}"
-            </td>
-          </tr>
-        `;
-
-        return;
-
-      }
+  let query =
+    supabaseClient
+      .from("warehouse_activities")
+      .select("*")
+      .ilike("hubs", "%" + search + "%");
 
 
-      tbody.innerHTML =
-        data.map(row => `
+  /* ================= DATE FILTER ================= */
 
-          <tr>
+  if (fromDate) {
 
-            <td>${escapeHtml(
-              row.activity_date || "-"
-            )}</td>
+    query =
+      query.gte(
+        "activity_date",
+        fromDate
+      );
 
-            <td>${escapeHtml(
-              row.activity_type || "-"
-            )}</td>
+  }
 
-            <td>${escapeHtml(
-              String(row.load_count ?? "-")
-            )}</td>
 
-            <td>${escapeHtml(
-              row.hubs || "-"
-            )}</td>
+  if (toDate) {
 
-            <td>${escapeHtml(
-              row.items || "-"
-            )}</td>
+    query =
+      query.lte(
+        "activity_date",
+        toDate
+      );
 
-            <td>${escapeHtml(
-              row.vehicle || "-"
-            )}</td>
+  }
 
-            <td>${escapeHtml(
-              row.challenges || "-"
-            )}</td>
 
-          </tr>
+  /* ================= RUN QUERY ================= */
 
-        `).join("");
+  const { data, error } =
+    await query
+      .order("activity_date", {
+        ascending: false
+      })
+      .order("created_at", {
+        ascending: false
+      });
 
+
+  /* ================= ERROR ================= */
+
+  if (error) {
+
+    console.error(error);
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7"
+            style="text-align:center;color:#a51d1d;">
+          Error searching history.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  /* ================= NO RESULTS ================= */
+
+  if (!data || data.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7"
+            style="text-align:center;">
+          No history found for ${escapeHtml(search)}
+          ${fromDate ? " from " + escapeHtml(fromDate) : ""}
+          ${toDate ? " to " + escapeHtml(toDate) : ""}
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  /* ================= DISPLAY RESULTS ================= */
+
+  tbody.innerHTML =
+    data.map(row => `
+
+      <tr>
+
+        <td>
+          ${escapeHtml(
+            row.activity_date || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.activity_type || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            String(row.load_count ?? "-")
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.hubs || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.items || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.vehicle || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.challenges || "-"
+          )}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+             
     }
 
 
