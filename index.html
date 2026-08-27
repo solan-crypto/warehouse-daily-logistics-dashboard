@@ -2217,122 +2217,234 @@
 
     }
 
+async function loadRecentActivity() {
 
-    /* =========================================================
-       LOAD RECENT 7 DAYS
-       ========================================================= */
+  const tbody =
+    document.getElementById("recentActivity");
 
-    async function loadRecentActivity() {
+  const { data: sessionData } =
+    await supabaseClient.auth.getSession();
 
-      const today =
-        new Date();
+  const adminLoggedIn =
+    !!sessionData.session;
 
-      const sevenDaysAgo =
-        new Date();
 
-      sevenDaysAgo.setDate(
-        today.getDate() - 6
+  /* ================= LOCAL DATE ================= */
+
+  function getLocalDateString(date) {
+
+    const year = date.getFullYear();
+
+    const month =
+      String(date.getMonth() + 1).padStart(2, "0");
+
+    const day =
+      String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+  }
+
+
+  const today = new Date();
+
+  const sevenDaysAgo = new Date();
+
+  sevenDaysAgo.setDate(
+    today.getDate() - 6
+  );
+
+
+  const fromDate =
+    getLocalDateString(sevenDaysAgo);
+
+  const toDate =
+    getLocalDateString(today);
+
+
+  console.log("Recent activity date range:");
+  console.log("From:", fromDate);
+  console.log("To:", toDate);
+
+
+  /* ================= GET DATA ================= */
+
+  const { data, error } =
+    await supabaseClient
+      .from("warehouse_activities")
+      .select("*")
+      .gte(
+        "activity_date",
+        fromDate
+      )
+      .lte(
+        "activity_date",
+        toDate
+      )
+      .order(
+        "activity_date",
+        {
+          ascending: false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
       );
 
 
-      const fromDate =
-        sevenDaysAgo
-          .toISOString()
-          .split("T")[0];
+  console.log("Recent activity DATA:", data);
+  console.log("Recent activity ERROR:", error);
 
 
-      const { data, error } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*")
-          .gte(
-            "activity_date",
-            fromDate
-          )
-          .order(
-            "activity_date",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+  /* ================= ERROR ================= */
+
+  if (error) {
+
+    console.error(
+      "Recent activity error:",
+      error
+    );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${adminLoggedIn ? 8 : 7}"
+            style="text-align:center;color:#a51d1d;">
+          Error loading activities.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
 
 
-      const tbody =
-        document.getElementById(
-          "recentActivity"
-        );
+  /* ================= NO DATA ================= */
+
+  if (!data || data.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${adminLoggedIn ? 8 : 7}"
+            style="text-align:center;">
+          No activity recorded from
+          ${fromDate} to ${toDate}
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
 
 
-      if (error) {
+  /* ================= DISPLAY DATA ================= */
 
-        console.error(
-          "RECENT ERROR:",
-          error
-        );
+  tbody.innerHTML =
+    data.map(row => `
 
-        tbody.innerHTML = `
+      <tr>
 
-          <tr>
+        <td>
+          ${escapeHtml(
+            row.activity_date || "-"
+          )}
+        </td>
 
-            <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+        <td>
+          ${escapeHtml(
+            row.activity_type || "-"
+          )}
+        </td>
 
-              Error loading activities.
+        <td>
+          ${escapeHtml(
+            String(
+              row.load_count ?? "-"
+            )
+          )}
+        </td>
 
-            </td>
+        <td>
+          ${escapeHtml(
+            row.hubs || "-"
+          )}
+        </td>
 
-          </tr>
+        <td>
+          ${escapeHtml(
+            row.items || "-"
+          )}
+        </td>
 
-        `;
+        <td>
+          ${escapeHtml(
+            row.vehicle || "-"
+          )}
+        </td>
 
-        return;
+        <td>
+          ${escapeHtml(
+            row.challenges || "-"
+          )}
+        </td>
 
-      }
+        ${
+          adminLoggedIn
+            ? `
+              <td>
+                ${actionButtons(row.id)}
+              </td>
+            `
+            : ""
+        }
 
+      </tr>
 
-      if (
-        !data ||
-        data.length === 0
-      ) {
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;">
-
-              No activity recorded in the last 7 days.
-
-            </td>
-
-          </tr>
-
-        `;
-
-        return;
-
-      }
+    `).join("");
 
 
-      tbody.innerHTML =
-        data
-          .map(row =>
-            renderRow(row, true)
-          )
-          .join("");
+  /* ================= ADD EMPTY ROWS ================= */
 
-    }
+  const minimumRows = 7;
+
+  const emptyRows =
+    Math.max(
+      0,
+      minimumRows - data.length
+    );
+
+
+  for (let i = 0; i < emptyRows; i++) {
+
+    tbody.innerHTML += `
+
+      <tr class="empty-row">
+
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+
+        ${
+          adminLoggedIn
+            ? `<td>&nbsp;</td>`
+            : ""
+        }
+
+      </tr>
+
+    `;
+
+  }
+
+}
 
 
     /* =========================================================
