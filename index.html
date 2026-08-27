@@ -1580,6 +1580,263 @@ async function adminLogin() {
     "🔓 Admin Logged In";
 
 }
+loadDashboard();
+
+
+/* ================= SEARCH BY DATE ================= */
+
+async function searchByDate() {
+
+  const fromDate =
+    document
+      .getElementById("searchFromDate")
+      .value;
+
+  const toDate =
+    document
+      .getElementById("searchToDate")
+      .value;
+
+
+  const tbody =
+    document.getElementById(
+      "dateSearchResults"
+    );
+
+
+  /* No date selected */
+
+  if (!fromDate && !toDate) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          style="text-align:center;">
+          Please select a date.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  /* To date cannot be before From date */
+
+  if (
+    fromDate &&
+    toDate &&
+    toDate < fromDate
+  ) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          style="text-align:center;color:#a51d1d;">
+          To Date cannot be earlier than From Date.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  tbody.innerHTML = `
+    <tr>
+      <td
+        colspan="7"
+        style="text-align:center;">
+        Searching...
+      </td>
+    </tr>
+  `;
+
+
+  try {
+
+    let query =
+      supabaseClient
+        .from("warehouse_activities")
+        .select("*");
+
+
+    /*
+     * SINGLE DATE
+     *
+     * If only From Date is selected,
+     * search that exact date.
+     */
+
+    if (fromDate && !toDate) {
+
+      query = query
+        .eq("activity_date", fromDate);
+
+    }
+
+
+    /*
+     * DATE RANGE
+     *
+     * If both dates are selected,
+     * search between them.
+     */
+
+    if (fromDate && toDate) {
+
+      query = query
+        .gte("activity_date", fromDate)
+        .lte("activity_date", toDate);
+
+    }
+
+
+    /*
+     * ONLY TO DATE
+     *
+     * If the user selects only To Date,
+     * search that exact date.
+     */
+
+    if (!fromDate && toDate) {
+
+      query = query
+        .eq("activity_date", toDate);
+
+    }
+
+
+    const { data, error } =
+      await query
+        .order("activity_date", {
+          ascending: false
+        })
+        .order("created_at", {
+          ascending: false
+        });
+
+
+    if (error) {
+
+      console.error(error);
+
+      tbody.innerHTML = `
+        <tr>
+          <td
+            colspan="7"
+            style="text-align:center;color:#a51d1d;">
+
+            Error searching activities.
+
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+
+    /* No results */
+
+    if (!data || data.length === 0) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td
+            colspan="7"
+            style="text-align:center;">
+
+            No activity found for the selected date.
+
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+
+    /* Display results */
+
+    tbody.innerHTML =
+      data.map(row => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              row.activity_date || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.activity_type || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              String(
+                row.load_count ?? "-"
+              )
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.hubs || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.items || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.vehicle || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              row.challenges || "-"
+            )}
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    tbody.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          style="text-align:center;color:#a51d1d;">
+
+          Something went wrong. Please try again.
+
+        </td>
+      </tr>
+    `;
+
+  }
+
+}
   </script>
 
 </body>
