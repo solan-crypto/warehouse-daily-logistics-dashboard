@@ -25,7 +25,9 @@
       line-height: 1.5;
     }
 
-    /* ================= HEADER ================= */
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
     .header {
       background: linear-gradient(135deg, #09245f, #1746b0);
@@ -50,7 +52,9 @@
       margin: 20px auto;
     }
 
-    /* ================= CARDS ================= */
+    /* =====================================================
+       CARDS
+       ===================================================== */
 
     .card,
     .activity-card {
@@ -58,7 +62,7 @@
       border-radius: 14px;
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     }
 
     .section-title {
@@ -67,7 +71,9 @@
       font-size: 21px;
     }
 
-    /* ================= PLANT ================= */
+    /* =====================================================
+       PLANT / CENTER
+       ===================================================== */
 
     .plant-box h2 {
       color: #123a91;
@@ -75,7 +81,9 @@
       font-size: 20px;
     }
 
-    /* ================= INPUTS ================= */
+    /* =====================================================
+       INPUTS
+       ===================================================== */
 
     input,
     select,
@@ -93,10 +101,12 @@
     textarea:focus {
       outline: none;
       border-color: #1746b0;
-      box-shadow: 0 0 0 2px rgba(23,70,176,0.1);
+      box-shadow: 0 0 0 2px rgba(23, 70, 176, 0.1);
     }
 
-    /* ================= TOTAL ACTIVITY ================= */
+    /* =====================================================
+       TOTAL ACTIVITY
+       ===================================================== */
 
     .activity-stats {
       display: grid;
@@ -122,31 +132,25 @@
       color: #123a91;
     }
 
-    /* ================= TABLE ================= */
+    /* =====================================================
+       TABLE
+       ===================================================== */
 
     .table-card {
-     .empty-row td {
-  height: 55px;
-  background: #ffffff;
-}
-
-.empty-row:hover td {
-  background: #ffffff;
-}
+      background: white;
+      border-radius: 14px;
+      padding: 0;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: auto;
+    }
 
     /* Recent 7 days fixed-height area */
+
     .recent-table-card {
       max-height: 470px;
       overflow: auto;
     }
-      .empty-row td {
-  height: 55px;
-  background: #ffffff;
-}
-
-.empty-row:hover td {
-  background: #ffffff;
-}
 
     table {
       width: 100%;
@@ -161,7 +165,6 @@
       text-align: left;
       white-space: nowrap;
 
-      /* keeps header visible while scrolling */
       position: sticky;
       top: 0;
       z-index: 2;
@@ -177,7 +180,20 @@
       background: #f7f9fd;
     }
 
-    /* ================= FORM ================= */
+    /* Empty rows */
+
+    .empty-row td {
+      height: 55px;
+      background: #ffffff;
+    }
+
+    .empty-row:hover td {
+      background: #ffffff;
+    }
+
+    /* =====================================================
+       FORM
+       ===================================================== */
 
     .form-grid {
       display: grid;
@@ -205,7 +221,9 @@
       resize: vertical;
     }
 
-    /* ================= HUB SELECT ================= */
+    /* =====================================================
+       HUB SELECT
+       ===================================================== */
 
     .hub-select {
       min-height: 170px;
@@ -217,7 +235,9 @@
       margin-top: 6px;
     }
 
-    /* ================= BUTTONS ================= */
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
 
     .save-button,
     .search-button {
@@ -250,7 +270,9 @@
       padding: 12px 22px;
     }
 
-    /* ================= EDIT / DELETE ================= */
+    /* =====================================================
+       EDIT / DELETE
+       ===================================================== */
 
     .action-buttons {
       display: flex;
@@ -299,7 +321,9 @@
       display: none;
     }
 
-    /* ================= MESSAGE ================= */
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
 
     .message {
       display: none;
@@ -321,53 +345,99 @@
       color: #a51d1d;
     }
 
-    /* ================= ADMIN ================= */
+    /* =====================================================
+       ADMIN BUTTON
+       ===================================================== */
 
     .admin-button {
       margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
+      padding: 11px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
       background: white;
       color: #123a91;
       font-weight: bold;
+      font-size: 15px;
       cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      transition: 0.2s;
     }
 
     .admin-button:hover {
       background: #eef3ff;
+      transform: translateY(-1px);
     }
+
+    /* =====================================================
+       ADMIN LOGIN BOX
+       ===================================================== */
 
     .admin-login-box {
       display: none;
       width: 94%;
       max-width: 450px;
-      margin: 20px auto;
-      padding: 22px;
+      margin: 22px auto;
+      padding: 0;
       background: white;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      overflow: hidden;
+      border: 1px solid #e1e6ef;
     }
 
-    .admin-login-box h2 {
-      color: #123a91;
-      margin-bottom: 15px;
+    .admin-login-header {
+      background: linear-gradient(135deg, #09245f, #1746b0);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .admin-login-icon {
+      font-size: 34px;
+      margin-bottom: 5px;
+    }
+
+    .admin-login-header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .admin-login-header p {
+      margin-top: 4px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .admin-login-content {
+      padding: 22px;
+    }
+
+    .admin-input-group {
+      margin-bottom: 14px;
+    }
+
+    .admin-input-group label {
+      display: block;
+      margin-bottom: 6px;
     }
 
     .admin-login-box input {
-      margin-bottom: 12px;
+      margin-bottom: 0;
+      padding: 13px;
+      border-radius: 9px;
     }
 
     .login-button,
     .cancel-button,
     .logout-button {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 9px;
+      font-size: 15px;
     }
 
     .login-button {
@@ -375,9 +445,17 @@
       color: white;
     }
 
+    .login-button:hover {
+      background: #0b2d78;
+    }
+
     .cancel-button {
-      background: #e5e8ee;
+      background: #edf0f5;
       color: #34405a;
+    }
+
+    .cancel-button:hover {
+      background: #e1e5eb;
     }
 
     .logout-button {
@@ -386,11 +464,15 @@
     }
 
     #loginMessage {
-      margin-top: 12px;
+      margin-top: 13px;
       font-weight: bold;
+      text-align: center;
+      min-height: 20px;
     }
 
-    /* ================= DATE SEARCH ================= */
+    /* =====================================================
+       DATE SEARCH
+       ===================================================== */
 
     .date-search-grid {
       display: grid;
@@ -404,18 +486,9 @@
       margin-top: 18px;
     }
 
-    /* ================= PUBLIC SEARCH ================= */
-
-    .public-search-note {
-      margin-bottom: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #eef3ff;
-      color: #123a91;
-      font-size: 14px;
-    }
-
-    /* ================= FOOTER ================= */
+    /* =====================================================
+       FOOTER
+       ===================================================== */
 
     footer {
       text-align: center;
@@ -424,7 +497,9 @@
       font-size: 14px;
     }
 
-    /* ================= MOBILE ================= */
+    /* =====================================================
+       MOBILE
+       ===================================================== */
 
     @media (max-width: 700px) {
 
@@ -480,6 +555,10 @@
       .recent-table-card {
         max-height: 470px;
       }
+
+      .admin-login-box {
+        width: 94%;
+      }
     }
 
   </style>
@@ -488,7 +567,9 @@
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
   <header class="header">
 
@@ -508,48 +589,87 @@
   </header>
 
 
-  <!-- ================= ADMIN LOGIN ================= -->
+  <!-- =====================================================
+       ADMIN LOGIN
+       ===================================================== -->
 
   <div
     id="adminLoginBox"
     class="admin-login-box">
 
-    <h2>🔐 Admin Login</h2>
+    <div class="admin-login-header">
 
-    <input
-      type="email"
-      id="adminEmail"
-      placeholder="Admin email">
+      <div class="admin-login-icon">
+        🔐
+      </div>
 
-    <input
-      type="password"
-      id="adminPassword"
-      placeholder="Password">
+      <h2>Admin Login</h2>
 
-    <button
-      class="login-button"
-      onclick="adminLogin()">
+      <p>Authorized personnel only</p>
 
-      LOGIN
+    </div>
 
-    </button>
+    <div class="admin-login-content">
 
-    <button
-      class="cancel-button"
-      onclick="toggleAdminLogin()">
+      <div class="admin-input-group">
 
-      CANCEL
+        <label for="adminEmail">
+          Email
+        </label>
 
-    </button>
+        <input
+          type="email"
+          id="adminEmail"
+          placeholder="Enter admin email">
 
-    <div id="loginMessage"></div>
+      </div>
+
+
+      <div class="admin-input-group">
+
+        <label for="adminPassword">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="adminPassword"
+          placeholder="Enter password">
+
+      </div>
+
+
+      <button
+        class="login-button"
+        onclick="adminLogin()">
+
+        🔓 LOGIN
+
+      </button>
+
+
+      <button
+        class="cancel-button"
+        onclick="toggleAdminLogin()">
+
+        CANCEL
+
+      </button>
+
+
+      <div id="loginMessage"></div>
+
+    </div>
 
   </div>
 
 
   <main class="container">
 
-    <!-- ================= PLANT / CENTER ================= -->
+
+    <!-- =====================================================
+         PLANT / CENTER
+         ===================================================== -->
 
     <section class="card plant-box">
 
@@ -578,7 +698,9 @@
     </section>
 
 
-    <!-- ================= TOTAL ACTIVITY ================= -->
+    <!-- =====================================================
+         TOTAL ACTIVITY
+         ===================================================== -->
 
     <h2 class="section-title">
       Total Activity
@@ -602,6 +724,7 @@
 
         </div>
 
+
         <div class="stat">
 
           <h3>Offloaded</h3>
@@ -621,7 +744,9 @@
     </section>
 
 
-    <!-- ================= RECENT 7 DAYS ================= -->
+    <!-- =====================================================
+         RECENT 7 DAYS
+         ===================================================== -->
 
     <h2 class="section-title">
       Recent 7 Days Activity
@@ -636,17 +761,11 @@
           <tr>
 
             <th>Date</th>
-
             <th>Activity</th>
-
             <th>Load Count</th>
-
             <th>Hubs</th>
-
             <th>Items</th>
-
             <th>Vehicle</th>
-
             <th>Challenges</th>
 
             <th
@@ -660,6 +779,7 @@
           </tr>
 
         </thead>
+
 
         <tbody id="recentActivity">
 
@@ -683,7 +803,7 @@
 
 
     <!-- =====================================================
-         PUBLIC SEARCH HUB HISTORY
+         SEARCH HUB HISTORY
          ===================================================== -->
 
     <h2 class="section-title">
@@ -691,14 +811,6 @@
     </h2>
 
     <section class="card">
-
-      <div class="public-search-note">
-
-        🔎 Anyone can search warehouse activity history.
-        Admin login is only required for adding, editing,
-        or deleting records.
-
-      </div>
 
       <div class="form-grid">
 
@@ -773,7 +885,7 @@
         style="width:100%; margin-top:18px;"
         onclick="searchHub()">
 
-        SEARCH HISTORY
+        🔎 SEARCH HISTORY
 
       </button>
 
@@ -808,6 +920,7 @@
 
           </thead>
 
+
           <tbody id="historyResults">
 
             <tr>
@@ -816,7 +929,7 @@
                 colspan="8"
                 style="text-align:center;">
 
-                Select a hub and date range to search
+                Select a hub to search
 
               </td>
 
@@ -831,7 +944,9 @@
     </section>
 
 
-    <!-- ================= SEARCH BY DATE ================= -->
+    <!-- =====================================================
+         SEARCH ACTIVITY BY DATE
+         ===================================================== -->
 
     <h2 class="section-title">
       Search Activity by Date
@@ -869,19 +984,11 @@
       </div>
 
 
-      <div class="help-text">
-
-        Select one date for a single-day search,
-        or select two dates for a date range.
-
-      </div>
-
-
       <button
         class="search-button date-search-button"
         onclick="searchByDate()">
 
-        SEARCH BY DATE
+        🔎 SEARCH BY DATE
 
       </button>
 
@@ -916,6 +1023,7 @@
 
           </thead>
 
+
           <tbody id="dateSearchResults">
 
             <tr>
@@ -947,15 +1055,20 @@
       id="adminActivitySection"
       style="display:none;">
 
-      <!-- ================= DAILY ACTIVITY ENTRY ================= -->
+
+      <!-- ===================================================
+           DAILY ACTIVITY ENTRY
+           =================================================== -->
 
       <h2 class="section-title">
         Daily Activity Entry
       </h2>
 
+
       <section class="card">
 
         <div class="form-grid">
+
 
           <!-- DATE -->
 
@@ -1159,7 +1272,9 @@
   </main>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
   <footer>
 
@@ -1168,13 +1283,15 @@
   </footer>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
   <script>
 
-    /* =========================================================
+    /* =====================================================
        SUPABASE SETTINGS
-       ========================================================= */
+       ===================================================== */
 
     const SUPABASE_URL =
       "https://uxtrykyvivhejqfojiwm.supabase.co";
@@ -1189,45 +1306,61 @@
       );
 
 
-    /* =========================================================
+    /* =====================================================
        EDIT STATE
-       ========================================================= */
+       ===================================================== */
 
     let editingId = null;
 
 
-    /* =========================================================
+    /* =====================================================
        ADMIN STATE
-       ========================================================= */
+       ===================================================== */
 
     let adminLoggedIn = false;
 
 
-    /* =========================================================
+    /* =====================================================
        DATE
-       ========================================================= */
+       ===================================================== */
 
     function getToday() {
 
-      return new Date()
-        .toISOString()
-        .split("T")[0];
+      const today = new Date();
+
+      const year =
+        today.getFullYear();
+
+      const month =
+        String(
+          today.getMonth() + 1
+        ).padStart(2, "0");
+
+      const day =
+        String(
+          today.getDate()
+        ).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
 
     }
+
 
     document.getElementById(
       "activityDate"
     ).value = getToday();
 
 
-    /* =========================================================
+    /* =====================================================
        MESSAGE
-       ========================================================= */
+       ===================================================== */
 
     function showMessage(text, type) {
 
       const message =
-        document.getElementById("message");
+        document.getElementById(
+          "message"
+        );
 
       message.textContent = text;
 
@@ -1237,9 +1370,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ESCAPE HTML
-       ========================================================= */
+       ===================================================== */
 
     function escapeHtml(value) {
 
@@ -1253,22 +1386,28 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        GET SELECTED HUBS
-       ========================================================= */
+       ===================================================== */
 
     function getSelectedHubs() {
 
       const select =
-        document.getElementById("hubs");
+        document.getElementById(
+          "hubs"
+        );
 
       const selected = [];
 
-      for (const option of select.options) {
+      for (
+        const option of select.options
+      ) {
 
         if (option.selected) {
 
-          selected.push(option.value);
+          selected.push(
+            option.value
+          );
 
         }
 
@@ -1279,56 +1418,82 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        SET SELECTED HUBS
-       ========================================================= */
+       ===================================================== */
 
-    function setSelectedHubs(hubString) {
+    function setSelectedHubs(
+      hubString
+    ) {
 
       const select =
-        document.getElementById("hubs");
+        document.getElementById(
+          "hubs"
+        );
 
       const selectedHubs =
         String(hubString || "")
           .split(",")
-          .map(hub => hub.trim())
+          .map(
+            hub => hub.trim()
+          )
           .filter(Boolean);
 
-      for (const option of select.options) {
+      for (
+        const option of select.options
+      ) {
 
         option.selected =
-          selectedHubs.includes(option.value);
+          selectedHubs.includes(
+            option.value
+          );
 
       }
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ADMIN LOGIN BOX
-       ========================================================= */
+       ===================================================== */
 
     function toggleAdminLogin() {
 
       const box =
-        document.getElementById("adminLoginBox");
+        document.getElementById(
+          "adminLoginBox"
+        );
 
-      if (box.style.display === "block") {
+      if (
+        box.style.display === "block"
+      ) {
 
-        box.style.display = "none";
+        box.style.display =
+          "none";
 
       } else {
 
-        box.style.display = "block";
+        box.style.display =
+          "block";
+
+        setTimeout(() => {
+
+          document
+            .getElementById(
+              "adminEmail"
+            )
+            .focus();
+
+        }, 100);
 
       }
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        UPDATE ACTION HEADERS
-       ========================================================= */
+       ===================================================== */
 
     function updateActionHeaders() {
 
@@ -1337,24 +1502,30 @@
           ? "table-cell"
           : "none";
 
+
       document.getElementById(
         "recentActionsHeader"
-      ).style.display = display;
+      ).style.display =
+        display;
+
 
       document.getElementById(
         "historyActionsHeader"
-      ).style.display = display;
+      ).style.display =
+        display;
+
 
       document.getElementById(
         "dateActionsHeader"
-      ).style.display = display;
+      ).style.display =
+        display;
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        SHOW / HIDE ADMIN SECTION
-       ========================================================= */
+       ===================================================== */
 
     function showAdminSection(user) {
 
@@ -1408,16 +1579,14 @@
       updateActionHeaders();
 
 
-      /* Refresh all visible tables */
-
       loadRecentActivity();
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ADMIN LOGIN
-       ========================================================= */
+       ===================================================== */
 
     async function adminLogin() {
 
@@ -1491,24 +1660,25 @@
         "#176b36";
 
 
-      showAdminSection(data.user);
+      showAdminSection(
+        data.user
+      );
 
-
-      /* Refresh search results if they already exist */
 
       await refreshExistingSearches();
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ADMIN LOGOUT
-       ========================================================= */
+       ===================================================== */
 
     async function adminLogout() {
 
       const { error } =
-        await supabaseClient.auth.signOut();
+        await supabaseClient.auth
+          .signOut();
 
 
       if (error) {
@@ -1527,9 +1697,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        CHECK CURRENT SESSION
-       ========================================================= */
+       ===================================================== */
 
     async function checkAdminSession() {
 
@@ -1560,9 +1730,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        CHECK ADMIN
-       ========================================================= */
+       ===================================================== */
 
     async function isAdminLoggedIn() {
 
@@ -1575,9 +1745,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        SAVE / UPDATE
-       ========================================================= */
+       ===================================================== */
 
     async function saveActivity() {
 
@@ -1726,8 +1896,6 @@
       let result;
 
 
-      /* ================= UPDATE ================= */
-
       if (editingId) {
 
         result =
@@ -1740,9 +1908,6 @@
               "id",
               editingId
             );
-
-
-      /* ================= INSERT ================= */
 
       } else {
 
@@ -1815,9 +1980,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        CLEAR FORM
-       ========================================================= */
+       ===================================================== */
 
     function clearActivityForm() {
 
@@ -1866,9 +2031,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        EDIT ACTIVITY
-       ========================================================= */
+       ===================================================== */
 
     async function editActivity(id) {
 
@@ -1889,7 +2054,10 @@
             "warehouse_activities"
           )
           .select("*")
-          .eq("id", id)
+          .eq(
+            "id",
+            id
+          )
           .single();
 
 
@@ -1922,7 +2090,8 @@
       document.getElementById(
         "activityType"
       ).value =
-        data.activity_type || "Loaded";
+        data.activity_type ||
+        "Loaded";
 
 
       document.getElementById(
@@ -1941,7 +2110,9 @@
       ).value =
         data.items === "-"
           ? ""
-          : (data.items || "");
+          : (
+              data.items || ""
+            );
 
 
       document.getElementById(
@@ -1955,7 +2126,9 @@
       ).value =
         data.challenges === "-"
           ? ""
-          : (data.challenges || "");
+          : (
+              data.challenges || ""
+            );
 
 
       document.getElementById(
@@ -1992,9 +2165,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        CANCEL EDIT
-       ========================================================= */
+       ===================================================== */
 
     function cancelEdit() {
 
@@ -2029,9 +2202,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        DELETE ACTIVITY
-       ========================================================= */
+       ===================================================== */
 
     async function deleteActivity(id) {
 
@@ -2109,9 +2282,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        ACTION BUTTONS
-       ========================================================= */
+       ===================================================== */
 
     function actionButtons(id) {
 
@@ -2123,6 +2296,7 @@
 
 
       return `
+
         <div class="action-buttons">
 
           <button
@@ -2142,16 +2316,20 @@
           </button>
 
         </div>
+
       `;
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        RENDER TABLE ROW
-       ========================================================= */
+       ===================================================== */
 
-    function renderRow(row, includeActions = true) {
+    function renderRow(
+      row,
+      includeActions = true
+    ) {
 
       return `
 
@@ -2202,11 +2380,16 @@
           </td>
 
           ${
-            includeActions && adminLoggedIn
+            includeActions &&
+            adminLoggedIn
               ? `
+
                 <td>
-                  ${actionButtons(row.id)}
+                  ${actionButtons(
+                    row.id
+                  )}
                 </td>
+
               `
               : ""
           }
@@ -2217,243 +2400,312 @@
 
     }
 
-async function loadRecentActivity() {
 
-  const tbody =
-    document.getElementById("recentActivity");
+    /* =====================================================
+       LOAD RECENT 7 DAYS
+       ===================================================== */
 
-  const { data: sessionData } =
-    await supabaseClient.auth.getSession();
+    async function loadRecentActivity() {
 
-  const adminLoggedIn =
-    !!sessionData.session;
-
-
-  /* ================= LOCAL DATE ================= */
-
-  function getLocalDateString(date) {
-
-    const year = date.getFullYear();
-
-    const month =
-      String(date.getMonth() + 1).padStart(2, "0");
-
-    const day =
-      String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-
-  }
+      const tbody =
+        document.getElementById(
+          "recentActivity"
+        );
 
 
-  const today = new Date();
+      /* Get current login state */
 
-  const sevenDaysAgo = new Date();
-
-  sevenDaysAgo.setDate(
-    today.getDate() - 6
-  );
-
-
-  const fromDate =
-    getLocalDateString(sevenDaysAgo);
-
-  const toDate =
-    getLocalDateString(today);
+      const {
+        data: sessionData
+      } =
+        await supabaseClient.auth
+          .getSession();
 
 
-  console.log("Recent activity date range:");
-  console.log("From:", fromDate);
-  console.log("To:", toDate);
+      const currentAdminLoggedIn =
+        !!sessionData.session;
 
 
-  /* ================= GET DATA ================= */
+      /* ===================================================
+         LOCAL DATE FUNCTION
+         =================================================== */
 
-  const { data, error } =
-    await supabaseClient
-      .from("warehouse_activities")
-      .select("*")
-      .gte(
-        "activity_date",
-        fromDate
-      )
-      .lte(
-        "activity_date",
-        toDate
-      )
-      .order(
-        "activity_date",
-        {
-          ascending: false
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
+      function getLocalDateString(
+        date
+      ) {
+
+        const year =
+          date.getFullYear();
+
+        const month =
+          String(
+            date.getMonth() + 1
+          ).padStart(2, "0");
+
+        const day =
+          String(
+            date.getDate()
+          ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+
+      }
+
+
+      /* ===================================================
+         DATE RANGE
+         =================================================== */
+
+      const today =
+        new Date();
+
+
+      const sevenDaysAgo =
+        new Date();
+
+
+      sevenDaysAgo.setDate(
+        today.getDate() - 6
       );
 
 
-  console.log("Recent activity DATA:", data);
-  console.log("Recent activity ERROR:", error);
+      const fromDate =
+        getLocalDateString(
+          sevenDaysAgo
+        );
 
 
-  /* ================= ERROR ================= */
-
-  if (error) {
-
-    console.error(
-      "Recent activity error:",
-      error
-    );
-
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="${adminLoggedIn ? 8 : 7}"
-            style="text-align:center;color:#a51d1d;">
-          Error loading activities.
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
+      const toDate =
+        getLocalDateString(
+          today
+        );
 
 
-  /* ================= NO DATA ================= */
+      /*
+       * Create tomorrow date.
+       * Using LESS THAN tomorrow makes the query work
+       * correctly even if activity_date is timestamp/date.
+       */
 
-  if (!data || data.length === 0) {
+      const tomorrow =
+        new Date(today);
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="${adminLoggedIn ? 8 : 7}"
-            style="text-align:center;">
-          No activity recorded from
-          ${fromDate} to ${toDate}
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
+      tomorrow.setDate(
+        tomorrow.getDate() + 1
+      );
 
 
-  /* ================= DISPLAY DATA ================= */
-
-  tbody.innerHTML =
-    data.map(row => `
-
-      <tr>
-
-        <td>
-          ${escapeHtml(
-            row.activity_date || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.activity_type || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            String(
-              row.load_count ?? "-"
-            )
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.hubs || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.items || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.vehicle || "-"
-          )}
-        </td>
-
-        <td>
-          ${escapeHtml(
-            row.challenges || "-"
-          )}
-        </td>
-
-        ${
-          adminLoggedIn
-            ? `
-              <td>
-                ${actionButtons(row.id)}
-              </td>
-            `
-            : ""
-        }
-
-      </tr>
-
-    `).join("");
+      const tomorrowDate =
+        getLocalDateString(
+          tomorrow
+        );
 
 
-  /* ================= ADD EMPTY ROWS ================= */
-
-  const minimumRows = 7;
-
-  const emptyRows =
-    Math.max(
-      0,
-      minimumRows - data.length
-    );
+      console.log(
+        "Recent activity range:",
+        fromDate,
+        "to",
+        toDate
+      );
 
 
-  for (let i = 0; i < emptyRows; i++) {
+      /* ===================================================
+         GET DATA
+         =================================================== */
 
-    tbody.innerHTML += `
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from(
+            "warehouse_activities"
+          )
+          .select("*")
+          .gte(
+            "activity_date",
+            fromDate
+          )
+          .lt(
+            "activity_date",
+            tomorrowDate
+          )
+          .order(
+            "activity_date",
+            {
+              ascending: false
+            }
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
 
-      <tr class="empty-row">
 
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+      console.log(
+        "Recent activity DATA:",
+        data
+      );
 
-        ${
-          adminLoggedIn
-            ? `<td>&nbsp;</td>`
-            : ""
-        }
-
-      </tr>
-
-    `;
-
-  }
-
-}
+      console.log(
+        "Recent activity ERROR:",
+        error
+      );
 
 
-    /* =========================================================
+      /* ===================================================
+         ERROR
+         =================================================== */
+
+      if (error) {
+
+        console.error(
+          "Recent activity error:",
+          error
+        );
+
+
+        tbody.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="${
+                currentAdminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
+
+              Error loading activities.
+
+            </td>
+
+          </tr>
+
+        `;
+
+        return;
+
+      }
+
+
+      /* ===================================================
+         NO DATA
+         =================================================== */
+
+      if (
+        !data ||
+        data.length === 0
+      ) {
+
+        tbody.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="${
+                currentAdminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                padding:20px;
+              ">
+
+              No activity recorded in the last 7 days.
+
+            </td>
+
+          </tr>
+
+        `;
+
+        return;
+
+      }
+
+
+      /* ===================================================
+         DISPLAY DATA
+         =================================================== */
+
+      tbody.innerHTML =
+        data
+          .map(row => {
+
+            return renderRow(
+              row,
+              true
+            );
+
+          })
+          .join("");
+
+
+      /* ===================================================
+         ADD EMPTY ROWS
+         =================================================== */
+
+      const minimumRows = 7;
+
+
+      const emptyRows =
+        Math.max(
+          0,
+          minimumRows - data.length
+        );
+
+
+      for (
+        let i = 0;
+        i < emptyRows;
+        i++
+      ) {
+
+        tbody.innerHTML += `
+
+          <tr class="empty-row">
+
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+
+            ${
+              currentAdminLoggedIn
+                ? `<td>&nbsp;</td>`
+                : ""
+            }
+
+          </tr>
+
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
        TOTALS
-       ========================================================= */
+       ===================================================== */
 
     async function loadTotals() {
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await supabaseClient
           .from(
             "warehouse_activities"
@@ -2531,9 +2783,9 @@ async function loadRecentActivity() {
     }
 
 
-    /* =========================================================
+    /* =====================================================
        SEARCH HUB HISTORY
-       ========================================================= */
+       ===================================================== */
 
     async function searchHub() {
 
@@ -2542,15 +2794,18 @@ async function loadRecentActivity() {
           "hubSearch"
         ).value.trim();
 
+
       const fromDate =
         document.getElementById(
           "hubFromDate"
         ).value;
 
+
       const toDate =
         document.getElementById(
           "hubToDate"
         ).value;
+
 
       const tbody =
         document.getElementById(
@@ -2565,8 +2820,15 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
 
               Please select a hub.
 
@@ -2592,8 +2854,15 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
 
               From Date cannot be later than To Date.
 
@@ -2613,7 +2882,11 @@ async function loadRecentActivity() {
         <tr>
 
           <td
-            colspan="${adminLoggedIn ? 8 : 7}"
+            colspan="${
+              adminLoggedIn
+                ? 8
+                : 7
+            }"
             style="text-align:center;">
 
             Searching history...
@@ -2650,16 +2923,52 @@ async function loadRecentActivity() {
 
       if (toDate) {
 
+        /*
+         * Add one day so the selected To Date
+         * is fully included.
+         */
+
+        const endDate =
+          new Date(
+            toDate + "T00:00:00"
+          );
+
+        endDate.setDate(
+          endDate.getDate() + 1
+        );
+
+
+        const year =
+          endDate.getFullYear();
+
+        const month =
+          String(
+            endDate.getMonth() + 1
+          ).padStart(2, "0");
+
+        const day =
+          String(
+            endDate.getDate()
+          ).padStart(2, "0");
+
+
+        const exclusiveTo =
+          `${year}-${month}-${day}`;
+
+
         query =
-          query.lte(
+          query.lt(
             "activity_date",
-            toDate
+            exclusiveTo
           );
 
       }
 
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await query
           .order(
             "activity_date",
@@ -2682,13 +2991,21 @@ async function loadRecentActivity() {
           error
         );
 
+
         tbody.innerHTML = `
 
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
 
               Error searching history.
 
@@ -2713,7 +3030,11 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
               style="text-align:center;">
 
               No history found.
@@ -2732,16 +3053,19 @@ async function loadRecentActivity() {
       tbody.innerHTML =
         data
           .map(row =>
-            renderRow(row, true)
+            renderRow(
+              row,
+              true
+            )
           )
           .join("");
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        SEARCH BY DATE
-       ========================================================= */
+       ===================================================== */
 
     async function searchByDate() {
 
@@ -2750,10 +3074,12 @@ async function loadRecentActivity() {
           "dateFrom"
         ).value;
 
+
       const toDate =
         document.getElementById(
           "dateTo"
         ).value;
+
 
       const tbody =
         document.getElementById(
@@ -2771,7 +3097,11 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
               style="text-align:center;">
 
               Please select a date.
@@ -2798,8 +3128,15 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
 
               To Date cannot be earlier than From Date.
 
@@ -2819,7 +3156,11 @@ async function loadRecentActivity() {
         <tr>
 
           <td
-            colspan="${adminLoggedIn ? 8 : 7}"
+            colspan="${
+              adminLoggedIn
+                ? 8
+                : 7
+            }"
             style="text-align:center;">
 
             Searching...
@@ -2845,10 +3186,15 @@ async function loadRecentActivity() {
       ) {
 
         query =
-          query.eq(
-            "activity_date",
-            fromDate
-          );
+          query
+            .gte(
+              "activity_date",
+              fromDate
+            )
+            .lt(
+              "activity_date",
+              getNextDate(fromDate)
+            );
 
       }
 
@@ -2859,10 +3205,15 @@ async function loadRecentActivity() {
       ) {
 
         query =
-          query.eq(
-            "activity_date",
-            toDate
-          );
+          query
+            .gte(
+              "activity_date",
+              toDate
+            )
+            .lt(
+              "activity_date",
+              getNextDate(toDate)
+            );
 
       }
 
@@ -2878,15 +3229,18 @@ async function loadRecentActivity() {
               "activity_date",
               fromDate
             )
-            .lte(
+            .lt(
               "activity_date",
-              toDate
+              getNextDate(toDate)
             );
 
       }
 
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await query
           .order(
             "activity_date",
@@ -2909,13 +3263,21 @@ async function loadRecentActivity() {
           error
         );
 
+
         tbody.innerHTML = `
 
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
-              style="text-align:center;color:#a51d1d;">
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
+              style="
+                text-align:center;
+                color:#a51d1d;
+              ">
 
               Error searching activities.
 
@@ -2940,7 +3302,11 @@ async function loadRecentActivity() {
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${
+                adminLoggedIn
+                  ? 8
+                  : 7
+              }"
               style="text-align:center;">
 
               No activity found for the selected date.
@@ -2959,16 +3325,57 @@ async function loadRecentActivity() {
       tbody.innerHTML =
         data
           .map(row =>
-            renderRow(row, true)
+            renderRow(
+              row,
+              true
+            )
           )
           .join("");
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
+       GET NEXT DATE
+       ===================================================== */
+
+    function getNextDate(
+      dateString
+    ) {
+
+      const date =
+        new Date(
+          dateString + "T00:00:00"
+        );
+
+
+      date.setDate(
+        date.getDate() + 1
+      );
+
+
+      const year =
+        date.getFullYear();
+
+      const month =
+        String(
+          date.getMonth() + 1
+        ).padStart(2, "0");
+
+      const day =
+        String(
+          date.getDate()
+        ).padStart(2, "0");
+
+
+      return `${year}-${month}-${day}`;
+
+    }
+
+
+    /* =====================================================
        REFRESH EXISTING SEARCHES
-       ========================================================= */
+       ===================================================== */
 
     async function refreshExistingSearches() {
 
@@ -2977,10 +3384,12 @@ async function loadRecentActivity() {
           "hubSearch"
         ).value;
 
+
       const hubFrom =
         document.getElementById(
           "hubFromDate"
         ).value;
+
 
       const hubTo =
         document.getElementById(
@@ -3000,6 +3409,7 @@ async function loadRecentActivity() {
           "dateFrom"
         ).value;
 
+
       const dateTo =
         document.getElementById(
           "dateTo"
@@ -3018,9 +3428,9 @@ async function loadRecentActivity() {
     }
 
 
-    /* =========================================================
+    /* =====================================================
        DASHBOARD
-       ========================================================= */
+       ===================================================== */
 
     async function loadDashboard() {
 
@@ -3031,9 +3441,9 @@ async function loadRecentActivity() {
     }
 
 
-    /* =========================================================
+    /* =====================================================
        START
-       ========================================================= */
+       ===================================================== */
 
     updateActionHeaders();
 
@@ -3045,4 +3455,4 @@ async function loadRecentActivity() {
 
 </body>
 
-  </html>
+      </html>
