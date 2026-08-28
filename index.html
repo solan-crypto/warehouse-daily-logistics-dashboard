@@ -13,6 +13,10 @@
 
 <style>
 
+/* ==========================================================
+   GENERAL
+========================================================== */
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -227,6 +231,11 @@ textarea{
   background:#eef3ff;
 }
 
+
+/* ==========================================================
+   ADMIN LOGIN
+========================================================== */
+
 .admin-login-box{
   display:none;
   width:94%;
@@ -308,6 +317,11 @@ textarea{
   min-height:20px;
 }
 
+
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
+
 .action-buttons{
   display:flex;
   gap:7px;
@@ -347,6 +361,11 @@ textarea{
   display:none;
 }
 
+
+/* ==========================================================
+   MESSAGES
+========================================================== */
+
 .message{
   display:none;
   margin-top:15px;
@@ -367,25 +386,24 @@ textarea{
   color:#a51d1d;
 }
 
+
+/* ==========================================================
+   SEARCH
+========================================================== */
+
 .date-search-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:16px;
 }
 
-footer{
-  text-align:center;
-  padding:30px 15px;
-  color:#667085;
-  font-size:14px;
-}
 
-/* =========================
+/* ==========================================================
    DAILY VEHICLE ROWS
-========================= */
+========================================================== */
 
 .daily-entry-table{
-  min-width:900px;
+  min-width:950px;
 }
 
 .daily-entry-table th{
@@ -431,17 +449,26 @@ footer{
   color:#123a91;
 }
 
-/* Ethiopian date */
-
-.ethiopian-date-help{
-  font-size:12px;
-  color:#667085;
-  margin-top:5px;
-}
-
 .empty-row td{
   height:55px;
 }
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+footer{
+  text-align:center;
+  padding:30px 15px;
+  color:#667085;
+  font-size:14px;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
 
 @media(max-width:700px){
 
@@ -496,6 +523,10 @@ footer{
 <body>
 
 
+<!-- ==========================================================
+     HEADER
+========================================================== -->
+
 <header class="header">
 
 <h1>
@@ -518,7 +549,9 @@ class="admin-button">
 </header>
 
 
-<!-- ================= ADMIN LOGIN ================= -->
+<!-- ==========================================================
+     ADMIN LOGIN
+========================================================== -->
 
 <div
 id="adminLoginBox"
@@ -551,7 +584,8 @@ Email
 <input
 type="email"
 id="adminEmail"
-placeholder="Enter admin email">
+placeholder="Enter admin email"
+autocomplete="username">
 
 </div>
 
@@ -564,7 +598,8 @@ Password
 <input
 type="password"
 id="adminPassword"
-placeholder="Enter password">
+placeholder="Enter password"
+autocomplete="current-password">
 
 </div>
 
@@ -596,7 +631,9 @@ CANCEL
 <main class="container">
 
 
-<!-- ================= PLANT ================= -->
+<!-- ==========================================================
+     PLANT / CENTER
+========================================================== -->
 
 <section class="card plant-box">
 
@@ -627,7 +664,9 @@ Other
 </section>
 
 
-<!-- ================= TOTAL ================= -->
+<!-- ==========================================================
+     TOTAL ACTIVITY
+========================================================== -->
 
 <h2 class="section-title">
 Total Activity
@@ -674,7 +713,9 @@ id="offloadedTotal">
 </section>
 
 
-<!-- ================= RECENT 7 DAYS ================= -->
+<!-- ==========================================================
+     RECENT 7 DAYS
+========================================================== -->
 
 <h2 class="section-title">
 Recent 7 Days Activity
@@ -728,7 +769,9 @@ Loading...
 </section>
 
 
-<!-- ================= HUB HISTORY ================= -->
+<!-- ==========================================================
+     HUB HISTORY
+========================================================== -->
 
 <h2 class="section-title">
 Search Hub History
@@ -778,7 +821,7 @@ Select Hub
 <div class="form-group">
 
 <label>
-From Ethiopian Date
+From Date
 </label>
 
 <input
@@ -791,7 +834,7 @@ placeholder="YYYY-MM-DD">
 <div class="form-group">
 
 <label>
-To Ethiopian Date
+To Date
 </label>
 
 <input
@@ -823,7 +866,7 @@ style="margin-top:20px;">
 
 <tr>
 
-<th>Eth. Date</th>
+<th>Date</th>
 <th>Activity</th>
 <th>Vehicle</th>
 <th>Hub</th>
@@ -865,7 +908,9 @@ Select a hub to search
 </section>
 
 
-<!-- ================= DATE SEARCH ================= -->
+<!-- ==========================================================
+     DATE SEARCH
+========================================================== -->
 
 <h2 class="section-title">
 Search Activity by Date
@@ -878,7 +923,7 @@ Search Activity by Date
 <div class="form-group">
 
 <label>
-From Ethiopian Date
+From Date
 </label>
 
 <input
@@ -891,7 +936,7 @@ placeholder="YYYY-MM-DD">
 <div class="form-group">
 
 <label>
-To Ethiopian Date
+To Date
 </label>
 
 <input
@@ -923,7 +968,7 @@ style="margin-top:20px;">
 
 <tr>
 
-<th>Eth. Date</th>
+<th>Date</th>
 <th>Activity</th>
 <th>Vehicle</th>
 <th>Hub</th>
@@ -950,7 +995,7 @@ Actions
 colspan="6"
 style="text-align:center;">
 
-Enter Ethiopian date and search
+Enter date and search
 
 </td>
 
@@ -965,7 +1010,9 @@ Enter Ethiopian date and search
 </section>
 
 
-<!-- ================= ADMIN ENTRY ================= -->
+<!-- ==========================================================
+     ADMIN DAILY ACTIVITY ENTRY
+========================================================== -->
 
 <div
 id="adminActivitySection"
@@ -984,17 +1031,13 @@ Daily Activity Entry
 <div class="form-group">
 
 <label>
-Ethiopian Activity Date
+Activity Date
 </label>
 
 <input
 type="text"
 id="activityDate"
 placeholder="YYYY-MM-DD">
-
-<div class="ethiopian-date-help">
-Example: 2018-12-15
-</div>
 
 </div>
 
@@ -1023,7 +1066,9 @@ Offloaded
 </div>
 
 
-<!-- ================= VEHICLE ROW TABLE ================= -->
+<!-- ========================================================
+     DAILY ROW TABLE
+========================================================= -->
 
 <div
 class="table-card"
@@ -1060,7 +1105,6 @@ Action
 </thead>
 
 <tbody id="dailyRows">
-
 </tbody>
 
 </table>
@@ -1189,6 +1233,10 @@ const HUBS = [
 ];
 
 
+/* ==========================================================
+   VEHICLES
+========================================================== */
+
 const VEHICLES = [
 
 "Tesabi",
@@ -1201,18 +1249,13 @@ const VEHICLES = [
 
 
 /* ==========================================================
-   ETHIOPIAN CALENDAR
-   ==========================================================
-
-   The website displays Ethiopian dates.
-
-   Supabase still stores the equivalent Gregorian date
-   because PostgreSQL DATE uses Gregorian dates.
-
+   DATE CONVERSION
 ========================================================== */
 
 
-/* Gregorian -> JDN */
+/* ----------------------------------------------------------
+   Gregorian -> JDN
+---------------------------------------------------------- */
 
 function gregorianToJDN(
 year,
@@ -1246,7 +1289,9 @@ Math.floor(y / 400) -
 }
 
 
-/* JDN -> Gregorian */
+/* ----------------------------------------------------------
+   JDN -> Gregorian
+---------------------------------------------------------- */
 
 function jdnToGregorian(jdn){
 
@@ -1319,7 +1364,9 @@ day:d
 }
 
 
-/* Ethiopian -> JDN */
+/* ----------------------------------------------------------
+   Ethiopian -> JDN
+---------------------------------------------------------- */
 
 function ethiopianToJDN(
 year,
@@ -1338,7 +1385,9 @@ Math.floor(year / 4) +
 }
 
 
-/* JDN -> Ethiopian */
+/* ----------------------------------------------------------
+   JDN -> Ethiopian
+---------------------------------------------------------- */
 
 function jdnToEthiopian(jdn){
 
@@ -1363,7 +1412,6 @@ Math.floor(
 );
 
 let month;
-
 let day;
 
 if(daysInYear < 360){
@@ -1394,7 +1442,9 @@ day
 }
 
 
-/* Ethiopian -> Gregorian */
+/* ----------------------------------------------------------
+   Ethiopian -> Gregorian
+---------------------------------------------------------- */
 
 function ethiopianToGregorian(
 ethDate
@@ -1402,6 +1452,7 @@ ethDate
 
 const parts =
 String(ethDate)
+.trim()
 .split("-")
 .map(Number);
 
@@ -1469,7 +1520,9 @@ String(g.day).padStart(2,"0")
 }
 
 
-/* Gregorian -> Ethiopian */
+/* ----------------------------------------------------------
+   Gregorian -> Ethiopian
+---------------------------------------------------------- */
 
 function gregorianToEthiopian(
 gregDate
@@ -1477,10 +1530,16 @@ gregDate
 
 const parts =
 String(gregDate)
+.substring(0,10)
 .split("-")
 .map(Number);
 
-if(parts.length !== 3){
+if(
+parts.length !== 3 ||
+parts.some(
+n => !Number.isInteger(n)
+)
+){
 
 return "";
 
@@ -1513,38 +1572,47 @@ String(eth.day).padStart(2,"0")
 }
 
 
-/* Today's Ethiopian date */
+/* ----------------------------------------------------------
+   Today's date
+---------------------------------------------------------- */
 
 function getTodayEthiopian(){
 
 const now =
 new Date();
 
-return gregorianToEthiopian(
+const year =
+now.getFullYear();
 
-now.getFullYear() +
-"-" +
+const month =
 String(
-now.getMonth()+1
-).padStart(2,"0") +
-"-" +
+now.getMonth() + 1
+).padStart(2,"0");
+
+const day =
 String(
 now.getDate()
-).padStart(2,"0")
+).padStart(2,"0");
 
+return gregorianToEthiopian(
+year + "-" +
+month + "-" +
+day
 );
 
 }
 
 
-/* Add/subtract Ethiopian days */
+/* ----------------------------------------------------------
+   Add/subtract Ethiopian days
+---------------------------------------------------------- */
 
 function addEthiopianDays(
 ethDate,
 days
 ){
 
-let greg =
+const greg =
 ethiopianToGregorian(
 ethDate
 );
@@ -1561,7 +1629,7 @@ greg + "T00:00:00"
 );
 
 d.setDate(
-d.getDate() + days
+d.getDate() + Number(days)
 );
 
 const g =
@@ -1580,18 +1648,50 @@ return gregorianToEthiopian(g);
 }
 
 
-/* Validate Ethiopian date */
+/* ----------------------------------------------------------
+   Add Gregorian days
+---------------------------------------------------------- */
+
+function addGregorianDays(
+dateString,
+days
+){
+
+const d =
+new Date(
+dateString + "T00:00:00"
+);
+
+d.setDate(
+d.getDate() + Number(days)
+);
+
+return (
+d.getFullYear() +
+"-" +
+String(
+d.getMonth()+1
+).padStart(2,"0") +
+"-" +
+String(
+d.getDate()
+).padStart(2,"0")
+);
+
+}
+
+
+/* ----------------------------------------------------------
+   Validate Ethiopian date
+---------------------------------------------------------- */
 
 function validateEthDate(
 value
 ){
 
-const result =
-ethiopianToGregorian(
+return !!ethiopianToGregorian(
 value
 );
-
-return !!result;
 
 }
 
@@ -1652,16 +1752,24 @@ box.textContent =
 text;
 
 box.style.color =
-color;
+color || "";
 
 }
 
 
 /* ==========================================================
-   LOGIN
+   ADMIN LOGIN BOX
 ========================================================== */
 
 function toggleAdminLogin(){
+
+if(adminLoggedIn){
+
+adminLogout();
+
+return;
+
+}
 
 const box =
 document.getElementById(
@@ -1680,8 +1788,15 @@ box.style.display =
 box.style.display =
 "block";
 
+showLoginMessage(
+"",
+""
+);
+
 document
-.getElementById("adminEmail")
+.getElementById(
+"adminEmail"
+)
 .focus();
 
 }
@@ -1689,18 +1804,40 @@ document
 }
 
 
+/* ==========================================================
+   ADMIN LOGIN
+========================================================== */
+
 async function adminLogin(){
 
 const email =
 document
-.getElementById("adminEmail")
+.getElementById(
+"adminEmail"
+)
 .value
 .trim();
 
 const password =
 document
-.getElementById("adminPassword")
+.getElementById(
+"adminPassword"
+)
 .value;
+
+const button =
+document.getElementById(
+"loginButton"
+);
+
+
+/* Clear old message */
+
+showLoginMessage(
+"",
+""
+);
+
 
 if(!email || !password){
 
@@ -1713,16 +1850,13 @@ return;
 
 }
 
-const button =
-document.getElementById(
-"loginButton"
-);
 
 button.disabled =
 true;
 
 button.textContent =
 "LOGGING IN...";
+
 
 try{
 
@@ -1733,12 +1867,21 @@ error
 await supabaseClient.auth
 .signInWithPassword({
 
+email:
 email,
+
+password:
 password
 
 });
 
+
 if(error){
+
+console.error(
+"SUPABASE LOGIN ERROR:",
+error
+);
 
 showLoginMessage(
 "Login failed: " +
@@ -1750,10 +1893,40 @@ return;
 
 }
 
+
+if(
+!data ||
+!data.session ||
+!data.user
+){
+
+showLoginMessage(
+"Login failed. No valid session was created.",
+"#a51d1d"
+);
+
+return;
+
+}
+
+
+/*
+ Login successful
+*/
+
+adminLoggedIn =
+true;
+
+
 showAdminSection(
 data.user,
 false
 );
+
+
+/*
+ Hide login box
+*/
 
 document
 .getElementById(
@@ -1762,11 +1935,34 @@ document
 .style.display =
 "none";
 
+
+/*
+ Clear password
+*/
+
+document
+.getElementById(
+"adminPassword"
+)
+.value =
+"";
+
+
+/*
+ Refresh dashboard
+*/
+
 await loadDashboard();
 
 await refreshExistingSearches();
 
+
 }catch(error){
+
+console.error(
+"LOGIN EXCEPTION:",
+error
+);
 
 showLoginMessage(
 "Login error: " +
@@ -1788,7 +1984,7 @@ button.textContent =
 
 
 /* ==========================================================
-   SESSION
+   CHECK EXISTING SESSION
 ========================================================== */
 
 async function checkAdminSession(){
@@ -1796,23 +1992,17 @@ async function checkAdminSession(){
 try{
 
 const {
-data
+data,
+error
 } =
 await supabaseClient.auth
 .getSession();
 
-const user =
-data?.session?.user || null;
 
-showAdminSection(
-user,
-false
-);
-
-}catch(error){
+if(error){
 
 console.error(
-"SESSION ERROR:",
+"SESSION CHECK ERROR:",
 error
 );
 
@@ -1821,28 +2011,54 @@ null,
 false
 );
 
-}
+return;
 
 }
 
 
-supabaseClient.auth.onAuthStateChange(
-(event,session)=>{
+const session =
+data?.session || null;
+
 
 if(
-event === "SIGNED_IN"
+session &&
+session.user
 ){
 
+console.log(
+"Existing admin session found:",
+session.user.email
+);
+
+adminLoggedIn =
+true;
+
 showAdminSection(
-session?.user || null,
+session.user,
+false
+);
+
+}else{
+
+adminLoggedIn =
+false;
+
+showAdminSection(
+null,
 false
 );
 
 }
 
-if(
-event === "SIGNED_OUT"
-){
+}catch(error){
+
+console.error(
+"SESSION ERROR:",
+error
+);
+
+adminLoggedIn =
+false;
 
 showAdminSection(
 null,
@@ -1852,7 +2068,54 @@ false
 }
 
 }
+
+
+/* ==========================================================
+   AUTH STATE LISTENER
+========================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+(event,session)=>{
+
+console.log(
+"AUTH EVENT:",
+event
 );
+
+
+if(
+event === "SIGNED_IN"
+){
+
+adminLoggedIn =
+true;
+
+showAdminSection(
+session?.user || null,
+false
+);
+
+}
+
+
+if(
+event === "SIGNED_OUT"
+){
+
+adminLoggedIn =
+false;
+
+editingId =
+null;
+
+showAdminSection(
+null,
+false
+);
+
+}
+
+});
 
 
 /* ==========================================================
@@ -1861,7 +2124,7 @@ false
 
 function showAdminSection(
 user,
-reloadRecent=true
+reloadRecent = true
 ){
 
 const section =
@@ -1874,8 +2137,10 @@ document.getElementById(
 "adminLoginButton"
 );
 
+
 adminLoggedIn =
 !!user;
+
 
 if(user){
 
@@ -1901,7 +2166,9 @@ toggleAdminLogin;
 
 }
 
+
 updateActionHeaders();
+
 
 if(reloadRecent){
 
@@ -1912,6 +2179,10 @@ loadRecentActivity();
 }
 
 
+/* ==========================================================
+   ACTION HEADERS
+========================================================== */
+
 function updateActionHeaders(){
 
 const display =
@@ -1919,15 +2190,18 @@ adminLoggedIn
 ? "table-cell"
 : "none";
 
+
 document.getElementById(
 "recentActionsHeader"
 ).style.display =
 display;
 
+
 document.getElementById(
 "historyActionsHeader"
 ).style.display =
 display;
+
 
 document.getElementById(
 "dateActionsHeader"
@@ -1936,6 +2210,10 @@ display;
 
 }
 
+
+/* ==========================================================
+   ADMIN LOGOUT
+========================================================== */
 
 async function adminLogout(){
 
@@ -1949,12 +2227,30 @@ return;
 
 }
 
-await supabaseClient.auth.signOut();
+
+try{
+
+const {
+error
+} =
+await supabaseClient.auth
+.signOut();
+
+
+if(error){
+
+throw error;
+
+}
+
 
 editingId =
 null;
 
 clearDailyRows();
+
+adminLoggedIn =
+false;
 
 showAdminSection(
 null,
@@ -1965,14 +2261,30 @@ await loadDashboard();
 
 await refreshExistingSearches();
 
+}catch(error){
+
+console.error(
+"LOGOUT ERROR:",
+error
+);
+
+alert(
+"Logout failed:\n\n" +
+error.message
+);
+
+}
+
 }
 
 
 /* ==========================================================
-   ADMIN CHECK
+   CHECK ADMIN
 ========================================================== */
 
 async function isAdminLoggedIn(){
+
+try{
 
 const {
 data
@@ -1980,13 +2292,28 @@ data
 await supabaseClient.auth
 .getSession();
 
-return !!data?.session?.user;
+return !!(
+data &&
+data.session &&
+data.session.user
+);
+
+}catch(error){
+
+console.error(
+"ADMIN CHECK ERROR:",
+error
+);
+
+return false;
+
+}
 
 }
 
 
 /* ==========================================================
-   DAILY ROWS
+   HUB OPTIONS
 ========================================================== */
 
 function createHubOptions(){
@@ -2003,6 +2330,10 @@ ${escapeHtml(hub)}
 }
 
 
+/* ==========================================================
+   VEHICLE OPTIONS
+========================================================== */
+
 function createVehicleOptions(){
 
 return VEHICLES.map(
@@ -2017,8 +2348,12 @@ ${escapeHtml(vehicle)}
 }
 
 
+/* ==========================================================
+   ADD DAILY ROW
+========================================================== */
+
 function addDailyRow(
-data={}
+data = {}
 ){
 
 const tbody =
@@ -2026,11 +2361,14 @@ document.getElementById(
 "dailyRows"
 );
 
+
 const row =
 document.createElement("tr");
 
+
 row.className =
 "daily-entry-row";
+
 
 row.innerHTML = `
 
@@ -2048,6 +2386,7 @@ ${createHubOptions()}
 
 </td>
 
+
 <td>
 
 <select class="row-vehicle">
@@ -2062,6 +2401,7 @@ ${createVehicleOptions()}
 
 </td>
 
+
 <td>
 
 <input
@@ -2071,6 +2411,7 @@ placeholder="Items">
 
 </td>
 
+
 <td>
 
 <input
@@ -2079,6 +2420,7 @@ class="row-challenge"
 placeholder="Challenge">
 
 </td>
+
 
 <td>
 
@@ -2094,17 +2436,25 @@ class="remove-row-button">
 
 `;
 
+
 tbody.appendChild(row);
+
+
+/*
+ Set existing values
+*/
 
 row.querySelector(
 ".row-hub"
 ).value =
 data.hub || "";
 
+
 row.querySelector(
 ".row-vehicle"
 ).value =
 data.vehicle || "";
+
 
 row.querySelector(
 ".row-items"
@@ -2113,6 +2463,7 @@ data.items === "-"
 ? ""
 : data.items || "";
 
+
 row.querySelector(
 ".row-challenge"
 ).value =
@@ -2120,10 +2471,15 @@ data.challenges === "-"
 ? ""
 : data.challenges || "";
 
+
+/*
+ Remove row
+*/
+
 row.querySelector(
 ".remove-row-button"
 ).onclick =
-()=>{
+function(){
 
 row.remove();
 
@@ -2131,10 +2487,19 @@ updateVehicleTotal();
 
 };
 
+
+/*
+ Update counter
+*/
+
 updateVehicleTotal();
 
 }
 
+
+/* ==========================================================
+   TOTAL VEHICLE ROWS
+========================================================== */
 
 function updateVehicleTotal(){
 
@@ -2142,6 +2507,7 @@ const rows =
 document.querySelectorAll(
 ".daily-entry-row"
 );
+
 
 document.getElementById(
 "vehicleTotal"
@@ -2151,6 +2517,10 @@ rows.length;
 }
 
 
+/* ==========================================================
+   CLEAR DAILY ROWS
+========================================================== */
+
 function clearDailyRows(){
 
 document.getElementById(
@@ -2158,7 +2528,9 @@ document.getElementById(
 ).innerHTML =
 "";
 
+
 addDailyRow();
+
 
 updateVehicleTotal();
 
@@ -2166,7 +2538,7 @@ updateVehicleTotal();
 
 
 /* ==========================================================
-   GET DAILY ROW DATA
+   GET DAILY ROWS
 ========================================================== */
 
 function getDailyRows(){
@@ -2176,43 +2548,55 @@ document.querySelectorAll(
 ".daily-entry-row"
 );
 
-const result=[];
+
+const result = [];
+
 
 rows.forEach(
-row=>{
+row => {
 
 const hub =
 row.querySelector(
 ".row-hub"
 ).value;
 
+
 const vehicle =
 row.querySelector(
 ".row-vehicle"
 ).value;
+
 
 const items =
 row.querySelector(
 ".row-items"
 ).value.trim();
 
+
 const challenges =
 row.querySelector(
 ".row-challenge"
 ).value.trim();
 
+
 result.push({
 
+hub:
 hub,
+
+vehicle:
 vehicle,
+
 items:
 items || "-",
+
 challenges:
 challenges || "-"
 
 });
 
 });
+
 
 return result;
 
@@ -2238,17 +2622,21 @@ return;
 
 }
 
+
 const ethDate =
 document.getElementById(
 "activityDate"
-).value.trim();
+)
+.value
+.trim();
+
 
 if(
 !validateEthDate(ethDate)
 ){
 
 showMessage(
-"Invalid Ethiopian date. Use YYYY-MM-DD.",
+"Invalid date. Use YYYY-MM-DD.",
 "error"
 );
 
@@ -2256,23 +2644,32 @@ return;
 
 }
 
+
 const gregDate =
 ethiopianToGregorian(
 ethDate
 );
+
 
 const activityType =
 document.getElementById(
 "activityType"
 ).value;
 
+
 const plantCenter =
 document.getElementById(
 "plantCenter"
 ).value;
 
+
 const rows =
 getDailyRows();
+
+
+/*
+ At least one row
+*/
 
 if(rows.length === 0){
 
@@ -2285,25 +2682,41 @@ return;
 
 }
 
+
+/*
+ Validate every row
+*/
+
 for(
-const row of rows
+let i = 0;
+i < rows.length;
+i++
 ){
+
+const row =
+rows[i];
+
 
 if(!row.hub){
 
 showMessage(
-"Please select a hub for every row.",
+"Please select a hub for row " +
+(i + 1) +
+".",
 "error"
 );
 
 return;
 
 }
+
 
 if(!row.vehicle){
 
 showMessage(
-"Please select a vehicle for every row.",
+"Please select a vehicle for row " +
+(i + 1) +
+".",
 "error"
 );
 
@@ -2312,32 +2725,44 @@ return;
 }
 
 }
+
 
 const saveButton =
 document.getElementById(
 "saveButton"
 );
 
+
 saveButton.disabled =
 true;
 
+
+const isEditing =
+!!editingId;
+
+
 saveButton.textContent =
-editingId
+isEditing
 ? "UPDATING..."
 : "SAVING...";
 
 
 try{
 
-/*
- If editing one record,
- update that record.
-*/
+
+/* ========================================================
+   EDIT EXISTING RECORD
+======================================================== */
 
 if(editingId){
 
+/*
+ Editing represents ONE database record.
+*/
+
 const row =
 rows[0];
+
 
 const {
 error
@@ -2381,40 +2806,62 @@ new Date().toISOString()
 editingId
 );
 
+
 if(error){
 
 throw error;
 
 }
 
+
 showMessage(
 "Activity updated successfully! ✅",
 "success"
 );
 
+
 editingId =
 null;
+
 
 document.getElementById(
 "cancelEditButton"
 ).style.display =
 "none";
 
-saveButton.textContent =
-"SAVE DAILY ACTIVITY";
 
 clearDailyRows();
 
-}else{
+}
+
+
+/* ========================================================
+   NEW DAILY ACTIVITY
+======================================================== */
+
+else{
+
 
 /*
- Every hub/vehicle pair becomes
- one database record.
+ IMPORTANT:
+
+ Every row is saved as a separate
+ database record.
+
+ Example:
+
+ Nekemte + Iveco
+ Jimma + Lowbed
+ Adama + Tesabi
+ Hawasa + Iveco
+
+ = 4 database records.
 */
+
 
 const records =
 rows.map(
-row=>({
+row => ({
 
 activity_date:
 gregDate,
@@ -2443,6 +2890,7 @@ plantCenter || null
 })
 );
 
+
 const {
 error
 } =
@@ -2452,11 +2900,13 @@ await supabaseClient
 )
 .insert(records);
 
+
 if(error){
 
 throw error;
 
 }
+
 
 showMessage(
 rows.length +
@@ -2464,13 +2914,16 @@ rows.length +
 "success"
 );
 
+
 clearDailyRows();
 
 }
 
+
 await loadDashboard();
 
 await refreshExistingSearches();
+
 
 }catch(error){
 
@@ -2479,28 +2932,24 @@ console.error(
 error
 );
 
+
 showMessage(
 "Error: " +
 error.message,
 "error"
 );
 
+
 }finally{
 
 saveButton.disabled =
 false;
 
-if(!editingId){
 
 saveButton.textContent =
-"SAVE DAILY ACTIVITY";
-
-}else{
-
-saveButton.textContent =
-"UPDATE ACTIVITY";
-
-}
+editingId
+? "UPDATE ACTIVITY"
+: "SAVE DAILY ACTIVITY";
 
 }
 
@@ -2508,7 +2957,7 @@ saveButton.textContent =
 
 
 /* ==========================================================
-   EDIT
+   EDIT ACTIVITY
 ========================================================== */
 
 async function editActivity(id){
@@ -2525,6 +2974,7 @@ return;
 
 }
 
+
 const {
 data,
 error
@@ -2540,6 +2990,7 @@ id
 )
 .single();
 
+
 if(error){
 
 alert(
@@ -2551,6 +3002,7 @@ return;
 
 }
 
+
 if(!data){
 
 alert(
@@ -2561,13 +3013,13 @@ return;
 
 }
 
+
 editingId =
 id;
 
 
 /*
- Convert stored Gregorian
- date back to Ethiopian.
+ Convert date to displayed date
 */
 
 document.getElementById(
@@ -2579,11 +3031,21 @@ data.activity_date
 ).substring(0,10)
 );
 
+
+/*
+ Activity type
+*/
+
 document.getElementById(
 "activityType"
 ).value =
 data.activity_type ||
 "Loaded";
+
+
+/*
+ Plant
+*/
 
 document.getElementById(
 "plantCenter"
@@ -2591,10 +3053,20 @@ document.getElementById(
 data.plant_center ||
 "";
 
+
+/*
+ Clear existing rows
+*/
+
 document.getElementById(
 "dailyRows"
 ).innerHTML =
 "";
+
+
+/*
+ Load selected record
+*/
 
 addDailyRow({
 
@@ -2612,21 +3084,33 @@ data.challenges
 
 });
 
+
+/*
+ Change button
+*/
+
 document.getElementById(
 "saveButton"
 ).textContent =
 "UPDATE ACTIVITY";
+
 
 document.getElementById(
 "cancelEditButton"
 ).style.display =
 "block";
 
+
 showMessage(
 "Editing activity #" +
 id,
 "success"
 );
+
+
+/*
+ Scroll to entry section
+*/
 
 window.scrollTo({
 
@@ -2638,7 +3122,7 @@ document.getElementById(
 behavior:
 "smooth"
 
-);
+});
 
 }
 
@@ -2652,25 +3136,31 @@ function cancelEdit(){
 editingId =
 null;
 
+
 clearDailyRows();
+
 
 document.getElementById(
 "saveButton"
 ).textContent =
 "SAVE DAILY ACTIVITY";
 
+
 document.getElementById(
 "cancelEditButton"
 ).style.display =
 "none";
+
 
 const message =
 document.getElementById(
 "message"
 );
 
+
 message.className =
 "message";
+
 
 message.textContent =
 "";
@@ -2679,7 +3169,7 @@ message.textContent =
 
 
 /* ==========================================================
-   DELETE
+   DELETE ACTIVITY
 ========================================================== */
 
 async function deleteActivity(id){
@@ -2696,6 +3186,7 @@ return;
 
 }
 
+
 if(
 !confirm(
 "Are you sure you want to delete activity #" +
@@ -2707,6 +3198,7 @@ id +
 return;
 
 }
+
 
 const {
 error
@@ -2721,6 +3213,7 @@ await supabaseClient
 id
 );
 
+
 if(error){
 
 alert(
@@ -2732,15 +3225,18 @@ return;
 
 }
 
+
 if(editingId === id){
 
 cancelEdit();
 
 }
 
+
 await loadDashboard();
 
 await refreshExistingSearches();
+
 
 alert(
 "Activity deleted successfully. ✅"
@@ -2761,6 +3257,7 @@ return "";
 
 }
 
+
 return `
 
 <div class="action-buttons">
@@ -2773,6 +3270,7 @@ onclick="editActivity(${Number(id)})">
 ✏️ Edit
 
 </button>
+
 
 <button
 type="button"
@@ -2791,7 +3289,7 @@ onclick="deleteActivity(${Number(id)})">
 
 
 /* ==========================================================
-   RENDER ROW
+   RENDER DATABASE ROW
 ========================================================== */
 
 function renderRow(row){
@@ -2803,6 +3301,7 @@ row.activity_date || ""
 ).substring(0,10)
 );
 
+
 return `
 
 <tr>
@@ -2813,11 +3312,13 @@ ethDate || "-"
 )}
 </td>
 
+
 <td>
 ${escapeHtml(
 row.activity_type || "-"
 )}
 </td>
+
 
 <td>
 ${escapeHtml(
@@ -2825,11 +3326,13 @@ row.vehicle || "-"
 )}
 </td>
 
+
 <td>
 ${escapeHtml(
 row.hub || "-"
 )}
 </td>
+
 
 <td>
 ${escapeHtml(
@@ -2837,11 +3340,13 @@ row.items || "-"
 )}
 </td>
 
+
 <td>
 ${escapeHtml(
 row.challenges || "-"
 )}
 </td>
+
 
 ${
 adminLoggedIn
@@ -2873,6 +3378,7 @@ document.getElementById(
 "recentActivity"
 );
 
+
 const colspan =
 adminLoggedIn
 ? 7
@@ -2880,15 +3386,16 @@ adminLoggedIn
 
 
 /*
- Get Ethiopian today.
+ Today in displayed calendar
 */
 
 const ethToday =
 getTodayEthiopian();
 
+
 /*
- Six days before today
- gives seven Ethiopian dates total.
+ Six days before today.
+ Total = 7 days.
 */
 
 const ethFrom =
@@ -2897,21 +3404,25 @@ ethToday,
 -6
 );
 
+
 const gregFrom =
 ethiopianToGregorian(
 ethFrom
 );
+
 
 const gregTo =
 ethiopianToGregorian(
 ethToday
 );
 
+
 const gregToNext =
 addGregorianDays(
 gregTo,
 1
 );
+
 
 tbody.innerHTML = `
 
@@ -2928,6 +3439,7 @@ Loading recent activities...
 </tr>
 
 `;
+
 
 try{
 
@@ -2961,11 +3473,13 @@ ascending:false
 }
 );
 
+
 if(error){
 
 throw error;
 
 }
+
 
 if(
 !data ||
@@ -2981,7 +3495,7 @@ colspan="${colspan}"
 style="text-align:center;padding:25px;">
 
 No activity recorded
-in the last 7 Ethiopian days.
+in the last 7 days.
 
 </td>
 
@@ -2993,10 +3507,12 @@ return;
 
 }
 
+
 tbody.innerHTML =
 data.map(
 renderRow
 ).join("");
+
 
 }catch(error){
 
@@ -3004,6 +3520,7 @@ console.error(
 "RECENT ERROR:",
 error
 );
+
 
 tbody.innerHTML = `
 
@@ -3028,40 +3545,6 @@ ${escapeHtml(error.message)}
 
 
 /* ==========================================================
-   GREGORIAN ADD DAYS
-========================================================== */
-
-function addGregorianDays(
-dateString,
-days
-){
-
-const d =
-new Date(
-dateString +
-"T00:00:00"
-);
-
-d.setDate(
-d.getDate() + days
-);
-
-return (
-d.getFullYear() +
-"-" +
-String(
-d.getMonth()+1
-).padStart(2,"0") +
-"-" +
-String(
-d.getDate()
-).padStart(2,"0")
-);
-
-}
-
-
-/* ==========================================================
    TOTALS
 ========================================================== */
 
@@ -3079,6 +3562,7 @@ await supabaseClient
 "activity_type,load_count"
 );
 
+
 if(error){
 
 console.error(
@@ -3090,17 +3574,20 @@ return;
 
 }
 
-let loaded=0;
 
-let offloaded=0;
+let loaded = 0;
+
+let offloaded = 0;
+
 
 (data || []).forEach(
-row=>{
+row => {
 
 const count =
 Number(
 row.load_count
 ) || 0;
+
 
 const type =
 String(
@@ -3109,6 +3596,7 @@ row.activity_type || ""
 .toLowerCase()
 .trim();
 
+
 if(
 type === "loaded"
 ){
@@ -3116,6 +3604,7 @@ type === "loaded"
 loaded += count;
 
 }
+
 
 if(
 type === "offloaded"
@@ -3127,10 +3616,12 @@ offloaded += count;
 
 });
 
+
 document.getElementById(
 "loadedTotal"
 ).textContent =
 loaded;
+
 
 document.getElementById(
 "offloadedTotal"
@@ -3151,25 +3642,30 @@ document.getElementById(
 "hubSearch"
 ).value;
 
+
 const fromEth =
 document.getElementById(
 "hubFromDate"
 ).value.trim();
+
 
 const toEth =
 document.getElementById(
 "hubToDate"
 ).value.trim();
 
+
 const tbody =
 document.getElementById(
 "historyResults"
 );
 
+
 const colspan =
 adminLoggedIn
 ? 7
 : 6;
+
 
 if(!hub){
 
@@ -3193,6 +3689,11 @@ return;
 
 }
 
+
+/*
+ Validate dates
+*/
+
 if(
 fromEth &&
 !validateEthDate(fromEth)
@@ -3206,7 +3707,7 @@ tbody.innerHTML = `
 colspan="${colspan}"
 style="text-align:center;color:#a51d1d;">
 
-Invalid From Ethiopian date.
+Invalid From date.
 
 </td>
 
@@ -3217,6 +3718,7 @@ Invalid From Ethiopian date.
 return;
 
 }
+
 
 if(
 toEth &&
@@ -3231,7 +3733,7 @@ tbody.innerHTML = `
 colspan="${colspan}"
 style="text-align:center;color:#a51d1d;">
 
-Invalid To Ethiopian date.
+Invalid To date.
 
 </td>
 
@@ -3242,6 +3744,11 @@ Invalid To Ethiopian date.
 return;
 
 }
+
+
+/*
+ Query
+*/
 
 let query =
 supabaseClient
@@ -3254,6 +3761,7 @@ supabaseClient
 hub
 );
 
+
 if(fromEth){
 
 query =
@@ -3265,6 +3773,7 @@ fromEth
 );
 
 }
+
 
 if(toEth){
 
@@ -3280,6 +3789,7 @@ toEth
 );
 
 }
+
 
 const {
 data,
@@ -3298,6 +3808,7 @@ ascending:false
 ascending:false
 }
 );
+
 
 if(error){
 
@@ -3322,6 +3833,7 @@ error.message
 return;
 
 }
+
 
 if(
 !data ||
@@ -3348,6 +3860,7 @@ return;
 
 }
 
+
 tbody.innerHTML =
 data.map(
 renderRow
@@ -3367,20 +3880,24 @@ document.getElementById(
 "dateFrom"
 ).value.trim();
 
+
 const toEth =
 document.getElementById(
 "dateTo"
 ).value.trim();
+
 
 const tbody =
 document.getElementById(
 "dateSearchResults"
 );
 
+
 const colspan =
 adminLoggedIn
 ? 7
 : 6;
+
 
 if(
 !fromEth &&
@@ -3395,7 +3912,7 @@ tbody.innerHTML = `
 colspan="${colspan}"
 style="text-align:center;">
 
-Please enter an Ethiopian date.
+Please enter a date.
 
 </td>
 
@@ -3406,6 +3923,7 @@ Please enter an Ethiopian date.
 return;
 
 }
+
 
 if(
 fromEth &&
@@ -3420,7 +3938,7 @@ tbody.innerHTML = `
 colspan="${colspan}"
 style="text-align:center;color:#a51d1d;">
 
-Invalid From Ethiopian date.
+Invalid From date.
 
 </td>
 
@@ -3431,6 +3949,7 @@ Invalid From Ethiopian date.
 return;
 
 }
+
 
 if(
 toEth &&
@@ -3445,7 +3964,7 @@ tbody.innerHTML = `
 colspan="${colspan}"
 style="text-align:center;color:#a51d1d;">
 
-Invalid To Ethiopian date.
+Invalid To date.
 
 </td>
 
@@ -3457,12 +3976,14 @@ return;
 
 }
 
+
 let query =
 supabaseClient
 .from(
 "warehouse_activities"
 )
 .select("*");
+
 
 if(fromEth){
 
@@ -3475,6 +3996,7 @@ fromEth
 );
 
 }
+
 
 if(toEth){
 
@@ -3490,6 +4012,7 @@ toEth
 );
 
 }
+
 
 const {
 data,
@@ -3508,6 +4031,7 @@ ascending:false
 ascending:false
 }
 );
+
 
 if(error){
 
@@ -3532,6 +4056,7 @@ error.message
 return;
 
 }
+
 
 if(
 !data ||
@@ -3558,6 +4083,7 @@ return;
 
 }
 
+
 tbody.innerHTML =
 data.map(
 renderRow
@@ -3567,7 +4093,7 @@ renderRow
 
 
 /* ==========================================================
-   REFRESH SEARCHES
+   REFRESH SEARCH RESULTS
 ========================================================== */
 
 async function refreshExistingSearches(){
@@ -3577,21 +4103,25 @@ document.getElementById(
 "hubSearch"
 ).value;
 
+
 const fromDate =
 document.getElementById(
 "dateFrom"
 ).value;
+
 
 const toDate =
 document.getElementById(
 "dateTo"
 ).value;
 
+
 if(hub){
 
 await searchHub();
 
 }
+
 
 if(
 fromDate ||
@@ -3628,8 +4158,13 @@ loadTotals()
 
 async function initializeDashboard(){
 
+console.log(
+"Starting EPSS Dashboard..."
+);
+
+
 /*
- Today's Ethiopian date.
+ Set today's date
 */
 
 document.getElementById(
@@ -3639,14 +4174,14 @@ getTodayEthiopian();
 
 
 /*
- Start with one entry row.
+ Start with one row
 */
 
 clearDailyRows();
 
 
 /*
- Buttons.
+ Login button
 */
 
 document.getElementById(
@@ -3654,35 +4189,86 @@ document.getElementById(
 ).onclick =
 toggleAdminLogin;
 
+
+/*
+ Login
+*/
+
 document.getElementById(
 "loginButton"
 ).onclick =
 adminLogin;
 
+
+/*
+ Cancel login
+*/
+
 document.getElementById(
 "cancelLoginButton"
 ).onclick =
-toggleAdminLogin;
+function(){
+
+document.getElementById(
+"adminLoginBox"
+).style.display =
+"none";
+
+showLoginMessage(
+"",
+""
+);
+
+};
+
+
+/*
+ Add row
+*/
 
 document.getElementById(
 "addRowButton"
 ).onclick =
-()=>addDailyRow();
+function(){
+
+addDailyRow();
+
+};
+
+
+/*
+ Save
+*/
 
 document.getElementById(
 "saveButton"
 ).onclick =
 saveActivity;
 
+
+/*
+ Cancel edit
+*/
+
 document.getElementById(
 "cancelEditButton"
 ).onclick =
 cancelEdit;
 
+
+/*
+ Hub search
+*/
+
 document.getElementById(
 "hubSearchButton"
 ).onclick =
 searchHub;
+
+
+/*
+ Date search
+*/
 
 document.getElementById(
 "dateSearchButton"
@@ -3691,7 +4277,7 @@ searchByDate;
 
 
 /*
- Public mode first.
+ Start as public
 */
 
 showAdminSection(
@@ -3701,17 +4287,18 @@ false
 
 
 /*
- Check Supabase login.
+ Check Supabase session
 */
 
 await checkAdminSession();
 
 
 /*
- Load data.
+ Load dashboard
 */
 
 await loadDashboard();
+
 
 console.log(
 "EPSS DASHBOARD READY"
