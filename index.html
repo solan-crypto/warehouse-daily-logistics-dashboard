@@ -2,25 +2,15 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>EPSS Warehouse Logistics Dashboard</title>
 
   <!-- ================= SUPABASE ================= -->
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <style>
-
-    /* =====================================================
-       GENERAL
-       ===================================================== */
 
     * {
       box-sizing: border-box;
@@ -35,10 +25,7 @@
       line-height: 1.5;
     }
 
-
-    /* =====================================================
-       HEADER
-       ===================================================== */
+    /* ================= HEADER ================= */
 
     .header {
       background: linear-gradient(135deg, #09245f, #1746b0);
@@ -57,17 +44,13 @@
       opacity: 0.9;
     }
 
-
     .container {
       width: 94%;
       max-width: 1200px;
       margin: 20px auto;
     }
 
-
-    /* =====================================================
-       CARDS
-       ===================================================== */
+    /* ================= CARDS ================= */
 
     .card,
     .activity-card {
@@ -84,10 +67,7 @@
       font-size: 21px;
     }
 
-
-    /* =====================================================
-       PLANT / CENTER
-       ===================================================== */
+    /* ================= PLANT ================= */
 
     .plant-box h2 {
       color: #123a91;
@@ -95,10 +75,7 @@
       font-size: 20px;
     }
 
-
-    /* =====================================================
-       INPUTS
-       ===================================================== */
+    /* ================= INPUTS ================= */
 
     input,
     select,
@@ -119,10 +96,7 @@
       box-shadow: 0 0 0 2px rgba(23, 70, 176, 0.1);
     }
 
-
-    /* =====================================================
-       TOTAL ACTIVITY
-       ===================================================== */
+    /* ================= TOTAL ACTIVITY ================= */
 
     .activity-stats {
       display: grid;
@@ -148,10 +122,7 @@
       color: #123a91;
     }
 
-
-    /* =====================================================
-       TABLE
-       ===================================================== */
+    /* ================= TABLE ================= */
 
     .table-card {
       background: white;
@@ -179,7 +150,6 @@
       padding: 13px;
       text-align: left;
       white-space: nowrap;
-
       position: sticky;
       top: 0;
       z-index: 2;
@@ -204,10 +174,7 @@
       background: #ffffff;
     }
 
-
-    /* =====================================================
-       FORM
-       ===================================================== */
+    /* ================= FORM ================= */
 
     .form-grid {
       display: grid;
@@ -235,10 +202,7 @@
       resize: vertical;
     }
 
-
-    /* =====================================================
-       HUB SELECT
-       ===================================================== */
+    /* ================= HUB ================= */
 
     .hub-select {
       min-height: 170px;
@@ -250,10 +214,7 @@
       margin-top: 6px;
     }
 
-
-    /* =====================================================
-       BUTTONS
-       ===================================================== */
+    /* ================= BUTTONS ================= */
 
     .save-button,
     .search-button {
@@ -286,87 +247,7 @@
       padding: 12px 22px;
     }
 
-
-    /* =====================================================
-       EDIT / DELETE
-       ===================================================== */
-
-    .action-buttons {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .edit-button,
-    .delete-button {
-      border: none;
-      border-radius: 6px;
-      padding: 8px 11px;
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .edit-button {
-      background: #e8f0ff;
-      color: #123a91;
-    }
-
-    .edit-button:hover {
-      background: #d6e3ff;
-    }
-
-    .delete-button {
-      background: #fdecec;
-      color: #a51d1d;
-    }
-
-    .delete-button:hover {
-      background: #f8d6d6;
-    }
-
-    .cancel-edit-button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #e5e8ee;
-      color: #34405a;
-      font-weight: bold;
-      cursor: pointer;
-      display: none;
-    }
-
-
-    /* =====================================================
-       MESSAGE
-       ===================================================== */
-
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .success {
-      display: block;
-      background: #e7f7ed;
-      color: #176b36;
-    }
-
-    .error {
-      display: block;
-      background: #fdecec;
-      color: #a51d1d;
-    }
-
-
-    /* =====================================================
-       ADMIN BUTTON
-       ===================================================== */
+    /* ================= ADMIN BUTTON ================= */
 
     .admin-button {
       margin-top: 15px;
@@ -379,18 +260,13 @@
       font-size: 15px;
       cursor: pointer;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-      transition: 0.2s;
     }
 
     .admin-button:hover {
       background: #eef3ff;
-      transform: translateY(-1px);
     }
 
-
-    /* =====================================================
-       ADMIN LOGIN BOX
-       ===================================================== */
+    /* ================= ADMIN LOGIN ================= */
 
     .admin-login-box {
       display: none;
@@ -418,7 +294,6 @@
     }
 
     .admin-login-header h2 {
-      margin: 0;
       font-size: 22px;
     }
 
@@ -474,10 +349,6 @@
       color: #34405a;
     }
 
-    .cancel-button:hover {
-      background: #e1e5eb;
-    }
-
     .logout-button {
       background: #a51d1d;
       color: white;
@@ -490,10 +361,70 @@
       min-height: 20px;
     }
 
+    /* ================= EDIT DELETE ================= */
 
-    /* =====================================================
-       DATE SEARCH
-       ===================================================== */
+    .action-buttons {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .edit-button,
+    .delete-button {
+      border: none;
+      border-radius: 6px;
+      padding: 8px 11px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .edit-button {
+      background: #e8f0ff;
+      color: #123a91;
+    }
+
+    .delete-button {
+      background: #fdecec;
+      color: #a51d1d;
+    }
+
+    .cancel-edit-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e5e8ee;
+      color: #34405a;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* ================= MESSAGE ================= */
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .success {
+      display: block;
+      background: #e7f7ed;
+      color: #176b36;
+    }
+
+    .error {
+      display: block;
+      background: #fdecec;
+      color: #a51d1d;
+    }
+
+    /* ================= DATE SEARCH ================= */
 
     .date-search-grid {
       display: grid;
@@ -507,10 +438,7 @@
       margin-top: 18px;
     }
 
-
-    /* =====================================================
-       FOOTER
-       ===================================================== */
+    /* ================= FOOTER ================= */
 
     footer {
       text-align: center;
@@ -519,10 +447,7 @@
       font-size: 14px;
     }
 
-
-    /* =====================================================
-       MOBILE
-       ===================================================== */
+    /* ================= MOBILE ================= */
 
     @media (max-width: 700px) {
 
@@ -575,37 +500,24 @@
         min-width: 900px;
       }
 
-      .recent-table-card {
-        max-height: 470px;
-      }
-
       .admin-login-box {
         width: 94%;
       }
-
     }
 
   </style>
 
 </head>
 
-
 <body>
 
-
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
+  <!-- ================= HEADER ================= -->
 
   <header class="header">
 
-    <h1>
-      EPSS Warehouse Logistics Dashboard
-    </h1>
+    <h1>EPSS Warehouse Logistics Dashboard</h1>
 
-    <p>
-      Warehouse Activity Monitoring System
-    </p>
+    <p>Warehouse Activity Monitoring System</p>
 
     <button
       type="button"
@@ -620,10 +532,7 @@
   </header>
 
 
-
-  <!-- =====================================================
-       ADMIN LOGIN
-       ===================================================== -->
+  <!-- ================= ADMIN LOGIN ================= -->
 
   <div
     id="adminLoginBox"
@@ -635,13 +544,9 @@
         🔐
       </div>
 
-      <h2>
-        Admin Login
-      </h2>
+      <h2>Admin Login</h2>
 
-      <p>
-        Authorized personnel only
-      </p>
+      <p>Authorized personnel only</p>
 
     </div>
 
@@ -658,7 +563,7 @@
           type="email"
           id="adminEmail"
           placeholder="Enter admin email"
-          autocomplete="username">
+          autocomplete="email">
 
       </div>
 
@@ -705,23 +610,14 @@
   </div>
 
 
-
-  <!-- =====================================================
-       MAIN
-       ===================================================== -->
-
   <main class="container">
 
 
-    <!-- ===================================================
-         PLANT / CENTER
-         =================================================== -->
+    <!-- ================= PLANT ================= -->
 
     <section class="card plant-box">
 
-      <h2>
-        Plant / Center
-      </h2>
+      <h2>Plant / Center</h2>
 
       <select id="plantCenter">
 
@@ -746,10 +642,7 @@
     </section>
 
 
-
-    <!-- ===================================================
-         TOTAL ACTIVITY
-         =================================================== -->
+    <!-- ================= TOTAL ACTIVITY ================= -->
 
     <h2 class="section-title">
       Total Activity
@@ -761,9 +654,7 @@
 
         <div class="stat">
 
-          <h3>
-            Loaded
-          </h3>
+          <h3>Loaded</h3>
 
           <div
             class="stat-number"
@@ -778,9 +669,7 @@
 
         <div class="stat">
 
-          <h3>
-            Offloaded
-          </h3>
+          <h3>Offloaded</h3>
 
           <div
             class="stat-number"
@@ -797,10 +686,7 @@
     </section>
 
 
-
-    <!-- ===================================================
-         RECENT 7 DAYS
-         =================================================== -->
+    <!-- ================= RECENT 7 DAYS ================= -->
 
     <h2 class="section-title">
       Recent 7 Days Activity
@@ -834,7 +720,6 @@
 
         </thead>
 
-
         <tbody id="recentActivity">
 
           <tr>
@@ -843,7 +728,7 @@
               colspan="7"
               style="text-align:center;">
 
-            Loading...
+              Loading...
 
             </td>
 
@@ -856,10 +741,7 @@
     </section>
 
 
-
-    <!-- ===================================================
-         SEARCH HUB HISTORY
-         =================================================== -->
+    <!-- ================= HUB HISTORY ================= -->
 
     <h2 class="section-title">
       Search Hub History
@@ -976,7 +858,6 @@
 
           </thead>
 
-
           <tbody id="historyResults">
 
             <tr>
@@ -1000,10 +881,7 @@
     </section>
 
 
-
-    <!-- ===================================================
-         SEARCH ACTIVITY BY DATE
-         =================================================== -->
+    <!-- ================= DATE SEARCH ================= -->
 
     <h2 class="section-title">
       Search Activity by Date
@@ -1081,7 +959,6 @@
 
           </thead>
 
-
           <tbody id="dateSearchResults">
 
             <tr>
@@ -1105,15 +982,11 @@
     </section>
 
 
-
-    <!-- ===================================================
-         ADMIN ONLY SECTION
-         =================================================== -->
+    <!-- ================= ADMIN ACTIVITY ================= -->
 
     <div
       id="adminActivitySection"
       style="display:none;">
-
 
       <h2 class="section-title">
         Daily Activity Entry
@@ -1124,8 +997,6 @@
 
         <div class="form-grid">
 
-
-          <!-- DATE -->
 
           <div class="form-group">
 
@@ -1139,8 +1010,6 @@
 
           </div>
 
-
-          <!-- ACTIVITY -->
 
           <div class="form-group">
 
@@ -1163,8 +1032,6 @@
           </div>
 
 
-          <!-- LOAD COUNT -->
-
           <div class="form-group">
 
             <label>
@@ -1178,8 +1045,6 @@
 
           </div>
 
-
-          <!-- HUBS -->
 
           <div class="form-group">
 
@@ -1222,8 +1087,6 @@
           </div>
 
 
-          <!-- ITEMS -->
-
           <div class="form-group full">
 
             <label>
@@ -1236,8 +1099,6 @@
 
           </div>
 
-
-          <!-- VEHICLE -->
 
           <div class="form-group">
 
@@ -1275,8 +1136,6 @@
 
           </div>
 
-
-          <!-- CHALLENGES -->
 
           <div class="form-group">
 
@@ -1329,10 +1188,7 @@
   </main>
 
 
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
+  <!-- ================= FOOTER ================= -->
 
   <footer>
 
@@ -1341,16 +1197,12 @@
   </footer>
 
 
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
+  <!-- ================= JAVASCRIPT ================= -->
 
   <script>
 
-
     /* =====================================================
-       SUPABASE SETTINGS
+       SUPABASE
        ===================================================== */
 
     const SUPABASE_URL =
@@ -1371,7 +1223,6 @@
        ===================================================== */
 
     let editingId = null;
-
     let adminLoggedIn = false;
 
 
@@ -1387,17 +1238,14 @@
         today.getFullYear();
 
       const month =
-        String(
-          today.getMonth() + 1
-        ).padStart(2, "0");
+        String(today.getMonth() + 1)
+          .padStart(2, "0");
 
       const day =
-        String(
-          today.getDate()
-        ).padStart(2, "0");
+        String(today.getDate())
+          .padStart(2, "0");
 
       return `${year}-${month}-${day}`;
-
     }
 
 
@@ -1407,228 +1255,394 @@
 
 
     /* =====================================================
-       MESSAGE
-       ===================================================== */
-
-    function showMessage(
-      text,
-      type
-    ) {
-
-      const message =
-        document.getElementById(
-          "message"
-        );
-
-      message.textContent =
-        text;
-
-      message.className =
-        "message " + type;
-
-    }
-
-
-    /* =====================================================
        ESCAPE HTML
        ===================================================== */
 
     function escapeHtml(value) {
 
-      return String(
-        value ?? ""
-      )
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
+
+    function showMessage(text, type) {
+
+      const message =
+        document.getElementById("message");
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+    }
+
+
+    /* =====================================================
+       ADMIN LOGIN BOX
+       ===================================================== */
+
+    function toggleAdminLogin() {
+
+      const box =
+        document.getElementById("adminLoginBox");
+
+      if (
+        box.style.display === "block"
+      ) {
+
+        box.style.display = "none";
+
+      } else {
+
+        box.style.display = "block";
+
+        document.getElementById(
+          "adminEmail"
+        ).focus();
+
+      }
+    }
+
+
+    /* =====================================================
+       ADMIN LOGIN
+       ===================================================== */
+
+    async function adminLogin() {
+
+      const emailInput =
+        document.getElementById("adminEmail");
+
+      const passwordInput =
+        document.getElementById("adminPassword");
+
+      const loginMessage =
+        document.getElementById("loginMessage");
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      console.log("================================");
+      console.log("ADMIN LOGIN STARTED");
+      console.log("Email:", email);
+      console.log("================================");
+
+
+      if (!email || !password) {
+
+        loginMessage.textContent =
+          "Please enter email and password.";
+
+        loginMessage.style.color =
+          "#a51d1d";
+
+        return;
+      }
+
+
+      loginMessage.textContent =
+        "Connecting to Supabase...";
+
+      loginMessage.style.color =
+        "#667085";
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .signInWithPassword({
+
+              email: email,
+
+              password: password
+
+            });
+
+
+        console.log(
+          "SUPABASE LOGIN DATA:",
+          data
+        );
+
+        console.log(
+          "SUPABASE LOGIN ERROR:",
+          error
+        );
+
+
+        if (error) {
+
+          loginMessage.textContent =
+            "Login failed: " +
+            error.message;
+
+          loginMessage.style.color =
+            "#a51d1d";
+
+          return;
+        }
+
+
+        if (!data || !data.user) {
+
+          loginMessage.textContent =
+            "Login failed: No user returned.";
+
+          loginMessage.style.color =
+            "#a51d1d";
+
+          return;
+        }
+
+
+        /* ===============================
+           SUCCESS
+           =============================== */
+
+        loginMessage.textContent =
+          "Login successful! ✅";
+
+        loginMessage.style.color =
+          "#176b36";
+
+
+        console.log(
+          "ADMIN USER:",
+          data.user
+        );
+
+
+        showAdminSection(
+          data.user
+        );
+
+
+        await refreshExistingSearches();
+
+
+      } catch (err) {
+
+        console.error(
+          "LOGIN EXCEPTION:",
+          err
+        );
+
+        loginMessage.textContent =
+          "Login error: " +
+          err.message;
+
+        loginMessage.style.color =
+          "#a51d1d";
+      }
+
+    }
+
+
+    /* =====================================================
+       CHECK ADMIN SESSION
+       ===================================================== */
+
+    async function checkAdminSession() {
+
+      console.log(
+        "Checking existing Supabase session..."
+      );
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .getSession();
+
+
+        if (error) {
+
+          console.error(
+            "SESSION CHECK ERROR:",
+            error
+          );
+
+          showAdminSection(null);
+
+          return;
+        }
+
+
+        const session =
+          data.session;
+
+
+        if (session && session.user) {
+
+          console.log(
+            "Existing admin session found:",
+            session.user.email
+          );
+
+          showAdminSection(
+            session.user
+          );
+
+        } else {
+
+          console.log(
+            "No admin session found."
+          );
+
+          showAdminSection(null);
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "SESSION EXCEPTION:",
+          error
+        );
+
+        showAdminSection(null);
+      }
+
+    }
+
+
+    /* =====================================================
+       AUTH STATE LISTENER
+       ===================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      async (event, session) => {
+
+        console.log(
+          "AUTH EVENT:",
+          event
+        );
+
+
+        if (
+          event === "SIGNED_IN" &&
+          session
+        ) {
+
+          showAdminSection(
+            session.user
+          );
+
+        }
+
+
+        if (
+          event === "SIGNED_OUT"
+        ) {
+
+          showAdminSection(null);
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       ADMIN LOGOUT
+       ===================================================== */
+
+    async function adminLogout() {
+
+      const confirmed =
+        confirm(
+          "Do you want to logout from Admin?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient.auth
+          .signOut();
+
+
+      if (error) {
+
+        alert(
+          "Logout failed:\n\n" +
+          error.message
+        );
+
+        return;
+      }
+
+
+      adminLoggedIn = false;
+
+      editingId = null;
+
+
+      const loginButton =
+        document.getElementById(
+          "adminLoginButton"
+        );
+
+
+      loginButton.textContent =
+        "🔐 Admin Login";
+
+
+      loginButton.onclick =
+        toggleAdminLogin;
+
+
+      document.getElementById(
+        "adminActivitySection"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "adminLoginBox"
+      ).style.display =
+        "none";
+
+
+      updateActionHeaders();
+
+      loadRecentActivity();
+
+      alert(
+        "Logged out successfully. ✅"
       );
 
     }
 
 
     /* =====================================================
-       SELECTED HUBS
-       ===================================================== */
-
-    function getSelectedHubs() {
-
-      const select =
-        document.getElementById(
-          "hubs"
-        );
-
-      const selected = [];
-
-      for (
-        const option of select.options
-      ) {
-
-        if (option.selected) {
-
-          selected.push(
-            option.value
-          );
-
-        }
-
-      }
-
-      return selected.join(", ");
-
-    }
-
-
-    /* =====================================================
-       SET SELECTED HUBS
-       ===================================================== */
-
-    function setSelectedHubs(
-      hubString
-    ) {
-
-      const select =
-        document.getElementById(
-          "hubs"
-        );
-
-      const selectedHubs =
-        String(
-          hubString || ""
-        )
-        .split(",")
-        .map(
-          hub =>
-            hub.trim()
-        )
-        .filter(Boolean);
-
-
-      for (
-        const option of select.options
-      ) {
-
-        option.selected =
-          selectedHubs.includes(
-            option.value
-          );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       TOGGLE LOGIN BOX
-       ===================================================== */
-
-    function toggleAdminLogin() {
-
-      const box =
-        document.getElementById(
-          "adminLoginBox"
-        );
-
-      if (!box) {
-
-        console.error(
-          "Admin login box not found."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        box.style.display === "none" ||
-        box.style.display === ""
-      ) {
-
-        box.style.display =
-          "block";
-
-      } else {
-
-        box.style.display =
-          "none";
-
-      }
-
-    }
-
-
-    /* =====================================================
-       UPDATE ACTION HEADERS
-       ===================================================== */
-
-    function updateActionHeaders() {
-
-      const display =
-        adminLoggedIn
-          ? "table-cell"
-          : "none";
-
-
-      const recentHeader =
-        document.getElementById(
-          "recentActionsHeader"
-        );
-
-      const historyHeader =
-        document.getElementById(
-          "historyActionsHeader"
-        );
-
-      const dateHeader =
-        document.getElementById(
-          "dateActionsHeader"
-        );
-
-
-      if (recentHeader) {
-
-        recentHeader.style.display =
-          display;
-
-      }
-
-
-      if (historyHeader) {
-
-        historyHeader.style.display =
-          display;
-
-      }
-
-
-      if (dateHeader) {
-
-        dateHeader.style.display =
-          display;
-
-      }
-
-    }
-
-
-    /* =====================================================
-       SHOW / HIDE ADMIN SECTION
+       SHOW / HIDE ADMIN
        ===================================================== */
 
     function showAdminSection(user) {
@@ -1655,69 +1669,43 @@
 
       if (user) {
 
-        /* SHOW ADMIN AREA */
-
-        if (adminSection) {
-
-          adminSection.style.display =
-            "block";
-
-        }
+        adminSection.style.display =
+          "block";
 
 
-        /* CHANGE HEADER BUTTON */
-
-        if (loginButton) {
-
-          loginButton.textContent =
-            "🔓 Admin Logged In";
-
-          loginButton.onclick =
-            function () {
-
-              adminLogout();
-
-            };
-
-        }
+        loginButton.textContent =
+          "🔓 Admin Logged In";
 
 
-        /* HIDE LOGIN BOX */
+        loginButton.onclick =
+          adminLogout;
 
-        if (loginBox) {
 
-          loginBox.style.display =
-            "none";
+        loginBox.style.display =
+          "none";
 
-        }
+
+        console.log(
+          "ADMIN MODE ENABLED"
+        );
 
       } else {
 
-        /* HIDE ADMIN AREA */
-
-        if (adminSection) {
-
-          adminSection.style.display =
-            "none";
-
-        }
+        adminSection.style.display =
+          "none";
 
 
-        /* RESTORE LOGIN BUTTON */
+        loginButton.textContent =
+          "🔐 Admin Login";
 
-        if (loginButton) {
 
-          loginButton.textContent =
-            "🔐 Admin Login";
+        loginButton.onclick =
+          toggleAdminLogin;
 
-          loginButton.onclick =
-            function () {
 
-              toggleAdminLogin();
-
-            };
-
-        }
+        console.log(
+          "ADMIN MODE DISABLED"
+        );
 
       }
 
@@ -1730,368 +1718,136 @@
 
 
     /* =====================================================
-       ADMIN LOGIN
+       ACTION HEADERS
        ===================================================== */
 
-    async function adminLogin() {
+    function updateActionHeaders() {
 
-      const loginMessage =
-        document.getElementById(
-          "loginMessage"
-        );
-
-      const email =
-        document.getElementById(
-          "adminEmail"
-        ).value.trim();
-
-      const password =
-        document.getElementById(
-          "adminPassword"
-        ).value;
+      const display =
+        adminLoggedIn
+          ? "table-cell"
+          : "none";
 
 
-      console.log(
-        "LOGIN BUTTON CLICKED"
-      );
-
-      console.log(
-        "Email:",
-        email
-      );
+      document.getElementById(
+        "recentActionsHeader"
+      ).style.display =
+        display;
 
 
-      /* CHECK FIELDS */
-
-      if (
-        !email ||
-        !password
-      ) {
-
-        loginMessage.textContent =
-          "Please enter email and password.";
-
-        loginMessage.style.color =
-          "#a51d1d";
-
-        return;
-
-      }
+      document.getElementById(
+        "historyActionsHeader"
+      ).style.display =
+        display;
 
 
-      loginMessage.textContent =
-        "Connecting to Supabase...";
-
-      loginMessage.style.color =
-        "#667085";
-
-
-      try {
-
-        console.log(
-          "Calling Supabase Auth..."
-        );
-
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .signInWithPassword({
-
-              email:
-                email,
-
-              password:
-                password
-
-            });
-
-
-        console.log(
-          "LOGIN DATA:",
-          data
-        );
-
-        console.log(
-          "LOGIN ERROR:",
-          error
-        );
-
-
-        /* SUPABASE ERROR */
-
-        if (error) {
-
-          loginMessage.textContent =
-            "Login failed: " +
-            error.message;
-
-          loginMessage.style.color =
-            "#a51d1d";
-
-          return;
-
-        }
-
-
-        /* SUCCESS */
-
-        loginMessage.textContent =
-          "Login successful! ✅";
-
-        loginMessage.style.color =
-          "#176b36";
-
-
-        console.log(
-          "USER LOGGED IN:",
-          data.user
-        );
-
-
-        showAdminSection(
-          data.user
-        );
-
-
-        await refreshExistingSearches();
-
-      }
-
-      catch (err) {
-
-        console.error(
-          "LOGIN EXCEPTION:",
-          err
-        );
-
-
-        loginMessage.textContent =
-          "Login error: " +
-          err.message;
-
-        loginMessage.style.color =
-          "#a51d1d";
-
-      }
+      document.getElementById(
+        "dateActionsHeader"
+      ).style.display =
+        display;
 
     }
 
 
     /* =====================================================
-       ADMIN LOGOUT
-       ===================================================== */
-
-    async function adminLogout() {
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth
-            .signOut();
-
-
-        if (error) {
-
-          console.error(
-            "LOGOUT ERROR:",
-            error
-          );
-
-          alert(
-            "Logout failed:\n\n" +
-            error.message
-          );
-
-          return;
-
-        }
-
-
-        adminLoggedIn =
-          false;
-
-        editingId =
-          null;
-
-
-        document.getElementById(
-          "adminEmail"
-        ).value = "";
-
-
-        document.getElementById(
-          "adminPassword"
-        ).value = "";
-
-
-        document.getElementById(
-          "loginMessage"
-        ).textContent = "";
-
-
-        showAdminSection(
-          null
-        );
-
-
-        alert(
-          "Admin logged out successfully. ✅"
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "LOGOUT EXCEPTION:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       CHECK CURRENT ADMIN SESSION
-       ===================================================== */
-
-    async function checkAdminSession() {
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .getSession();
-
-
-        if (error) {
-
-          console.error(
-            "SESSION ERROR:",
-            error
-          );
-
-          showAdminSection(
-            null
-          );
-
-          return;
-
-        }
-
-
-        if (
-          data &&
-          data.session
-        ) {
-
-          console.log(
-            "Existing admin session found:",
-            data.session.user.email
-          );
-
-
-          showAdminSection(
-            data.session.user
-          );
-
-        } else {
-
-          console.log(
-            "No admin session."
-          );
-
-
-          showAdminSection(
-            null
-          );
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "CHECK SESSION ERROR:",
-          error
-        );
-
-        showAdminSection(
-          null
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       AUTH STATE LISTENER
-       ===================================================== */
-
-    supabaseClient.auth.onAuthStateChange(
-      function (
-        event,
-        session
-      ) {
-
-        console.log(
-          "AUTH EVENT:",
-          event
-        );
-
-
-        if (session) {
-
-          showAdminSection(
-            session.user
-          );
-
-        } else {
-
-          showAdminSection(
-            null
-          );
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       IS ADMIN LOGGED IN
+       CHECK IF ADMIN
        ===================================================== */
 
     async function isAdminLoggedIn() {
 
       const {
-        data
+        data,
+        error
       } =
         await supabaseClient.auth
           .getSession();
 
 
-      return !!(
-        data &&
-        data.session
-      );
+      if (error) {
+
+        console.error(
+          "GET SESSION ERROR:",
+          error
+        );
+
+        return false;
+      }
+
+
+      return !!data.session;
 
     }
 
 
     /* =====================================================
-       SAVE / UPDATE ACTIVITY
+       SELECTED HUBS
+       ===================================================== */
+
+    function getSelectedHubs() {
+
+      const select =
+        document.getElementById("hubs");
+
+      const selected = [];
+
+
+      for (
+        const option of select.options
+      ) {
+
+        if (option.selected) {
+
+          selected.push(
+            option.value
+          );
+
+        }
+
+      }
+
+
+      return selected.join(", ");
+
+    }
+
+
+    /* =====================================================
+       SET HUBS
+       ===================================================== */
+
+    function setSelectedHubs(
+      hubString
+    ) {
+
+      const select =
+        document.getElementById("hubs");
+
+
+      const selectedHubs =
+        String(hubString || "")
+          .split(",")
+          .map(
+            hub => hub.trim()
+          )
+          .filter(Boolean);
+
+
+      for (
+        const option of select.options
+      ) {
+
+        option.selected =
+          selectedHubs.includes(
+            option.value
+          );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SAVE ACTIVITY
        ===================================================== */
 
     async function saveActivity() {
@@ -2109,10 +1865,7 @@
           .getSession();
 
 
-      if (
-        !sessionData ||
-        !sessionData.session
-      ) {
+      if (!sessionData.session) {
 
         showMessage(
           "Please log in as Admin before saving.",
@@ -2120,7 +1873,6 @@
         );
 
         return;
-
       }
 
 
@@ -2164,8 +1916,6 @@
         ).value.trim();
 
 
-      /* VALIDATION */
-
       if (!activityDate) {
 
         showMessage(
@@ -2174,7 +1924,6 @@
         );
 
         return;
-
       }
 
 
@@ -2189,7 +1938,6 @@
         );
 
         return;
-
       }
 
 
@@ -2201,7 +1949,6 @@
         );
 
         return;
-
       }
 
 
@@ -2213,7 +1960,6 @@
         );
 
         return;
-
       }
 
 
@@ -2256,8 +2002,6 @@
       let result;
 
 
-      /* UPDATE */
-
       if (editingId) {
 
         result =
@@ -2271,33 +2015,24 @@
               editingId
             );
 
-      }
-
-      /* INSERT */
-
-      else {
+      } else {
 
         result =
           await supabaseClient
             .from(
               "warehouse_activities"
             )
-            .insert([
-              record
-            ]);
+            .insert([record]);
 
       }
 
 
-      /* ERROR */
-
       if (result.error) {
 
         console.error(
-          "SAVE/UPDATE ERROR:",
+          "SAVE ERROR:",
           result.error
         );
-
 
         showMessage(
           "Error: " +
@@ -2305,11 +2040,7 @@
           "error"
         );
 
-      }
-
-      /* SUCCESS */
-
-      else {
+      } else {
 
         showMessage(
           editingId
@@ -2321,9 +2052,7 @@
 
         clearActivityForm();
 
-
-        editingId =
-          null;
+        editingId = null;
 
 
         document.getElementById(
@@ -2407,10 +2136,7 @@
         )
         .forEach(
           option => {
-
-            option.selected =
-              false;
-
+            option.selected = false;
           }
         );
 
@@ -2428,11 +2154,10 @@
       ) {
 
         alert(
-          "Please log in as Admin to edit an activity."
+          "Please log in as Admin to edit."
         );
 
         return;
-
       }
 
 
@@ -2454,24 +2179,16 @@
 
       if (error) {
 
-        console.error(
-          "EDIT ERROR:",
-          error
-        );
-
-
         alert(
-          "Unable to load this activity:\n" +
+          "Unable to load activity:\n" +
           error.message
         );
 
         return;
-
       }
 
 
-      editingId =
-        id;
+      editingId = id;
 
 
       document.getElementById(
@@ -2503,9 +2220,7 @@
       ).value =
         data.items === "-"
           ? ""
-          : (
-              data.items || ""
-            );
+          : data.items || "";
 
 
       document.getElementById(
@@ -2519,9 +2234,7 @@
       ).value =
         data.challenges === "-"
           ? ""
-          : (
-              data.challenges || ""
-            );
+          : data.challenges || "";
 
 
       document.getElementById(
@@ -2564,9 +2277,7 @@
 
     function cancelEdit() {
 
-      editingId =
-        null;
-
+      editingId = null;
 
       clearActivityForm();
 
@@ -2600,7 +2311,7 @@
 
 
     /* =====================================================
-       DELETE ACTIVITY
+       DELETE
        ===================================================== */
 
     async function deleteActivity(id) {
@@ -2610,11 +2321,10 @@
       ) {
 
         alert(
-          "Please log in as Admin to delete an activity."
+          "Please log in as Admin."
         );
 
         return;
-
       }
 
 
@@ -2627,9 +2337,7 @@
 
 
       if (!confirmed) {
-
         return;
-
       }
 
 
@@ -2649,25 +2357,16 @@
 
       if (error) {
 
-        console.error(
-          "DELETE ERROR:",
-          error
-        );
-
-
         alert(
           "Delete failed:\n\n" +
           error.message
         );
 
         return;
-
       }
 
 
-      if (
-        editingId === id
-      ) {
+      if (editingId === id) {
 
         cancelEdit();
 
@@ -2693,9 +2392,7 @@
     function actionButtons(id) {
 
       if (!adminLoggedIn) {
-
         return "";
-
       }
 
 
@@ -2711,7 +2408,6 @@
             ✏️ Edit
 
           </button>
-
 
           <button
             type="button"
@@ -2792,13 +2488,11 @@
             includeActions &&
             adminLoggedIn
               ? `
-
                 <td>
                   ${actionButtons(
                     row.id
                   )}
                 </td>
-
               `
               : ""
           }
@@ -2811,7 +2505,7 @@
 
 
     /* =====================================================
-       LOAD RECENT 7 DAYS
+       RECENT 7 DAYS
        ===================================================== */
 
     async function loadRecentActivity() {
@@ -2822,13 +2516,6 @@
         );
 
 
-      if (!tbody) {
-
-        return;
-
-      }
-
-
       const {
         data: sessionData
       } =
@@ -2837,47 +2524,8 @@
 
 
       const loggedIn =
-        !!(
-          sessionData &&
-          sessionData.session
-        );
+        !!sessionData.session;
 
-
-      adminLoggedIn =
-        loggedIn;
-
-
-      /* LOCAL DATE */
-
-      function getLocalDateString(
-        date
-      ) {
-
-        const year =
-          date.getFullYear();
-
-        const month =
-          String(
-            date.getMonth() + 1
-          ).padStart(
-            2,
-            "0"
-          );
-
-        const day =
-          String(
-            date.getDate()
-          ).padStart(
-            2,
-            "0"
-          );
-
-        return `${year}-${month}-${day}`;
-
-      }
-
-
-      /* LAST 7 DAYS */
 
       const today =
         new Date();
@@ -2892,14 +2540,34 @@
       );
 
 
+      function localDate(date) {
+
+        const year =
+          date.getFullYear();
+
+        const month =
+          String(
+            date.getMonth() + 1
+          ).padStart(2, "0");
+
+        const day =
+          String(
+            date.getDate()
+          ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+
+      }
+
+
       const fromDate =
-        getLocalDateString(
+        localDate(
           sevenDaysAgo
         );
 
 
       const toDate =
-        getLocalDateString(
+        localDate(
           today
         );
 
@@ -2920,8 +2588,6 @@
 
       `;
 
-
-      /* GET RECORDS */
 
       const {
         data,
@@ -2944,12 +2610,8 @@
               ascending: false
             }
           )
-          .limit(
-            100
-          );
+          .limit(100);
 
-
-      /* ERROR */
 
       if (error) {
 
@@ -2970,13 +2632,8 @@
                 color:#a51d1d;
               ">
 
-              Error loading recent activities.
-
-              <br><br>
-
-              ${escapeHtml(
-                error.message
-              )}
+              Error loading recent activities:
+              ${escapeHtml(error.message)}
 
             </td>
 
@@ -2985,47 +2642,34 @@
         `;
 
         return;
-
       }
 
 
-      /* FILTER */
-
       const recentData =
-        (data || [])
-          .filter(
-            row => {
+        (data || []).filter(
+          row => {
 
-              if (
-                !row.activity_date
-              ) {
-
-                return false;
-
-              }
-
-
-              const activityDate =
-                String(
-                  row.activity_date
-                ).substring(
-                  0,
-                  10
-                );
-
-
-              return (
-                activityDate >=
-                  fromDate &&
-                activityDate <=
-                  toDate
-              );
-
+            if (
+              !row.activity_date
+            ) {
+              return false;
             }
-          );
 
 
-      /* NO DATA */
+            const activityDate =
+              String(
+                row.activity_date
+              ).substring(0, 10);
+
+
+            return (
+              activityDate >= fromDate &&
+              activityDate <= toDate
+            );
+
+          }
+        );
+
 
       if (
         recentData.length === 0
@@ -3042,7 +2686,8 @@
                 padding:25px;
               ">
 
-              No activity recorded in the last 7 days.
+              No activity recorded
+              in the last 7 days.
 
             </td>
 
@@ -3051,11 +2696,8 @@
         `;
 
         return;
-
       }
 
-
-      /* DISPLAY */
 
       tbody.innerHTML =
         recentData
@@ -3069,17 +2711,14 @@
           .join("");
 
 
-      /* EMPTY ROWS */
-
-      const minimumRows =
-        7;
+      const minimumRows = 7;
 
 
       const emptyRows =
         Math.max(
           0,
           minimumRows -
-            recentData.length
+          recentData.length
         );
 
 
@@ -3103,7 +2742,7 @@
 
             ${
               loggedIn
-                ? "<td>&nbsp;</td>"
+                ? `<td>&nbsp;</td>`
                 : ""
             }
 
@@ -3143,55 +2782,48 @@
         );
 
         return;
-
       }
 
 
-      let loaded =
-        0;
+      let loaded = 0;
 
-      let offloaded =
-        0;
+      let offloaded = 0;
 
 
-      (data || [])
-        .forEach(
-          row => {
+      (data || []).forEach(
+        row => {
 
-            const count =
-              Number(
-                row.load_count
-              ) || 0;
-
-
-            const type =
-              String(
-                row.activity_type || ""
-              )
-              .toLowerCase();
+          const count =
+            Number(
+              row.load_count
+            ) || 0;
 
 
-            if (
-              type === "loaded"
-            ) {
-
-              loaded +=
-                count;
-
-            }
+          const type =
+            String(
+              row.activity_type || ""
+            ).toLowerCase();
 
 
-            if (
-              type === "offloaded"
-            ) {
+          if (
+            type === "loaded"
+          ) {
 
-              offloaded +=
-                count;
-
-            }
+            loaded += count;
 
           }
-        );
+
+
+          if (
+            type === "offloaded"
+          ) {
+
+            offloaded += count;
+
+          }
+
+        }
+      );
 
 
       document.getElementById(
@@ -3209,7 +2841,7 @@
 
 
     /* =====================================================
-       SEARCH HUB HISTORY
+       HUB SEARCH
        ===================================================== */
 
     async function searchHub() {
@@ -3238,6 +2870,12 @@
         );
 
 
+      const colspan =
+        adminLoggedIn
+          ? 8
+          : 7;
+
+
       if (!search) {
 
         tbody.innerHTML = `
@@ -3245,7 +2883,7 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
@@ -3260,7 +2898,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3275,13 +2912,14 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
               ">
 
-              From Date cannot be later than To Date.
+              From Date cannot be later
+              than To Date.
 
             </td>
 
@@ -3290,7 +2928,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3299,7 +2936,7 @@
         <tr>
 
           <td
-            colspan="${adminLoggedIn ? 8 : 7}"
+            colspan="${colspan}"
             style="text-align:center;">
 
             Searching history...
@@ -3319,9 +2956,7 @@
           .select("*")
           .ilike(
             "hubs",
-            "%" +
-            search +
-            "%"
+            "%" + search + "%"
           );
 
 
@@ -3341,9 +2976,7 @@
         query =
           query.lt(
             "activity_date",
-            getNextDate(
-              toDate
-            )
+            getNextDate(toDate)
           );
 
       }
@@ -3381,19 +3014,14 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
               ">
 
-              Error searching history.
-
-              <br><br>
-
-              ${escapeHtml(
-                error.message
-              )}
+              Error searching history:
+              ${escapeHtml(error.message)}
 
             </td>
 
@@ -3402,7 +3030,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3416,7 +3043,7 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="text-align:center;">
 
               No history found.
@@ -3428,7 +3055,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3447,7 +3073,7 @@
 
 
     /* =====================================================
-       SEARCH BY DATE
+       DATE SEARCH
        ===================================================== */
 
     async function searchByDate() {
@@ -3470,6 +3096,12 @@
         );
 
 
+      const colspan =
+        adminLoggedIn
+          ? 8
+          : 7;
+
+
       if (
         !fromDate &&
         !toDate
@@ -3480,7 +3112,7 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="text-align:center;">
 
               Please select a date.
@@ -3492,7 +3124,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3507,13 +3138,14 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
               ">
 
-              To Date cannot be earlier than From Date.
+              To Date cannot be earlier
+              than From Date.
 
             </td>
 
@@ -3522,7 +3154,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3531,7 +3162,7 @@
         <tr>
 
           <td
-            colspan="${adminLoggedIn ? 8 : 7}"
+            colspan="${colspan}"
             style="text-align:center;">
 
             Searching...
@@ -3551,65 +3182,24 @@
           .select("*");
 
 
-      if (
-        fromDate &&
-        !toDate
-      ) {
+      if (fromDate) {
 
         query =
-          query
-            .gte(
-              "activity_date",
-              fromDate
-            )
-            .lt(
-              "activity_date",
-              getNextDate(
-                fromDate
-              )
-            );
+          query.gte(
+            "activity_date",
+            fromDate
+          );
 
       }
 
 
-      if (
-        !fromDate &&
-        toDate
-      ) {
+      if (toDate) {
 
         query =
-          query
-            .gte(
-              "activity_date",
-              toDate
-            )
-            .lt(
-              "activity_date",
-              getNextDate(
-                toDate
-              )
-            );
-
-      }
-
-
-      if (
-        fromDate &&
-        toDate
-      ) {
-
-        query =
-          query
-            .gte(
-              "activity_date",
-              fromDate
-            )
-            .lt(
-              "activity_date",
-              getNextDate(
-                toDate
-              )
-            );
+          query.lt(
+            "activity_date",
+            getNextDate(toDate)
+          );
 
       }
 
@@ -3646,19 +3236,14 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
               ">
 
-              Error searching activities.
-
-              <br><br>
-
-              ${escapeHtml(
-                error.message
-              )}
+              Error searching activities:
+              ${escapeHtml(error.message)}
 
             </td>
 
@@ -3667,7 +3252,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3681,10 +3265,11 @@
           <tr>
 
             <td
-              colspan="${adminLoggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="text-align:center;">
 
-              No activity found for the selected date.
+              No activity found
+              for the selected date.
 
             </td>
 
@@ -3693,7 +3278,6 @@
         `;
 
         return;
-
       }
 
 
@@ -3738,19 +3322,13 @@
       const month =
         String(
           date.getMonth() + 1
-        ).padStart(
-          2,
-          "0"
-        );
+        ).padStart(2, "0");
 
 
       const day =
         String(
           date.getDate()
-        ).padStart(
-          2,
-          "0"
-        );
+        ).padStart(2, "0");
 
 
       return `${year}-${month}-${day}`;
@@ -3770,13 +3348,6 @@
         ).value;
 
 
-      if (hub) {
-
-        await searchHub();
-
-      }
-
-
       const dateFrom =
         document.getElementById(
           "dateFrom"
@@ -3787,6 +3358,13 @@
         document.getElementById(
           "dateTo"
         ).value;
+
+
+      if (hub) {
+
+        await searchHub();
+
+      }
 
 
       if (
@@ -3818,16 +3396,22 @@
        START APPLICATION
        ===================================================== */
 
+    console.log(
+      "EPSS DASHBOARD STARTING..."
+    );
+
+
     updateActionHeaders();
 
-    await checkAdminSession();
 
-    await loadDashboard();
+    checkAdminSession();
+
+
+    loadDashboard();
 
 
   </script>
 
-
 </body>
 
-  </html>
+            </html>
