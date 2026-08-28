@@ -1581,7 +1581,8 @@
        ===================================================== */
 async function adminLogin() {
 
-  console.log("ADMIN LOGIN BUTTON CLICKED");
+  const loginMessage =
+    document.getElementById("loginMessage");
 
   const email =
     document.getElementById("adminEmail").value.trim();
@@ -1589,12 +1590,10 @@ async function adminLogin() {
   const password =
     document.getElementById("adminPassword").value;
 
-  const loginMessage =
-    document.getElementById("loginMessage");
-
+  console.log("LOGIN BUTTON CLICKED");
   console.log("Email:", email);
-  console.log("Password entered:", password.length > 0);
 
+  /* Check fields */
   if (!email || !password) {
 
     loginMessage.textContent =
@@ -1605,36 +1604,52 @@ async function adminLogin() {
     return;
   }
 
-  loginMessage.textContent = "Logging in...";
-  loginMessage.style.color = "#667085";
+  /* Show immediate response */
+  loginMessage.textContent =
+    "Connecting to Supabase...";
 
-  console.log("Calling Supabase Auth...");
+  loginMessage.style.color =
+    "#667085";
 
   try {
 
+    console.log("Calling Supabase Auth...");
+
     const { data, error } =
       await supabaseClient.auth.signInWithPassword({
+
         email: email,
+
         password: password
+
       });
 
-    console.log("SUPABASE LOGIN RESULT:", data);
-    console.log("SUPABASE LOGIN ERROR:", error);
+    console.log("LOGIN DATA:", data);
+    console.log("LOGIN ERROR:", error);
 
+    /* Supabase error */
     if (error) {
 
       loginMessage.textContent =
         "Login failed: " + error.message;
 
-      loginMessage.style.color = "#a51d1d";
+      loginMessage.style.color =
+        "#a51d1d";
 
       return;
     }
 
+    /* Successful login */
     loginMessage.textContent =
       "Login successful! ✅";
 
-    loginMessage.style.color = "#176b36";
+    loginMessage.style.color =
+      "#176b36";
+
+    console.log(
+      "USER LOGGED IN:",
+      data.user
+    );
 
     showAdminSection(data.user);
 
@@ -1642,74 +1657,19 @@ async function adminLogin() {
 
   } catch (err) {
 
-    console.error("LOGIN CRASH:", err);
+    console.error(
+      "LOGIN EXCEPTION:",
+      err
+    );
 
     loginMessage.textContent =
       "Login error: " + err.message;
 
-    loginMessage.style.color = "#a51d1d";
+    loginMessage.style.color =
+      "#a51d1d";
   }
+
 }
-
-
-    /* =====================================================
-       ADMIN LOGOUT
-       ===================================================== */
-
-    async function adminLogout() {
-
-      const { error } =
-        await supabaseClient.auth
-          .signOut();
-
-
-      if (error) {
-
-        console.error(error);
-
-        return;
-
-      }
-
-
-      cancelEdit();
-
-      showAdminSection(null);
-
-    }
-
-
-    /* =====================================================
-       CHECK CURRENT SESSION
-       ===================================================== */
-
-    async function checkAdminSession() {
-
-      const { data } =
-        await supabaseClient.auth
-          .getSession();
-
-
-      showAdminSection(
-        data.session
-          ? data.session.user
-          : null
-      );
-
-
-      supabaseClient.auth.onAuthStateChange(
-        (_event, session) => {
-
-          showAdminSection(
-            session
-              ? session.user
-              : null
-          );
-
-        }
-      );
-
-    }
 
 
     /* =====================================================
