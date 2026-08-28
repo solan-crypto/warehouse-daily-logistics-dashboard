@@ -3708,7 +3708,19 @@ async function checkAdminSession() {
 }
     loadDashboard();
 
+/* =====================================================
+   START DASHBOARD
+   ===================================================== */
 
+document.addEventListener("DOMContentLoaded", async function () {
+
+  console.log("Dashboard starting...");
+
+  await checkAdminSession();
+
+  await loadDashboard();
+
+});
   </script>
 
 </body>
