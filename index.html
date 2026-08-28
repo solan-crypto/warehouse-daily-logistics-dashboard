@@ -519,16 +519,15 @@
 
     <p>Warehouse Activity Monitoring System</p>
 
-    <button
-      type="button"
-      id="adminLoginButton"
-      class="admin-button"
-      onclick="toggleAdminLogin()">
+<button
+  type="button"
+  id="adminLoginButton"
+  class="admin-button"
+  onclick="toggleAdminLogin()">
 
-      🔐 Admin Login
+  🔐 Admin Login
 
-    </button>
-
+</button>
   </header>
 
 
@@ -3675,7 +3674,38 @@ function getLocalDateString(date) {
 
     checkAdminSession();
 
+/* =====================================================
+   CHECK ADMIN SESSION
+   ===================================================== */
 
+async function checkAdminSession() {
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getSession();
+
+  if (error) {
+
+    console.error(
+      "SESSION CHECK ERROR:",
+      error
+    );
+
+    showAdminSection(null);
+
+    return;
+
+  }
+
+  const user =
+    data.session
+      ? data.session.user
+      : null;
+
+  showAdminSection(user);
+
+}
     loadDashboard();
 
 
