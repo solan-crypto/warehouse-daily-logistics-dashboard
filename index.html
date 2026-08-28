@@ -3,3970 +3,3743 @@
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-  <title>EPSS Warehouse Logistics Dashboard</title>
-
-  <!-- ================= SUPABASE ================= -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #172033;
-      line-height: 1.5;
-    }
-
-    /* ================= HEADER ================= */
-
-    .header {
-      background: linear-gradient(
-        135deg,
-        #09245f,
-        #1746b0
-      );
-
-      color: white;
-      text-align: center;
-      padding: 28px 15px;
-    }
-
-    .header h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .header p {
-      font-size: 15px;
-      opacity: 0.9;
-    }
-
-    .container {
-      width: 94%;
-      max-width: 1200px;
-      margin: 20px auto;
-    }
-
-    /* ================= CARDS ================= */
-
-    .card,
-    .activity-card {
-      background: white;
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 20px;
-
-      box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .section-title {
-      color: #123a91;
-      margin: 25px 0 12px;
-      font-size: 21px;
-    }
-
-    /* ================= PLANT ================= */
-
-    .plant-box h2 {
-      color: #123a91;
-      margin-bottom: 12px;
-      font-size: 20px;
-    }
-
-    /* ================= INPUTS ================= */
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px;
-
-      border: 1px solid #ccd4e0;
-      border-radius: 8px;
-
-      font-size: 15px;
-      background: white;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #1746b0;
-
-      box-shadow:
-        0 0 0 2px rgba(
-          23,
-          70,
-          176,
-          0.1
-        );
-    }
-
-    /* ================= TOTAL ACTIVITY ================= */
-
-    .activity-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .stat {
-      text-align: center;
-      padding: 20px;
-      border-radius: 12px;
-      background: #f5f7fc;
-    }
-
-    .stat h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .stat-number {
-      font-size: 34px;
-      font-weight: bold;
-      color: #123a91;
-    }
-
-    /* ================= TABLE ================= */
-
-    .table-card {
-      background: white;
-      border-radius: 14px;
-      padding: 0;
-      margin-bottom: 20px;
-
-      box-shadow:
-        0 4px 15px rgba(
-          0,
-          0,
-          0,
-          0.08
-        );
-
-      overflow: auto;
-    }
-
-    .recent-table-card {
-      max-height: 470px;
-      overflow: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 900px;
-      border-collapse: collapse;
-    }
-
-    th {
-      background: #123a91;
-      color: white;
-      padding: 13px;
-      text-align: left;
-      white-space: nowrap;
-
-      position: sticky;
-      top: 0;
-      z-index: 2;
-    }
-
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #e5e8ee;
-      vertical-align: top;
-    }
-
-    tr:hover td {
-      background: #f7f9fd;
-    }
-
-    .empty-row td {
-      height: 55px;
-      background: #ffffff;
-    }
-
-    .empty-row:hover td {
-      background: #ffffff;
-    }
-
-    /* ================= FORM ================= */
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-weight: bold;
-      margin-bottom: 7px;
-      color: #34405a;
-    }
-
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    /* ================= HUB ================= */
-
-    .hub-select {
-      min-height: 170px;
-    }
-
-    .help-text {
-      font-size: 12px;
-      color: #667085;
-      margin-top: 6px;
-    }
-
-    /* ================= BUTTONS ================= */
-
-    .save-button,
-    .search-button {
-      border: none;
-      border-radius: 8px;
-      background: #123a91;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .save-button {
-      width: 100%;
-      margin-top: 18px;
-      padding: 14px;
-      font-size: 16px;
-    }
-
-    .save-button:hover,
-    .search-button:hover {
-      background: #0b2d78;
-    }
-
-    .save-button:disabled {
-      background: #8b96aa;
-      cursor: not-allowed;
-    }
-
-    .search-button {
-      padding: 12px 22px;
-    }
-
-    /* ================= ADMIN BUTTON ================= */
-
-    .admin-button {
-      margin-top: 15px;
-      padding: 11px 22px;
-
-      border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.7
-      );
-
-      border-radius: 10px;
-
-      background: white;
-      color: #123a91;
-
-      font-weight: bold;
-      font-size: 15px;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 3px 10px rgba(
-          0,
-          0,
-          0,
-          0.15
-        );
-    }
-
-    .admin-button:hover {
-      background: #eef3ff;
-    }
-
-    /* ================= ADMIN LOGIN ================= */
-
-    .admin-login-box {
-      display: none;
-
-      width: 94%;
-      max-width: 450px;
-
-      margin: 22px auto;
-
-      padding: 0;
-
-      background: white;
-
-      border-radius: 16px;
-
-      box-shadow:
-        0 8px 28px rgba(
-          0,
-          0,
-          0,
-          0.14
-        );
-
-      overflow: hidden;
-
-      border: 1px solid #e1e6ef;
-    }
-
-    .admin-login-header {
-      background: linear-gradient(
-        135deg,
-        #09245f,
-        #1746b0
-      );
-
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .admin-login-icon {
-      font-size: 34px;
-      margin-bottom: 5px;
-    }
-
-    .admin-login-header h2 {
-      font-size: 22px;
-    }
-
-    .admin-login-header p {
-      margin-top: 4px;
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    .admin-login-content {
-      padding: 22px;
-    }
-
-    .admin-input-group {
-      margin-bottom: 14px;
-    }
-
-    .admin-input-group label {
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .admin-login-box input {
-      margin-bottom: 0;
-      padding: 13px;
-      border-radius: 9px;
-    }
-
-    .login-button,
-    .cancel-button,
-    .logout-button {
-      width: 100%;
-      padding: 13px;
-
-      border: none;
-      border-radius: 9px;
-
-      font-weight: bold;
-      cursor: pointer;
-
-      margin-top: 9px;
-      font-size: 15px;
-    }
-
-    .login-button {
-      background: #123a91;
-      color: white;
-    }
-
-    .login-button:hover {
-      background: #0b2d78;
-    }
-
-    .cancel-button {
-      background: #edf0f5;
-      color: #34405a;
-    }
-
-    .logout-button {
-      background: #a51d1d;
-      color: white;
-    }
-
-    #loginMessage {
-      margin-top: 13px;
-      font-weight: bold;
-      text-align: center;
-      min-height: 20px;
-    }
-
-    /* ================= EDIT DELETE ================= */
-
-    .action-buttons {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .edit-button,
-    .delete-button {
-      border: none;
-      border-radius: 6px;
-
-      padding: 8px 11px;
-
-      font-weight: bold;
-      cursor: pointer;
-
-      white-space: nowrap;
-    }
-
-    .edit-button {
-      background: #e8f0ff;
-      color: #123a91;
-    }
-
-    .delete-button {
-      background: #fdecec;
-      color: #a51d1d;
-    }
-
-    .cancel-edit-button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-
-      border: none;
-      border-radius: 8px;
-
-      background: #e5e8ee;
-      color: #34405a;
-
-      font-weight: bold;
-      cursor: pointer;
-
-      display: none;
-    }
-
-    /* ================= MESSAGE ================= */
-
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .success {
-      display: block;
-      background: #e7f7ed;
-      color: #176b36;
-    }
-
-    .error {
-      display: block;
-      background: #fdecec;
-      color: #a51d1d;
-    }
-
-    /* ================= DATE SEARCH ================= */
-
-    .date-search-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 8px;
-    }
-
-    .date-search-button {
-      width: 100%;
-      margin-top: 18px;
-    }
-
-    /* ================= FOOTER ================= */
-
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      color: #667085;
-      font-size: 14px;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 700px) {
-
-      .header {
-        padding: 22px 12px;
-      }
-
-      .header h1 {
-        font-size: 22px;
-      }
-
-      .header p {
-        font-size: 13px;
-      }
-
-      .container {
-        width: 94%;
-      }
-
-      .card,
-      .activity-card {
-        padding: 16px;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full {
-        grid-column: auto;
-      }
-
-      .activity-stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .stat {
-        padding: 15px 8px;
-      }
-
-      .stat-number {
-        font-size: 28px;
-      }
-
-      .date-search-grid {
-        grid-template-columns: 1fr;
-      }
-
-      table {
-        min-width: 900px;
-      }
-
-      .admin-login-box {
-        width: 94%;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPSS Warehouse Logistics Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  line-height:1.5;
+}
+
+.header{
+  background:linear-gradient(135deg,#09245f,#1746b0);
+  color:white;
+  text-align:center;
+  padding:28px 15px;
+}
+
+.header h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.header p{
+  font-size:15px;
+  opacity:.9;
+}
+
+.container{
+  width:94%;
+  max-width:1200px;
+  margin:20px auto;
+}
+
+.card,
+.activity-card{
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.section-title{
+  color:#123a91;
+  margin:25px 0 12px;
+  font-size:21px;
+}
+
+.plant-box h2{
+  color:#123a91;
+  margin-bottom:12px;
+  font-size:20px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccd4e0;
+  border-radius:8px;
+  font-size:15px;
+  background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#1746b0;
+  box-shadow:0 0 0 2px rgba(23,70,176,.1);
+}
+
+.activity-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.stat{
+  text-align:center;
+  padding:20px;
+  border-radius:12px;
+  background:#f5f7fc;
+}
+
+.stat h3{
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.stat-number{
+  font-size:34px;
+  font-weight:bold;
+  color:#123a91;
+}
+
+.table-card{
+  background:white;
+  border-radius:14px;
+  padding:0;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+  overflow:auto;
+}
+
+.recent-table-card{
+  max-height:470px;
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  min-width:950px;
+  border-collapse:collapse;
+}
+
+th{
+  background:#123a91;
+  color:white;
+  padding:13px;
+  text-align:left;
+  white-space:nowrap;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #e5e8ee;
+  vertical-align:top;
+}
+
+tr:hover td{
+  background:#f7f9fd;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-weight:bold;
+  margin-bottom:7px;
+  color:#34405a;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.save-button,
+.search-button{
+  border:none;
+  border-radius:8px;
+  background:#123a91;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.save-button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  font-size:16px;
+}
+
+.save-button:hover,
+.search-button:hover{
+  background:#0b2d78;
+}
+
+.save-button:disabled{
+  background:#8b96aa;
+  cursor:not-allowed;
+}
+
+.search-button{
+  padding:12px 22px;
+}
+
+.admin-button{
+  margin-top:15px;
+  padding:11px 22px;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:10px;
+  background:white;
+  color:#123a91;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.admin-button:hover{
+  background:#eef3ff;
+}
+
+.admin-login-box{
+  display:none;
+  width:94%;
+  max-width:450px;
+  margin:22px auto;
+  padding:0;
+  background:white;
+  border-radius:16px;
+  box-shadow:0 8px 28px rgba(0,0,0,.14);
+  overflow:hidden;
+  border:1px solid #e1e6ef;
+}
+
+.admin-login-header{
+  background:linear-gradient(135deg,#09245f,#1746b0);
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+
+.admin-login-icon{
+  font-size:34px;
+}
+
+.admin-login-header h2{
+  font-size:22px;
+}
+
+.admin-login-header p{
+  margin-top:4px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.admin-login-content{
+  padding:22px;
+}
+
+.admin-input-group{
+  margin-bottom:14px;
+}
+
+.admin-input-group label{
+  display:block;
+}
+
+.login-button,
+.cancel-button,
+.logout-button{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:9px;
+  font-size:15px;
+}
+
+.login-button{
+  background:#123a91;
+  color:white;
+}
+
+.cancel-button{
+  background:#edf0f5;
+  color:#34405a;
+}
+
+.logout-button{
+  background:#a51d1d;
+  color:white;
+}
+
+#loginMessage{
+  margin-top:13px;
+  font-weight:bold;
+  text-align:center;
+  min-height:20px;
+}
+
+.action-buttons{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.edit-button,
+.delete-button{
+  border:none;
+  border-radius:6px;
+  padding:8px 11px;
+  font-weight:bold;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.edit-button{
+  background:#e8f0ff;
+  color:#123a91;
+}
+
+.delete-button{
+  background:#fdecec;
+  color:#a51d1d;
+}
+
+.cancel-edit-button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#e5e8ee;
+  color:#34405a;
+  font-weight:bold;
+  cursor:pointer;
+  display:none;
+}
+
+.message{
+  display:none;
+  margin-top:15px;
+  padding:12px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.success{
+  display:block;
+  background:#e7f7ed;
+  color:#176b36;
+}
+
+.error{
+  display:block;
+  background:#fdecec;
+  color:#a51d1d;
+}
+
+.date-search-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+footer{
+  text-align:center;
+  padding:30px 15px;
+  color:#667085;
+  font-size:14px;
+}
+
+/* =========================
+   DAILY VEHICLE ROWS
+========================= */
+
+.daily-entry-table{
+  min-width:900px;
+}
+
+.daily-entry-table th{
+  position:static;
+}
+
+.daily-entry-table td{
+  vertical-align:middle;
+}
+
+.daily-entry-table input,
+.daily-entry-table select{
+  min-width:150px;
+}
+
+.remove-row-button{
+  border:none;
+  background:#fdecec;
+  color:#a51d1d;
+  border-radius:7px;
+  padding:8px 10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.add-row-button{
+  margin-top:15px;
+  padding:11px 18px;
+  border:none;
+  border-radius:8px;
+  background:#e8f0ff;
+  color:#123a91;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.vehicle-total-box{
+  margin-top:15px;
+  padding:13px;
+  border-radius:9px;
+  background:#f5f7fc;
+  font-weight:bold;
+  color:#123a91;
+}
+
+/* Ethiopian date */
+
+.ethiopian-date-help{
+  font-size:12px;
+  color:#667085;
+  margin-top:5px;
+}
+
+.empty-row td{
+  height:55px;
+}
+
+@media(max-width:700px){
+
+  .header{
+    padding:22px 12px;
+  }
+
+  .header h1{
+    font-size:22px;
+  }
+
+  .container{
+    width:94%;
+  }
+
+  .card,
+  .activity-card{
+    padding:16px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .activity-stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .date-search-grid{
+    grid-template-columns:1fr;
+  }
+
+  table{
+    min-width:950px;
+  }
+
+  .admin-login-box{
+    width:94%;
+  }
+
+}
+
+</style>
 
 </head>
 
 
 <body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
 
-  <header class="header">
+<header class="header">
 
-    <h1>
-      EPSS Warehouse Logistics Dashboard
-    </h1>
+<h1>
+EPSS Warehouse Logistics Dashboard
+</h1>
 
-    <p>
-      Warehouse Activity Monitoring System
-    </p>
+<p>
+Warehouse Activity Monitoring System
+</p>
 
-    <button
-      type="button"
-      id="adminLoginButton"
-      class="admin-button">
+<button
+type="button"
+id="adminLoginButton"
+class="admin-button">
 
-      🔐 Admin Login
+🔐 Admin Login
 
-    </button>
+</button>
 
-  </header>
+</header>
 
 
-  <!-- =====================================================
-       ADMIN LOGIN
-       ===================================================== -->
+<!-- ================= ADMIN LOGIN ================= -->
 
-  <div
-    id="adminLoginBox"
-    class="admin-login-box">
+<div
+id="adminLoginBox"
+class="admin-login-box">
 
-    <div class="admin-login-header">
+<div class="admin-login-header">
 
-      <div class="admin-login-icon">
-        🔐
-      </div>
+<div class="admin-login-icon">
+🔐
+</div>
 
-      <h2>
-        Admin Login
-      </h2>
+<h2>
+Admin Login
+</h2>
 
-      <p>
-        Authorized personnel only
-      </p>
+<p>
+Authorized personnel only
+</p>
 
-    </div>
+</div>
 
-    <div class="admin-login-content">
+<div class="admin-login-content">
 
-      <div class="admin-input-group">
+<div class="admin-input-group">
 
-        <label for="adminEmail">
-          Email
-        </label>
+<label>
+Email
+</label>
 
-        <input
-          type="email"
-          id="adminEmail"
-          placeholder="Enter admin email"
-          autocomplete="email">
+<input
+type="email"
+id="adminEmail"
+placeholder="Enter admin email">
 
-      </div>
+</div>
 
-      <div class="admin-input-group">
+<div class="admin-input-group">
 
-        <label for="adminPassword">
-          Password
-        </label>
+<label>
+Password
+</label>
 
-        <input
-          type="password"
-          id="adminPassword"
-          placeholder="Enter password"
-          autocomplete="current-password">
+<input
+type="password"
+id="adminPassword"
+placeholder="Enter password">
 
-      </div>
+</div>
 
-      <button
-        type="button"
-        id="loginButton"
-        class="login-button">
+<button
+type="button"
+id="loginButton"
+class="login-button">
 
-        🔓 LOGIN
+🔓 LOGIN
 
-      </button>
+</button>
 
-      <button
-        type="button"
-        id="cancelLoginButton"
-        class="cancel-button">
+<button
+type="button"
+id="cancelLoginButton"
+class="cancel-button">
 
-        CANCEL
+CANCEL
 
-      </button>
+</button>
 
-      <div id="loginMessage"></div>
+<div id="loginMessage"></div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <main class="container">
+<main class="container">
 
-    <!-- =====================================================
-         PLANT / CENTER
-         ===================================================== -->
 
-    <section class="card plant-box">
+<!-- ================= PLANT ================= -->
 
-      <h2>
-        Plant / Center
-      </h2>
+<section class="card plant-box">
 
-      <select id="plantCenter">
+<h2>
+Plant / Center
+</h2>
 
-        <option value="">
-          Select Plant / Center
-        </option>
+<select id="plantCenter">
 
-        <option value="Modjo">
-          Modjo
-        </option>
+<option value="">
+Select Plant / Center
+</option>
 
-        <option value="Central Warehouse">
-          Central Warehouse
-        </option>
+<option value="Modjo">
+Modjo
+</option>
 
-        <option value="Other">
-          Other
-        </option>
+<option value="Central Warehouse">
+Central Warehouse
+</option>
 
-      </select>
+<option value="Other">
+Other
+</option>
 
-    </section>
+</select>
 
+</section>
 
-    <!-- =====================================================
-         TOTAL ACTIVITY
-         ===================================================== -->
 
-    <h2 class="section-title">
-      Total Activity
-    </h2>
+<!-- ================= TOTAL ================= -->
 
-    <section class="activity-card">
+<h2 class="section-title">
+Total Activity
+</h2>
 
-      <div class="activity-stats">
+<section class="activity-card">
 
-        <div class="stat">
+<div class="activity-stats">
 
-          <h3>
-            Loaded
-          </h3>
+<div class="stat">
 
-          <div
-            class="stat-number"
-            id="loadedTotal">
+<h3>
+Loaded
+</h3>
 
-            0
+<div
+class="stat-number"
+id="loadedTotal">
 
-          </div>
+0
 
-        </div>
+</div>
 
-        <div class="stat">
+</div>
 
-          <h3>
-            Offloaded
-          </h3>
+<div class="stat">
 
-          <div
-            class="stat-number"
-            id="offloadedTotal">
+<h3>
+Offloaded
+</h3>
 
-            0
+<div
+class="stat-number"
+id="offloadedTotal">
 
-          </div>
+0
 
-        </div>
+</div>
 
-      </div>
+</div>
 
-    </section>
+</div>
 
+</section>
 
-    <!-- =====================================================
-         RECENT 7 DAYS
-         ===================================================== -->
 
-    <h2 class="section-title">
-      Recent 7 Days Activity
-    </h2>
+<!-- ================= RECENT 7 DAYS ================= -->
 
-    <section class="table-card recent-table-card">
+<h2 class="section-title">
+Recent 7 Days Activity
+</h2>
 
-      <table>
+<section class="table-card recent-table-card">
 
-        <thead>
+<table>
 
-          <tr>
+<thead>
 
-            <th>Date</th>
-            <th>Activity</th>
-            <th>Load Count</th>
-            <th>Hubs</th>
-            <th>Items</th>
-            <th>Vehicle</th>
-            <th>Challenges</th>
+<tr>
 
-            <th
-              id="recentActionsHeader"
-              style="display:none;">
+<th>Date</th>
+<th>Activity</th>
+<th>Vehicle</th>
+<th>Hub</th>
+<th>Items</th>
+<th>Challenges</th>
 
-              Actions
+<th
+id="recentActionsHeader"
+style="display:none;">
 
-            </th>
+Actions
 
-          </tr>
+</th>
 
-        </thead>
+</tr>
 
-        <tbody id="recentActivity">
+</thead>
 
-          <tr>
+<tbody id="recentActivity">
 
-            <td
-              colspan="7"
-              style="text-align:center;">
+<tr>
 
-              Loading...
+<td
+colspan="6"
+style="text-align:center;">
 
-            </td>
+Loading...
 
-          </tr>
+</td>
 
-        </tbody>
+</tr>
 
-      </table>
+</tbody>
 
-    </section>
+</table>
 
+</section>
 
-    <!-- =====================================================
-         HUB HISTORY
-         ===================================================== -->
 
-    <h2 class="section-title">
-      Search Hub History
-    </h2>
+<!-- ================= HUB HISTORY ================= -->
 
-    <section class="card">
+<h2 class="section-title">
+Search Hub History
+</h2>
 
-      <div class="form-grid">
+<section class="card">
 
-        <div class="form-group">
+<div class="form-grid">
 
-          <label>
-            Select Hub
-          </label>
+<div class="form-group">
 
-          <select id="hubSearch">
+<label>
+Select Hub
+</label>
 
-            <option value="">
-              Select Hub
-            </option>
+<select id="hubSearch">
 
-            <option value="AA1hp">AA1hp</option>
-            <option value="AA1 MainWH">AA1 MainWH</option>
-            <option value="AA2">AA2</option>
-            <option value="Adama">Adama</option>
-            <option value="Hawasa">Hawasa</option>
-            <option value="Negelle">Negelle</option>
-            <option value="Nekemte">Nekemte</option>
-            <option value="Jimma">Jimma</option>
-            <option value="D.Dawa">D.Dawa</option>
-            <option value="Jigjiga">Jigjiga</option>
-            <option value="Arbaminch">Arbaminch</option>
-            <option value="Semera">Semera</option>
-            <option value="Gambella">Gambella</option>
-            <option value="Asosa">Asosa</option>
-            <option value="Bahir Dar">Bahir Dar</option>
-            <option value="Gondar">Gondar</option>
-            <option value="Dessie">Dessie</option>
-            <option value="Kebridar">Kebridar</option>
-            <option value="Mekele">Mekele</option>
-            <option value="Shire">Shire</option>
+<option value="">
+Select Hub
+</option>
 
-          </select>
+<option>AA1hp</option>
+<option>AA1 MainWH</option>
+<option>AA2</option>
+<option>Adama</option>
+<option>Hawasa</option>
+<option>Negelle</option>
+<option>Nekemte</option>
+<option>Jimma</option>
+<option>D.Dawa</option>
+<option>Jigjiga</option>
+<option>Arbaminch</option>
+<option>Semera</option>
+<option>Gambella</option>
+<option>Asosa</option>
+<option>Bahir Dar</option>
+<option>Gondar</option>
+<option>Dessie</option>
+<option>Kebridar</option>
+<option>Mekele</option>
+<option>Shire</option>
 
-        </div>
+</select>
 
-        <div class="form-group">
+</div>
 
-          <label>
-            From Date
-          </label>
+<div class="form-group">
 
-          <input
-            type="date"
-            id="hubFromDate">
+<label>
+From Ethiopian Date
+</label>
 
-        </div>
+<input
+type="text"
+id="hubFromDate"
+placeholder="YYYY-MM-DD">
 
-        <div class="form-group">
+</div>
 
-          <label>
-            To Date
-          </label>
+<div class="form-group">
 
-          <input
-            type="date"
-            id="hubToDate">
+<label>
+To Ethiopian Date
+</label>
 
-        </div>
+<input
+type="text"
+id="hubToDate"
+placeholder="YYYY-MM-DD">
 
-      </div>
+</div>
 
-      <button
-        type="button"
-        id="hubSearchButton"
-        class="search-button"
-        style="width:100%; margin-top:18px;">
+</div>
 
-        🔎 SEARCH HISTORY
+<button
+type="button"
+id="hubSearchButton"
+class="search-button"
+style="width:100%;margin-top:18px;">
 
-      </button>
+🔎 SEARCH HISTORY
 
-      <div
-        class="table-card"
-        style="margin-top:20px;">
+</button>
 
-        <table>
+<div
+class="table-card"
+style="margin-top:20px;">
 
-          <thead>
+<table>
 
-            <tr>
+<thead>
 
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
+<tr>
 
-              <th
-                id="historyActionsHeader"
-                style="display:none;">
+<th>Eth. Date</th>
+<th>Activity</th>
+<th>Vehicle</th>
+<th>Hub</th>
+<th>Items</th>
+<th>Challenges</th>
 
-                Actions
+<th
+id="historyActionsHeader"
+style="display:none;">
 
-              </th>
+Actions
 
-            </tr>
+</th>
 
-          </thead>
+</tr>
 
-          <tbody id="historyResults">
+</thead>
 
-            <tr>
+<tbody id="historyResults">
 
-              <td
-                colspan="7"
-                style="text-align:center;">
+<tr>
 
-                Select a hub to search
+<td
+colspan="6"
+style="text-align:center;">
 
-              </td>
+Select a hub to search
 
-            </tr>
+</td>
 
-          </tbody>
+</tr>
 
-        </table>
+</tbody>
 
-      </div>
+</table>
 
-    </section>
+</div>
 
+</section>
 
-    <!-- =====================================================
-         DATE SEARCH
-         ===================================================== -->
 
-    <h2 class="section-title">
-      Search Activity by Date
-    </h2>
+<!-- ================= DATE SEARCH ================= -->
 
-    <section class="card">
+<h2 class="section-title">
+Search Activity by Date
+</h2>
 
-      <div class="date-search-grid">
+<section class="card">
 
-        <div class="form-group">
+<div class="date-search-grid">
 
-          <label>
-            From Date
-          </label>
+<div class="form-group">
 
-          <input
-            type="date"
-            id="dateFrom">
+<label>
+From Ethiopian Date
+</label>
 
-        </div>
+<input
+type="text"
+id="dateFrom"
+placeholder="YYYY-MM-DD">
 
-        <div class="form-group">
+</div>
 
-          <label>
-            To Date
-          </label>
+<div class="form-group">
 
-          <input
-            type="date"
-            id="dateTo">
+<label>
+To Ethiopian Date
+</label>
 
-        </div>
+<input
+type="text"
+id="dateTo"
+placeholder="YYYY-MM-DD">
 
-      </div>
+</div>
 
-      <button
-        type="button"
-        id="dateSearchButton"
-        class="search-button date-search-button">
+</div>
 
-        🔎 SEARCH BY DATE
+<button
+type="button"
+id="dateSearchButton"
+class="search-button"
+style="width:100%;margin-top:18px;">
 
-      </button>
+🔎 SEARCH BY DATE
 
-      <div
-        class="table-card"
-        style="margin-top:20px;">
+</button>
 
-        <table>
+<div
+class="table-card"
+style="margin-top:20px;">
 
-          <thead>
+<table>
 
-            <tr>
+<thead>
 
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Load Count</th>
-              <th>Hubs</th>
-              <th>Items</th>
-              <th>Vehicle</th>
-              <th>Challenges</th>
+<tr>
 
-              <th
-                id="dateActionsHeader"
-                style="display:none;">
+<th>Eth. Date</th>
+<th>Activity</th>
+<th>Vehicle</th>
+<th>Hub</th>
+<th>Items</th>
+<th>Challenges</th>
 
-                Actions
+<th
+id="dateActionsHeader"
+style="display:none;">
 
-              </th>
+Actions
 
-            </tr>
+</th>
 
-          </thead>
+</tr>
 
-          <tbody id="dateSearchResults">
+</thead>
 
-            <tr>
+<tbody id="dateSearchResults">
 
-              <td
-                colspan="7"
-                style="text-align:center;">
+<tr>
 
-                Select a date and search
+<td
+colspan="6"
+style="text-align:center;">
 
-              </td>
+Enter Ethiopian date and search
 
-            </tr>
+</td>
 
-          </tbody>
+</tr>
 
-        </table>
+</tbody>
 
-      </div>
+</table>
 
-    </section>
+</div>
 
+</section>
 
-    <!-- =====================================================
-         ADMIN ACTIVITY ENTRY
-         ===================================================== -->
 
-    <div
-      id="adminActivitySection"
-      style="display:none;">
+<!-- ================= ADMIN ENTRY ================= -->
 
-      <h2 class="section-title">
-        Daily Activity Entry
-      </h2>
+<div
+id="adminActivitySection"
+style="display:none;">
 
-      <section class="card">
+<h2 class="section-title">
+Daily Activity Entry
+</h2>
 
-        <div class="form-grid">
+<section class="card">
 
-          <div class="form-group">
 
-            <label>
-              Activity Date
-            </label>
+<div class="form-grid">
 
-            <input
-              type="date"
-              id="activityDate">
 
-          </div>
+<div class="form-group">
 
-          <div class="form-group">
+<label>
+Ethiopian Activity Date
+</label>
 
-            <label>
-              Activity Type
-            </label>
+<input
+type="text"
+id="activityDate"
+placeholder="YYYY-MM-DD">
 
-            <select id="activityType">
+<div class="ethiopian-date-help">
+Example: 2018-12-15
+</div>
 
-              <option value="Loaded">
-                Loaded
-              </option>
+</div>
 
-              <option value="Offloaded">
-                Offloaded
-              </option>
 
-            </select>
+<div class="form-group">
 
-          </div>
+<label>
+Activity Type
+</label>
 
-          <div class="form-group">
+<select id="activityType">
 
-            <label>
-              Load Count
-            </label>
+<option value="Loaded">
+Loaded
+</option>
 
-            <input
-              type="number"
-              id="loadCount"
-              min="1">
+<option value="Offloaded">
+Offloaded
+</option>
 
-          </div>
+</select>
 
-          <div class="form-group">
+</div>
 
-            <label>
-              Hub(s)
-            </label>
 
-            <select
-              id="hubs"
-              class="hub-select"
-              multiple>
+</div>
 
-              <option value="AA1hp">AA1hp</option>
-              <option value="AA1 MainWH">AA1 MainWH</option>
-              <option value="AA2">AA2</option>
-              <option value="Adama">Adama</option>
-              <option value="Hawasa">Hawasa</option>
-              <option value="Negelle">Negelle</option>
-              <option value="Nekemte">Nekemte</option>
-              <option value="Jimma">Jimma</option>
-              <option value="D.Dawa">D.Dawa</option>
-              <option value="Jigjiga">Jigjiga</option>
-              <option value="Arbaminch">Arbaminch</option>
-              <option value="Semera">Semera</option>
-              <option value="Gambella">Gambella</option>
-              <option value="Asosa">Asosa</option>
-              <option value="Bahir Dar">Bahir Dar</option>
-              <option value="Gondar">Gondar</option>
-              <option value="Dessie">Dessie</option>
-              <option value="Kebridar">Kebridar</option>
-              <option value="Mekele">Mekele</option>
-              <option value="Shire">Shire</option>
 
-            </select>
+<!-- ================= VEHICLE ROW TABLE ================= -->
 
-            <div class="help-text">
-              Select one or more hubs.
-            </div>
+<div
+class="table-card"
+style="margin-top:20px;">
 
-          </div>
+<table class="daily-entry-table">
 
-          <div class="form-group full">
+<thead>
 
-            <label>
-              Items
-            </label>
+<tr>
 
-            <textarea
-              id="items"
-              placeholder="Enter items transported"></textarea>
+<th>
+Hub
+</th>
 
-          </div>
+<th>
+Vehicle
+</th>
 
-          <div class="form-group">
+<th>
+Items
+</th>
 
-            <label>
-              Vehicle
-            </label>
+<th>
+Challenge
+</th>
 
-            <select id="vehicle">
+<th>
+Action
+</th>
 
-              <option value="">
-                Select Vehicle
-              </option>
+</tr>
 
-              <option value="Tesabi">
-                Tesabi
-              </option>
+</thead>
 
-              <option value="Iveco">
-                Iveco
-              </option>
+<tbody id="dailyRows">
 
-              <option value="Lowbed">
-                Lowbed
-              </option>
+</tbody>
 
-              <option value="Van">
-                Van
-              </option>
+</table>
 
-              <option value="Shelto">
-                Shelto
-              </option>
+</div>
 
-            </select>
 
-          </div>
+<button
+type="button"
+id="addRowButton"
+class="add-row-button">
 
-          <div class="form-group">
+➕ ADD ROW
 
-            <label>
-              Challenges
-            </label>
+</button>
 
-            <input
-              type="text"
-              id="challenges"
-              placeholder="Enter challenges if any">
 
-          </div>
+<div class="vehicle-total-box">
 
-        </div>
+Total vehicles:
+<span id="vehicleTotal">
+0
+</span>
 
-        <button
-          type="button"
-          class="save-button"
-          id="saveButton">
+</div>
 
-          SAVE ACTIVITY
 
-        </button>
+<button
+type="button"
+class="save-button"
+id="saveButton">
 
-        <button
-          type="button"
-          class="cancel-edit-button"
-          id="cancelEditButton">
+SAVE DAILY ACTIVITY
 
-          CANCEL EDIT
+</button>
 
-        </button>
 
-        <div
-          id="message"
-          class="message">
+<button
+type="button"
+class="cancel-edit-button"
+id="cancelEditButton">
 
-        </div>
+CANCEL EDIT
 
-      </section>
+</button>
 
-    </div>
 
-  </main>
+<div
+id="message"
+class="message">
 
+</div>
 
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
 
-  <footer>
+</section>
 
-    EPSS Warehouse Logistics Dashboard © 2026
+</div>
 
-  </footer>
 
+</main>
 
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
 
-  <script>
+<footer>
 
-    /* =====================================================
-       SUPABASE
-       ===================================================== */
+EPSS Warehouse Logistics Dashboard © 2026
 
-    const SUPABASE_URL =
-      "https://uxtrykyvivhejqfojiwm.supabase.co";
+</footer>
 
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
+<script>
 
 
-    /* =====================================================
-       GLOBAL STATE
-       ===================================================== */
+/* ==========================================================
+   SUPABASE
+========================================================== */
 
-    let editingId = null;
+const SUPABASE_URL =
+"https://uxtrykyvivhejqfojiwm.supabase.co";
 
-    let adminLoggedIn = false;
+const SUPABASE_ANON_KEY =
+"sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
 
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
 
-    /* =====================================================
-       DATE HELPERS
-       ===================================================== */
 
-    function getLocalDateString(date) {
+/* ==========================================================
+   GLOBAL
+========================================================== */
 
-      const year =
-        date.getFullYear();
+let editingId = null;
 
-      const month =
-        String(
-          date.getMonth() + 1
-        ).padStart(2, "0");
+let adminLoggedIn = false;
 
-      const day =
-        String(
-          date.getDate()
-        ).padStart(2, "0");
 
-      return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-      );
+/* ==========================================================
+   HUBS
+========================================================== */
 
-    }
+const HUBS = [
 
+"AA1hp",
+"AA1 MainWH",
+"AA2",
+"Adama",
+"Hawasa",
+"Negelle",
+"Nekemte",
+"Jimma",
+"D.Dawa",
+"Jigjiga",
+"Arbaminch",
+"Semera",
+"Gambella",
+"Asosa",
+"Bahir Dar",
+"Gondar",
+"Dessie",
+"Kebridar",
+"Mekele",
+"Shire"
 
-    function getToday() {
+];
 
-      return getLocalDateString(
-        new Date()
-      );
 
-    }
+const VEHICLES = [
 
+"Tesabi",
+"Iveco",
+"Lowbed",
+"Van",
+"Shelto"
 
-    function getNextDate(dateString) {
+];
 
-      const date =
-        new Date(
-          dateString +
-          "T00:00:00"
-        );
 
-      date.setDate(
-        date.getDate() + 1
-      );
+/* ==========================================================
+   ETHIOPIAN CALENDAR
+   ==========================================================
 
-      return getLocalDateString(
-        date
-      );
+   The website displays Ethiopian dates.
 
-    }
+   Supabase still stores the equivalent Gregorian date
+   because PostgreSQL DATE uses Gregorian dates.
 
+========================================================== */
 
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
 
-    function escapeHtml(value) {
+/* Gregorian -> JDN */
 
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+function gregorianToJDN(
+year,
+month,
+day
+){
 
-    }
+const a =
+Math.floor(
+(14 - month) / 12
+);
 
+const y =
+year + 4800 - a;
 
-    /* =====================================================
-       MESSAGE
-       ===================================================== */
+const m =
+month + 12 * a - 3;
 
-    function showMessage(
-      text,
-      type
-    ) {
+return (
+day +
+Math.floor(
+(153 * m + 2) / 5
+) +
+365 * y +
+Math.floor(y / 4) -
+Math.floor(y / 100) +
+Math.floor(y / 400) -
+32045
+);
 
-      const message =
-        document.getElementById(
-          "message"
-        );
+}
 
-      message.textContent =
-        text;
 
-      message.className =
-        "message " +
-        type;
+/* JDN -> Gregorian */
 
-    }
+function jdnToGregorian(jdn){
 
+let j =
+jdn + 32044;
 
-    /* =====================================================
-       LOGIN MESSAGE
-       ===================================================== */
+let g =
+Math.floor(j / 146097);
 
-    function showLoginMessage(
-      text,
-      color
-    ) {
+let dg =
+j % 146097;
 
-      const box =
-        document.getElementById(
-          "loginMessage"
-        );
+let c =
+Math.floor(
+(dg / 36524 + 1) * 3 / 4
+);
 
-      box.textContent =
-        text;
+let dc =
+dg - c * 36524;
 
-      box.style.color =
-        color;
+let b =
+Math.floor(dc / 1461);
 
-    }
+let db =
+dc % 1461;
 
+let a =
+Math.floor(
+(db / 365 + 1) * 3 / 4
+);
 
-    /* =====================================================
-       ADMIN LOGIN BOX
-       ===================================================== */
+let da =
+db - a * 365;
 
-    function toggleAdminLogin() {
+let y =
+g * 400 +
+c * 100 +
+b * 4 +
+a;
 
-      const box =
-        document.getElementById(
-          "adminLoginBox"
-        );
+let m =
+Math.floor(
+(da * 5 + 308) / 153
+) - 2;
 
-      if (
-        box.style.display ===
-        "block"
-      ) {
+let d =
+da -
+Math.floor(
+(153 * m + 2) / 5
+) +
+1;
 
-        box.style.display =
-          "none";
+let month =
+m +
+3 -
+12 *
+Math.floor(m / 10);
 
-      } else {
+let year =
+y -
+4800 +
+Math.floor(m / 10);
 
-        box.style.display =
-          "block";
+return {
+year,
+month,
+day:d
+};
 
-        document
-          .getElementById(
-            "adminEmail"
-          )
-          .focus();
+}
 
-      }
 
-    }
+/* Ethiopian -> JDN */
 
+function ethiopianToJDN(
+year,
+month,
+day
+){
 
-    /* =====================================================
-       ADMIN LOGIN
-       ===================================================== */
+return (
+1724220 +
+365 * (year - 1) +
+Math.floor(year / 4) +
+30 * (month - 1) +
+(day - 1)
+);
 
-    async function adminLogin() {
+}
 
-      const email =
-        document
-          .getElementById(
-            "adminEmail"
-          )
-          .value
-          .trim();
 
-      const password =
-        document
-          .getElementById(
-            "adminPassword"
-          )
-          .value;
+/* JDN -> Ethiopian */
 
-      if (!email || !password) {
+function jdnToEthiopian(jdn){
 
-        showLoginMessage(
-          "Please enter email and password.",
-          "#a51d1d"
-        );
+const r =
+Math.floor(jdn) -
+1724220;
 
-        return;
+const year =
+Math.floor(r / 1461) * 4 +
+Math.floor(
+(r % 1461) / 365
+) +
+1;
 
-      }
+const daysInYear =
+r -
+(
+(year - 1) * 365 +
+Math.floor(
+(year - 1) / 4
+)
+);
 
-      const loginButton =
-        document.getElementById(
-          "loginButton"
-        );
+let month;
 
-      loginButton.disabled =
-        true;
+let day;
 
-      loginButton.textContent =
-        "LOGGING IN...";
+if(daysInYear < 360){
 
-      showLoginMessage(
-        "Connecting to Supabase...",
-        "#667085"
-      );
+month =
+Math.floor(
+daysInYear / 30
+) + 1;
 
-      try {
+day =
+(daysInYear % 30) + 1;
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .signInWithPassword({
+}else{
 
-              email:
-                email,
+month = 13;
 
-              password:
-                password
+day =
+daysInYear - 360 + 1;
 
-            });
+}
 
+return {
+year,
+month,
+day
+};
 
-        if (error) {
+}
 
-          console.error(
-            "LOGIN ERROR:",
-            error
-          );
 
-          showLoginMessage(
-            "Login failed: " +
-            error.message,
-            "#a51d1d"
-          );
+/* Ethiopian -> Gregorian */
 
-          return;
+function ethiopianToGregorian(
+ethDate
+){
 
-        }
+const parts =
+String(ethDate)
+.split("-")
+.map(Number);
 
+if(
+parts.length !== 3 ||
+parts.some(
+n => !Number.isInteger(n)
+)
+){
 
-        if (
-          !data ||
-          !data.user
-        ) {
+return null;
 
-          showLoginMessage(
-            "Login failed: no user returned.",
-            "#a51d1d"
-          );
+}
 
-          return;
+const [
+year,
+month,
+day
+] = parts;
 
-        }
+if(
+year < 1 ||
+month < 1 ||
+month > 13 ||
+day < 1
+){
 
+return null;
 
-        showAdminSection(
-          data.user,
-          false
-        );
+}
 
+const maxDay =
+month === 13
+? (
+year % 4 === 3
+? 6
+: 5
+)
+: 30;
 
-        showLoginMessage(
-          "Login successful! ✅",
-          "#176b36"
-        );
+if(day > maxDay){
 
+return null;
 
-        document
-          .getElementById(
-            "adminLoginBox"
-          )
-          .style.display =
-          "none";
+}
 
+const jdn =
+ethiopianToJDN(
+year,
+month,
+day
+);
 
-        await loadDashboard();
+const g =
+jdnToGregorian(jdn);
 
-        await refreshExistingSearches();
+return (
+String(g.year) +
+"-" +
+String(g.month).padStart(2,"0") +
+"-" +
+String(g.day).padStart(2,"0")
+);
 
-      } catch (error) {
+}
 
-        console.error(
-          "LOGIN EXCEPTION:",
-          error
-        );
 
-        showLoginMessage(
-          "Login error: " +
-          error.message,
-          "#a51d1d"
-        );
+/* Gregorian -> Ethiopian */
 
-      } finally {
+function gregorianToEthiopian(
+gregDate
+){
 
-        loginButton.disabled =
-          false;
+const parts =
+String(gregDate)
+.split("-")
+.map(Number);
 
-        loginButton.textContent =
-          "🔓 LOGIN";
+if(parts.length !== 3){
 
-      }
+return "";
 
-    }
+}
 
+const [
+year,
+month,
+day
+] = parts;
 
-    /* =====================================================
-       CHECK SESSION
-       ===================================================== */
+const jdn =
+gregorianToJDN(
+year,
+month,
+day
+);
 
-    async function checkAdminSession() {
+const eth =
+jdnToEthiopian(jdn);
 
-      try {
+return (
+String(eth.year) +
+"-" +
+String(eth.month).padStart(2,"0") +
+"-" +
+String(eth.day).padStart(2,"0")
+);
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .getSession();
+}
 
 
-        if (error) {
+/* Today's Ethiopian date */
 
-          console.error(
-            "SESSION CHECK ERROR:",
-            error
-          );
+function getTodayEthiopian(){
 
-          showAdminSection(
-            null,
-            false
-          );
+const now =
+new Date();
 
-          return;
+return gregorianToEthiopian(
 
-        }
+now.getFullYear() +
+"-" +
+String(
+now.getMonth()+1
+).padStart(2,"0") +
+"-" +
+String(
+now.getDate()
+).padStart(2,"0")
 
+);
 
-        const user =
-          data &&
-          data.session
-            ? data.session.user
-            : null;
+}
 
 
-        showAdminSection(
-          user,
-          false
-        );
+/* Add/subtract Ethiopian days */
 
-      } catch (error) {
+function addEthiopianDays(
+ethDate,
+days
+){
 
-        console.error(
-          "SESSION CHECK EXCEPTION:",
-          error
-        );
+let greg =
+ethiopianToGregorian(
+ethDate
+);
 
-        showAdminSection(
-          null,
-          false
-        );
+if(!greg){
 
-      }
+return null;
 
-    }
+}
 
+const d =
+new Date(
+greg + "T00:00:00"
+);
 
-    /* =====================================================
-       AUTH STATE LISTENER
-       ===================================================== */
+d.setDate(
+d.getDate() + days
+);
 
-    supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
+const g =
+d.getFullYear() +
+"-" +
+String(
+d.getMonth()+1
+).padStart(2,"0") +
+"-" +
+String(
+d.getDate()
+).padStart(2,"0");
 
-        console.log(
-          "AUTH EVENT:",
-          event
-        );
+return gregorianToEthiopian(g);
 
-        if (
-          event === "SIGNED_IN" &&
-          session &&
-          session.user
-        ) {
+}
 
-          showAdminSection(
-            session.user,
-            false
-          );
 
-        }
+/* Validate Ethiopian date */
 
-        if (
-          event === "SIGNED_OUT"
-        ) {
+function validateEthDate(
+value
+){
 
-          showAdminSection(
-            null,
-            false
-          );
+const result =
+ethiopianToGregorian(
+value
+);
 
-        }
+return !!result;
 
-      }
-    );
+}
 
 
-    /* =====================================================
-       SHOW / HIDE ADMIN
-       ===================================================== */
+/* ==========================================================
+   HTML ESCAPE
+========================================================== */
 
-    function showAdminSection(
-      user,
-      reloadRecent = true
-    ) {
+function escapeHtml(value){
 
-      const adminSection =
-        document.getElementById(
-          "adminActivitySection"
-        );
+return String(
+value ?? ""
+)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
-      const loginButton =
-        document.getElementById(
-          "adminLoginButton"
-        );
+}
 
-      const loginBox =
-        document.getElementById(
-          "adminLoginBox"
-        );
 
+/* ==========================================================
+   MESSAGES
+========================================================== */
 
-      adminLoggedIn =
-        !!user;
+function showMessage(
+text,
+type
+){
 
+const box =
+document.getElementById(
+"message"
+);
 
-      if (user) {
+box.textContent =
+text;
 
-        adminSection.style.display =
-          "block";
+box.className =
+"message " +
+type;
 
-        loginButton.textContent =
-          "🔓 Admin Logged In";
+}
 
-        loginButton.onclick =
-          adminLogout;
 
-        loginBox.style.display =
-          "none";
+function showLoginMessage(
+text,
+color
+){
 
-      } else {
+const box =
+document.getElementById(
+"loginMessage"
+);
 
-        adminSection.style.display =
-          "none";
+box.textContent =
+text;
 
-        loginButton.textContent =
-          "🔐 Admin Login";
+box.style.color =
+color;
 
-        loginButton.onclick =
-          toggleAdminLogin;
+}
 
-      }
 
+/* ==========================================================
+   LOGIN
+========================================================== */
 
-      updateActionHeaders();
+function toggleAdminLogin(){
 
+const box =
+document.getElementById(
+"adminLoginBox"
+);
 
-      if (reloadRecent) {
+if(
+box.style.display === "block"
+){
 
-        loadRecentActivity();
+box.style.display =
+"none";
 
-      }
+}else{
 
-    }
+box.style.display =
+"block";
 
+document
+.getElementById("adminEmail")
+.focus();
 
-    /* =====================================================
-       ACTION HEADERS
-       ===================================================== */
+}
 
-    function updateActionHeaders() {
+}
 
-      const display =
-        adminLoggedIn
-          ? "table-cell"
-          : "none";
 
+async function adminLogin(){
 
-      document
-        .getElementById(
-          "recentActionsHeader"
-        )
-        .style.display =
-        display;
+const email =
+document
+.getElementById("adminEmail")
+.value
+.trim();
 
+const password =
+document
+.getElementById("adminPassword")
+.value;
 
-      document
-        .getElementById(
-          "historyActionsHeader"
-        )
-        .style.display =
-        display;
+if(!email || !password){
 
+showLoginMessage(
+"Please enter email and password.",
+"#a51d1d"
+);
 
-      document
-        .getElementById(
-          "dateActionsHeader"
-        )
-        .style.display =
-        display;
+return;
 
-    }
+}
 
+const button =
+document.getElementById(
+"loginButton"
+);
 
-    /* =====================================================
-       ADMIN LOGOUT
-       ===================================================== */
+button.disabled =
+true;
 
-    async function adminLogout() {
+button.textContent =
+"LOGGING IN...";
 
-      const confirmed =
-        confirm(
-          "Do you want to logout from Admin?"
-        );
+try{
 
-      if (!confirmed) {
+const {
+data,
+error
+} =
+await supabaseClient.auth
+.signInWithPassword({
 
-        return;
+email,
+password
 
-      }
+});
 
-      try {
+if(error){
 
-        const {
-          error
-        } =
-          await supabaseClient.auth
-            .signOut();
+showLoginMessage(
+"Login failed: " +
+error.message,
+"#a51d1d"
+);
 
+return;
 
-        if (error) {
+}
 
-          alert(
-            "Logout failed:\n\n" +
-            error.message
-          );
+showAdminSection(
+data.user,
+false
+);
 
-          return;
+document
+.getElementById(
+"adminLoginBox"
+)
+.style.display =
+"none";
 
-        }
+await loadDashboard();
 
+await refreshExistingSearches();
 
-        editingId =
-          null;
+}catch(error){
 
-        clearActivityForm();
+showLoginMessage(
+"Login error: " +
+error.message,
+"#a51d1d"
+);
 
-        showAdminSection(
-          null,
-          false
-        );
+}finally{
 
-        await loadDashboard();
+button.disabled =
+false;
 
-        await refreshExistingSearches();
+button.textContent =
+"🔓 LOGIN";
 
-        alert(
-          "Logged out successfully. ✅"
-        );
+}
 
-      } catch (error) {
+}
 
-        console.error(
-          "LOGOUT ERROR:",
-          error
-        );
 
-        alert(
-          "Logout error:\n\n" +
-          error.message
-        );
+/* ==========================================================
+   SESSION
+========================================================== */
 
-      }
+async function checkAdminSession(){
 
-    }
+try{
 
+const {
+data
+} =
+await supabaseClient.auth
+.getSession();
 
-    /* =====================================================
-       CHECK ADMIN
-       ===================================================== */
+const user =
+data?.session?.user || null;
 
-    async function isAdminLoggedIn() {
+showAdminSection(
+user,
+false
+);
 
-      try {
+}catch(error){
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth
-            .getSession();
+console.error(
+"SESSION ERROR:",
+error
+);
 
+showAdminSection(
+null,
+false
+);
 
-        if (error) {
+}
 
-          console.error(
-            "GET SESSION ERROR:",
-            error
-          );
+}
 
-          return false;
 
-        }
+supabaseClient.auth.onAuthStateChange(
+(event,session)=>{
 
+if(
+event === "SIGNED_IN"
+){
 
-        return !!(
-          data &&
-          data.session &&
-          data.session.user
-        );
+showAdminSection(
+session?.user || null,
+false
+);
 
-      } catch (error) {
+}
 
-        console.error(
-          "ADMIN CHECK ERROR:",
-          error
-        );
+if(
+event === "SIGNED_OUT"
+){
 
-        return false;
+showAdminSection(
+null,
+false
+);
 
-      }
+}
 
-    }
+}
+);
 
 
-    /* =====================================================
-       SELECTED HUBS
-       ===================================================== */
+/* ==========================================================
+   ADMIN DISPLAY
+========================================================== */
 
-    function getSelectedHubs() {
+function showAdminSection(
+user,
+reloadRecent=true
+){
 
-      const select =
-        document.getElementById(
-          "hubs"
-        );
+const section =
+document.getElementById(
+"adminActivitySection"
+);
 
-      const selected = [];
+const button =
+document.getElementById(
+"adminLoginButton"
+);
 
+adminLoggedIn =
+!!user;
 
-      for (
-        const option of select.options
-      ) {
+if(user){
 
-        if (option.selected) {
+section.style.display =
+"block";
 
-          selected.push(
-            option.value
-          );
+button.textContent =
+"🔓 Admin Logged In";
 
-        }
+button.onclick =
+adminLogout;
 
-      }
+}else{
 
+section.style.display =
+"none";
 
-      return selected.join(
-        ", "
-      );
+button.textContent =
+"🔐 Admin Login";
 
-    }
+button.onclick =
+toggleAdminLogin;
 
+}
 
-    /* =====================================================
-       SET SELECTED HUBS
-       ===================================================== */
+updateActionHeaders();
 
-    function setSelectedHubs(
-      hubString
-    ) {
+if(reloadRecent){
 
-      const select =
-        document.getElementById(
-          "hubs"
-        );
+loadRecentActivity();
 
+}
 
-      const selectedHubs =
-        String(
-          hubString || ""
-        )
-          .split(",")
-          .map(
-            hub =>
-              hub.trim()
-          )
-          .filter(Boolean);
+}
 
 
-      for (
-        const option of select.options
-      ) {
+function updateActionHeaders(){
 
-        option.selected =
-          selectedHubs.includes(
-            option.value
-          );
+const display =
+adminLoggedIn
+? "table-cell"
+: "none";
 
-      }
+document.getElementById(
+"recentActionsHeader"
+).style.display =
+display;
 
-    }
+document.getElementById(
+"historyActionsHeader"
+).style.display =
+display;
 
+document.getElementById(
+"dateActionsHeader"
+).style.display =
+display;
 
-    /* =====================================================
-       SAVE / UPDATE ACTIVITY
-       ===================================================== */
+}
 
-    async function saveActivity() {
 
-      const loggedIn =
-        await isAdminLoggedIn();
+async function adminLogout(){
 
+if(
+!confirm(
+"Do you want to logout from Admin?"
+)
+){
 
-      if (!loggedIn) {
+return;
 
-        showMessage(
-          "Please log in as Admin before saving.",
-          "error"
-        );
+}
 
-        return;
+await supabaseClient.auth.signOut();
 
-      }
+editingId =
+null;
 
+clearDailyRows();
 
-      const activityDate =
-        document.getElementById(
-          "activityDate"
-        ).value;
+showAdminSection(
+null,
+false
+);
 
+await loadDashboard();
 
-      const activityType =
-        document.getElementById(
-          "activityType"
-        ).value;
+await refreshExistingSearches();
 
+}
 
-      const loadCount =
-        document.getElementById(
-          "loadCount"
-        ).value;
 
+/* ==========================================================
+   ADMIN CHECK
+========================================================== */
 
-      /*
-       * IMPORTANT:
-       * Database column is "hub", NOT "hubs".
-       */
+async function isAdminLoggedIn(){
 
-      const hub =
-        getSelectedHubs();
+const {
+data
+} =
+await supabaseClient.auth
+.getSession();
 
+return !!data?.session?.user;
 
-      const items =
-        document.getElementById(
-          "items"
-        ).value.trim();
+}
 
 
-      const vehicle =
-        document.getElementById(
-          "vehicle"
-        ).value;
+/* ==========================================================
+   DAILY ROWS
+========================================================== */
 
+function createHubOptions(){
 
-      const challenges =
-        document.getElementById(
-          "challenges"
-        ).value.trim();
+return HUBS.map(
+hub =>
+`
+<option value="${escapeHtml(hub)}">
+${escapeHtml(hub)}
+</option>
+`
+).join("");
 
+}
 
-      const plantCenter =
-        document.getElementById(
-          "plantCenter"
-        ).value;
 
+function createVehicleOptions(){
 
-      if (!activityDate) {
+return VEHICLES.map(
+vehicle =>
+`
+<option value="${escapeHtml(vehicle)}">
+${escapeHtml(vehicle)}
+</option>
+`
+).join("");
 
-        showMessage(
-          "Please select the activity date.",
-          "error"
-        );
+}
 
-        return;
 
-      }
+function addDailyRow(
+data={}
+){
 
+const tbody =
+document.getElementById(
+"dailyRows"
+);
 
-      if (
-        !loadCount ||
-        Number(loadCount) <= 0
-      ) {
+const row =
+document.createElement("tr");
 
-        showMessage(
-          "Please enter the load count.",
-          "error"
-        );
+row.className =
+"daily-entry-row";
 
-        return;
+row.innerHTML = `
 
-      }
+<td>
 
+<select class="row-hub">
 
-      if (!hub) {
+<option value="">
+Select Hub
+</option>
 
-        showMessage(
-          "Please select at least one hub.",
-          "error"
-        );
+${createHubOptions()}
 
-        return;
+</select>
 
-      }
+</td>
 
+<td>
 
-      if (!vehicle) {
+<select class="row-vehicle">
 
-        showMessage(
-          "Please select a vehicle.",
-          "error"
-        );
+<option value="">
+Select Vehicle
+</option>
 
-        return;
+${createVehicleOptions()}
 
-      }
+</select>
 
+</td>
 
-      const saveButton =
-        document.getElementById(
-          "saveButton"
-        );
+<td>
 
+<input
+type="text"
+class="row-items"
+placeholder="Items">
 
-      saveButton.disabled =
-        true;
+</td>
 
+<td>
 
-      saveButton.textContent =
-        editingId
-          ? "UPDATING..."
-          : "SAVING...";
+<input
+type="text"
+class="row-challenge"
+placeholder="Challenge">
 
+</td>
 
-      /*
-       * IMPORTANT:
-       * These names now exactly match
-       * your Supabase table columns.
-       */
+<td>
 
-      const record = {
+<button
+type="button"
+class="remove-row-button">
 
-        activity_date:
-          activityDate,
+🗑️
 
-        activity_type:
-          activityType,
+</button>
 
-        load_count:
-          Number(loadCount),
+</td>
 
-        hub:
-          hub,
+`;
 
-        items:
-          items || "-",
+tbody.appendChild(row);
 
-        vehicle:
-          vehicle,
+row.querySelector(
+".row-hub"
+).value =
+data.hub || "";
 
-        challenges:
-          challenges || "-",
+row.querySelector(
+".row-vehicle"
+).value =
+data.vehicle || "";
 
-        plant_center:
-          plantCenter || "-"
+row.querySelector(
+".row-items"
+).value =
+data.items === "-"
+? ""
+: data.items || "";
 
-      };
+row.querySelector(
+".row-challenge"
+).value =
+data.challenges === "-"
+? ""
+: data.challenges || "";
 
+row.querySelector(
+".remove-row-button"
+).onclick =
+()=>{
 
-      try {
+row.remove();
 
-        let result;
+updateVehicleTotal();
 
+};
 
-        if (editingId) {
+updateVehicleTotal();
 
-          result =
-            await supabaseClient
-              .from(
-                "warehouse_activities"
-              )
-              .update(record)
-              .eq(
-                "id",
-                editingId
-              );
+}
 
-        } else {
 
-          result =
-            await supabaseClient
-              .from(
-                "warehouse_activities"
-              )
-              .insert([
-                record
-              ]);
+function updateVehicleTotal(){
 
-        }
+const rows =
+document.querySelectorAll(
+".daily-entry-row"
+);
 
+document.getElementById(
+"vehicleTotal"
+).textContent =
+rows.length;
 
-        if (result.error) {
+}
 
-          console.error(
-            "SAVE/UPDATE ERROR:",
-            result.error
-          );
 
-          showMessage(
-            "Error: " +
-            result.error.message,
-            "error"
-          );
+function clearDailyRows(){
 
-          return;
+document.getElementById(
+"dailyRows"
+).innerHTML =
+"";
 
-        }
+addDailyRow();
 
+updateVehicleTotal();
 
-        const wasEditing =
-          !!editingId;
+}
 
 
-        editingId =
-          null;
+/* ==========================================================
+   GET DAILY ROW DATA
+========================================================== */
 
+function getDailyRows(){
 
-        clearActivityForm();
+const rows =
+document.querySelectorAll(
+".daily-entry-row"
+);
 
+const result=[];
 
-        document
-          .getElementById(
-            "saveButton"
-          )
-          .textContent =
-          "SAVE ACTIVITY";
+rows.forEach(
+row=>{
 
+const hub =
+row.querySelector(
+".row-hub"
+).value;
 
-        document
-          .getElementById(
-            "cancelEditButton"
-          )
-          .style.display =
-          "none";
+const vehicle =
+row.querySelector(
+".row-vehicle"
+).value;
 
+const items =
+row.querySelector(
+".row-items"
+).value.trim();
 
-        showMessage(
-          wasEditing
-            ? "Activity updated successfully! ✅"
-            : "Activity saved successfully! ✅",
-          "success"
-        );
+const challenges =
+row.querySelector(
+".row-challenge"
+).value.trim();
 
+result.push({
 
-        await loadDashboard();
+hub,
+vehicle,
+items:
+items || "-",
+challenges:
+challenges || "-"
 
-        await refreshExistingSearches();
+});
 
-      } catch (error) {
+});
 
-        console.error(
-          "SAVE EXCEPTION:",
-          error
-        );
+return result;
 
-        showMessage(
-          "Error: " +
-          error.message,
-          "error"
-        );
+}
 
-      } finally {
 
-        saveButton.disabled =
-          false;
+/* ==========================================================
+   SAVE DAILY ACTIVITY
+========================================================== */
 
+async function saveActivity(){
 
-        if (!editingId) {
+if(
+!await isAdminLoggedIn()
+){
 
-          saveButton.textContent =
-            "SAVE ACTIVITY";
+showMessage(
+"Please log in as Admin before saving.",
+"error"
+);
 
-        }
+return;
 
-      }
+}
 
-    }
+const ethDate =
+document.getElementById(
+"activityDate"
+).value.trim();
 
+if(
+!validateEthDate(ethDate)
+){
 
-    /* =====================================================
-       CLEAR FORM
-       ===================================================== */
+showMessage(
+"Invalid Ethiopian date. Use YYYY-MM-DD.",
+"error"
+);
 
-    function clearActivityForm() {
+return;
 
-      document.getElementById(
-        "activityDate"
-      ).value =
-        getToday();
+}
 
+const gregDate =
+ethiopianToGregorian(
+ethDate
+);
 
-      document.getElementById(
-        "activityType"
-      ).value =
-        "Loaded";
+const activityType =
+document.getElementById(
+"activityType"
+).value;
 
+const plantCenter =
+document.getElementById(
+"plantCenter"
+).value;
 
-      document.getElementById(
-        "loadCount"
-      ).value =
-        "";
+const rows =
+getDailyRows();
 
+if(rows.length === 0){
 
-      document.getElementById(
-        "items"
-      ).value =
-        "";
+showMessage(
+"Please add at least one vehicle row.",
+"error"
+);
 
+return;
 
-      document.getElementById(
-        "vehicle"
-      ).value =
-        "";
+}
 
+for(
+const row of rows
+){
 
-      document.getElementById(
-        "challenges"
-      ).value =
-        "";
+if(!row.hub){
 
+showMessage(
+"Please select a hub for every row.",
+"error"
+);
 
-      /*
-       * Do not clear Plant / Center.
-       * Keep the current selection for convenience.
-       */
+return;
 
+}
 
-      document
-        .querySelectorAll(
-          "#hubs option"
-        )
-        .forEach(
-          option => {
+if(!row.vehicle){
 
-            option.selected =
-              false;
+showMessage(
+"Please select a vehicle for every row.",
+"error"
+);
 
-          }
-        );
+return;
 
-    }
+}
 
+}
 
-    /* =====================================================
-       EDIT ACTIVITY
-       ===================================================== */
+const saveButton =
+document.getElementById(
+"saveButton"
+);
 
-    async function editActivity(id) {
+saveButton.disabled =
+true;
 
-      if (
-        !await isAdminLoggedIn()
-      ) {
+saveButton.textContent =
+editingId
+? "UPDATING..."
+: "SAVING...";
 
-        alert(
-          "Please log in as Admin to edit."
-        );
 
-        return;
+try{
 
-      }
+/*
+ If editing one record,
+ update that record.
+*/
 
+if(editingId){
 
-      try {
+const row =
+rows[0];
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .select("*")
-            .eq(
-              "id",
-              id
-            )
-            .single();
+const {
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.update({
 
+activity_date:
+gregDate,
 
-        if (error) {
+activity_type:
+activityType,
 
-          alert(
-            "Unable to load activity:\n\n" +
-            error.message
-          );
+load_count:
+1,
 
-          return;
+hub:
+row.hub,
 
-        }
+vehicle:
+row.vehicle,
 
+items:
+row.items,
 
-        if (!data) {
+challenges:
+row.challenges,
 
-          alert(
-            "Activity record was not found."
-          );
+plant_center:
+plantCenter || null,
 
-          return;
+updated_at:
+new Date().toISOString()
 
-        }
+})
+.eq(
+"id",
+editingId
+);
 
+if(error){
 
-        editingId =
-          id;
+throw error;
 
+}
 
-        document.getElementById(
-          "activityDate"
-        ).value =
-          String(
-            data.activity_date || ""
-          ).substring(
-            0,
-            10
-          );
+showMessage(
+"Activity updated successfully! ✅",
+"success"
+);
 
+editingId =
+null;
 
-        document.getElementById(
-          "activityType"
-        ).value =
-          data.activity_type ||
-          "Loaded";
+document.getElementById(
+"cancelEditButton"
+).style.display =
+"none";
 
+saveButton.textContent =
+"SAVE DAILY ACTIVITY";
 
-        document.getElementById(
-          "loadCount"
-        ).value =
-          data.load_count ||
-          "";
+clearDailyRows();
 
+}else{
 
-        /*
-         * IMPORTANT:
-         * Database column is "hub".
-         */
+/*
+ Every hub/vehicle pair becomes
+ one database record.
+*/
 
-        setSelectedHubs(
-          data.hub || ""
-        );
+const records =
+rows.map(
+row=>({
 
+activity_date:
+gregDate,
 
-        document.getElementById(
-          "items"
-        ).value =
-          data.items === "-"
-            ? ""
-            : data.items || "";
+activity_type:
+activityType,
 
+load_count:
+1,
 
-        document.getElementById(
-          "vehicle"
-        ).value =
-          data.vehicle || "";
+hub:
+row.hub,
 
+vehicle:
+row.vehicle,
 
-        document.getElementById(
-          "challenges"
-        ).value =
-          data.challenges === "-"
-            ? ""
-            : data.challenges || "";
+items:
+row.items,
 
+challenges:
+row.challenges,
 
-        document.getElementById(
-          "plantCenter"
-        ).value =
-          data.plant_center || "";
+plant_center:
+plantCenter || null
 
+})
+);
 
-        document.getElementById(
-          "saveButton"
-        ).textContent =
-          "UPDATE ACTIVITY";
+const {
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.insert(records);
 
+if(error){
 
-        document.getElementById(
-          "cancelEditButton"
-        ).style.display =
-        "block";
+throw error;
 
+}
 
-        showMessage(
-          "Editing activity #" +
-          id,
-          "success"
-        );
+showMessage(
+rows.length +
+" vehicle record(s) saved successfully! ✅",
+"success"
+);
 
+clearDailyRows();
 
-        window.scrollTo({
+}
 
-          top:
-            document
-              .getElementById(
-                "adminActivitySection"
-              )
-              .offsetTop - 20,
+await loadDashboard();
 
-          behavior:
-            "smooth"
+await refreshExistingSearches();
 
-        });
+}catch(error){
 
-      } catch (error) {
+console.error(
+"SAVE ERROR:",
+error
+);
 
-        console.error(
-          "EDIT ERROR:",
-          error
-        );
+showMessage(
+"Error: " +
+error.message,
+"error"
+);
 
-        alert(
-          "Edit error:\n\n" +
-          error.message
-        );
+}finally{
 
-      }
+saveButton.disabled =
+false;
 
-    }
+if(!editingId){
 
+saveButton.textContent =
+"SAVE DAILY ACTIVITY";
 
-    /* =====================================================
-       CANCEL EDIT
-       ===================================================== */
+}else{
 
-    function cancelEdit() {
+saveButton.textContent =
+"UPDATE ACTIVITY";
 
-      editingId =
-        null;
+}
 
+}
 
-      clearActivityForm();
+}
 
 
-      document.getElementById(
-        "saveButton"
-      ).textContent =
-        "SAVE ACTIVITY";
+/* ==========================================================
+   EDIT
+========================================================== */
 
+async function editActivity(id){
 
-      document.getElementById(
-        "cancelEditButton"
-      ).style.display =
-        "none";
+if(
+!await isAdminLoggedIn()
+){
 
+alert(
+"Please log in as Admin to edit."
+);
 
-      const message =
-        document.getElementById(
-          "message"
-        );
+return;
 
+}
 
-      message.className =
-        "message";
+const {
+data,
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.select("*")
+.eq(
+"id",
+id
+)
+.single();
 
+if(error){
 
-      message.textContent =
-        "";
+alert(
+"Unable to load activity:\n\n" +
+error.message
+);
 
-    }
+return;
 
+}
 
-    /* =====================================================
-       DELETE ACTIVITY
-       ===================================================== */
+if(!data){
 
-    async function deleteActivity(id) {
+alert(
+"Activity not found."
+);
 
-      if (
-        !await isAdminLoggedIn()
-      ) {
+return;
 
-        alert(
-          "Please log in as Admin."
-        );
+}
 
-        return;
+editingId =
+id;
 
-      }
 
+/*
+ Convert stored Gregorian
+ date back to Ethiopian.
+*/
 
-      const confirmed =
-        confirm(
-          "Are you sure you want to delete activity #" +
-          id +
-          "?\n\nThis action cannot be undone."
-        );
+document.getElementById(
+"activityDate"
+).value =
+gregorianToEthiopian(
+String(
+data.activity_date
+).substring(0,10)
+);
 
+document.getElementById(
+"activityType"
+).value =
+data.activity_type ||
+"Loaded";
 
-      if (!confirmed) {
+document.getElementById(
+"plantCenter"
+).value =
+data.plant_center ||
+"";
 
-        return;
+document.getElementById(
+"dailyRows"
+).innerHTML =
+"";
 
-      }
+addDailyRow({
 
+hub:
+data.hub,
 
-      try {
+vehicle:
+data.vehicle,
 
-        const {
-          error
-        } =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .delete()
-            .eq(
-              "id",
-              id
-            );
+items:
+data.items,
 
+challenges:
+data.challenges
 
-        if (error) {
+});
 
-          console.error(
-            "DELETE ERROR:",
-            error
-          );
+document.getElementById(
+"saveButton"
+).textContent =
+"UPDATE ACTIVITY";
 
-          alert(
-            "Delete failed:\n\n" +
-            error.message
-          );
+document.getElementById(
+"cancelEditButton"
+).style.display =
+"block";
 
-          return;
+showMessage(
+"Editing activity #" +
+id,
+"success"
+);
 
-        }
+window.scrollTo({
 
+top:
+document.getElementById(
+"adminActivitySection"
+).offsetTop - 20,
 
-        if (
-          editingId === id
-        ) {
+behavior:
+"smooth"
 
-          cancelEdit();
+);
 
-        }
+}
 
 
-        await loadDashboard();
+/* ==========================================================
+   CANCEL EDIT
+========================================================== */
 
-        await refreshExistingSearches();
+function cancelEdit(){
 
+editingId =
+null;
 
-        alert(
-          "Activity deleted successfully. ✅"
-        );
+clearDailyRows();
 
-      } catch (error) {
+document.getElementById(
+"saveButton"
+).textContent =
+"SAVE DAILY ACTIVITY";
 
-        console.error(
-          "DELETE EXCEPTION:",
-          error
-        );
+document.getElementById(
+"cancelEditButton"
+).style.display =
+"none";
 
-        alert(
-          "Delete error:\n\n" +
-          error.message
-        );
+const message =
+document.getElementById(
+"message"
+);
 
-      }
+message.className =
+"message";
 
-    }
+message.textContent =
+"";
 
+}
 
-    /* =====================================================
-       ACTION BUTTONS
-       ===================================================== */
 
-    function actionButtons(id) {
+/* ==========================================================
+   DELETE
+========================================================== */
 
-      if (!adminLoggedIn) {
+async function deleteActivity(id){
 
-        return "";
+if(
+!await isAdminLoggedIn()
+){
 
-      }
+alert(
+"Please log in as Admin."
+);
 
+return;
 
-      return `
+}
 
-        <div class="action-buttons">
+if(
+!confirm(
+"Are you sure you want to delete activity #" +
+id +
+"?\n\nThis cannot be undone."
+)
+){
 
-          <button
-            type="button"
-            class="edit-button"
-            onclick="editActivity(${Number(id)})">
+return;
 
-            ✏️ Edit
+}
 
-          </button>
+const {
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.delete()
+.eq(
+"id",
+id
+);
 
-          <button
-            type="button"
-            class="delete-button"
-            onclick="deleteActivity(${Number(id)})">
+if(error){
 
-            🗑️ Delete
+alert(
+"Delete failed:\n\n" +
+error.message
+);
 
-          </button>
+return;
 
-        </div>
+}
 
-      `;
+if(editingId === id){
 
-    }
+cancelEdit();
 
+}
 
-    /* =====================================================
-       RENDER ROW
-       ===================================================== */
+await loadDashboard();
 
-    function renderRow(row) {
+await refreshExistingSearches();
 
-      const actions =
-        adminLoggedIn
-          ? `
-            <td>
-              ${actionButtons(
-                row.id
-              )}
-            </td>
-          `
-          : "";
+alert(
+"Activity deleted successfully. ✅"
+);
 
+}
 
-      return `
 
-        <tr>
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
 
-          <td>
-            ${escapeHtml(
-              String(
-                row.activity_date || "-"
-              ).substring(
-                0,
-                10
-              )
-            )}
-          </td>
+function actionButtons(id){
 
-          <td>
-            ${escapeHtml(
-              row.activity_type || "-"
-            )}
-          </td>
+if(!adminLoggedIn){
 
-          <td>
-            ${escapeHtml(
-              String(
-                row.load_count ?? "-"
-              )
-            )}
-          </td>
+return "";
 
-          <td>
-            ${escapeHtml(
-              row.hub || "-"
-            )}
-          </td>
+}
 
-          <td>
-            ${escapeHtml(
-              row.items || "-"
-            )}
-          </td>
+return `
 
-          <td>
-            ${escapeHtml(
-              row.vehicle || "-"
-            )}
-          </td>
+<div class="action-buttons">
 
-          <td>
-            ${escapeHtml(
-              row.challenges || "-"
-            )}
-          </td>
+<button
+type="button"
+class="edit-button"
+onclick="editActivity(${Number(id)})">
 
-          ${actions}
+✏️ Edit
 
-        </tr>
+</button>
 
-      `;
+<button
+type="button"
+class="delete-button"
+onclick="deleteActivity(${Number(id)})">
 
-    }
+🗑️ Delete
 
+</button>
 
-    /* =====================================================
-       RECENT 7 DAYS ACTIVITY
-       ===================================================== */
+</div>
 
-    async function loadRecentActivity() {
+`;
 
-      const tbody =
-        document.getElementById(
-          "recentActivity"
-        );
+}
 
 
-      const colspan =
-        adminLoggedIn
-          ? 8
-          : 7;
+/* ==========================================================
+   RENDER ROW
+========================================================== */
 
+function renderRow(row){
 
-      /*
-       * Today
-       */
+const ethDate =
+gregorianToEthiopian(
+String(
+row.activity_date || ""
+).substring(0,10)
+);
 
-      const toDate =
-        getToday();
+return `
 
+<tr>
 
-      /*
-       * Six days before today.
-       * Together this gives exactly 7 calendar days.
-       */
+<td>
+${escapeHtml(
+ethDate || "-"
+)}
+</td>
 
-      const fromDateObj =
-        new Date();
+<td>
+${escapeHtml(
+row.activity_type || "-"
+)}
+</td>
 
+<td>
+${escapeHtml(
+row.vehicle || "-"
+)}
+</td>
 
-      fromDateObj.setDate(
-        fromDateObj.getDate() - 6
-      );
+<td>
+${escapeHtml(
+row.hub || "-"
+)}
+</td>
 
+<td>
+${escapeHtml(
+row.items || "-"
+)}
+</td>
 
-      const fromDate =
-        getLocalDateString(
-          fromDateObj
-        );
+<td>
+${escapeHtml(
+row.challenges || "-"
+)}
+</td>
 
+${
+adminLoggedIn
+?
+`
+<td>
+${actionButtons(row.id)}
+</td>
+`
+:
+""
+}
 
-      /*
-       * Supabase range:
-       *
-       * >= fromDate
-       * < tomorrow
-       *
-       * This includes today and the
-       * previous six days.
-       */
+</tr>
 
-      const nextDate =
-        getNextDate(
-          toDate
-        );
+`;
 
+}
 
-      console.log(
-        "RECENT 7 DAYS:",
-        fromDate,
-        "to",
-        toDate
-      );
 
+/* ==========================================================
+   RECENT 7 DAYS
+========================================================== */
 
-      tbody.innerHTML = `
+async function loadRecentActivity(){
 
-        <tr>
+const tbody =
+document.getElementById(
+"recentActivity"
+);
 
-          <td
-            colspan="${colspan}"
-            style="text-align:center;">
+const colspan =
+adminLoggedIn
+? 7
+: 6;
 
-            Loading recent activities...
 
-          </td>
+/*
+ Get Ethiopian today.
+*/
 
-        </tr>
+const ethToday =
+getTodayEthiopian();
 
-      `;
+/*
+ Six days before today
+ gives seven Ethiopian dates total.
+*/
 
+const ethFrom =
+addEthiopianDays(
+ethToday,
+-6
+);
 
-      try {
+const gregFrom =
+ethiopianToGregorian(
+ethFrom
+);
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .select("*")
-            .gte(
-              "activity_date",
-              fromDate
-            )
-            .lt(
-              "activity_date",
-              nextDate
-            )
-            .order(
-              "activity_date",
-              {
-                ascending: false
-              }
-            )
-            .order(
-              "created_at",
-              {
-                ascending: false
-              }
-            );
+const gregTo =
+ethiopianToGregorian(
+ethToday
+);
 
+const gregToNext =
+addGregorianDays(
+gregTo,
+1
+);
 
-        if (error) {
+tbody.innerHTML = `
 
-          console.error(
-            "RECENT ACTIVITY ERROR:",
-            error
-          );
+<tr>
 
+<td
+colspan="${colspan}"
+style="text-align:center;">
 
-          tbody.innerHTML = `
+Loading recent activities...
 
-            <tr>
+</td>
 
-              <td
-                colspan="${colspan}"
-                style="
-                  text-align:center;
-                  color:#a51d1d;
-                  padding:25px;
-                ">
+</tr>
 
-                Error loading recent activities:
-                ${escapeHtml(
-                  error.message
-                )}
+`;
 
-              </td>
+try{
 
-            </tr>
+const {
+data,
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.select("*")
+.gte(
+"activity_date",
+gregFrom
+)
+.lt(
+"activity_date",
+gregToNext
+)
+.order(
+"activity_date",
+{
+ascending:false
+}
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
-          `;
+if(error){
 
-          return;
+throw error;
 
-        }
+}
 
+if(
+!data ||
+data.length === 0
+){
 
-        const recentData =
-          data || [];
+tbody.innerHTML = `
 
+<tr>
 
-        console.log(
-          "RECENT ACTIVITY DATA:",
-          recentData
-        );
+<td
+colspan="${colspan}"
+style="text-align:center;padding:25px;">
 
+No activity recorded
+in the last 7 Ethiopian days.
 
-        if (
-          recentData.length === 0
-        ) {
+</td>
 
-          /*
-           * IMPORTANT:
-           * Date Search remains available below.
-           */
+</tr>
 
-          tbody.innerHTML = `
+`;
 
-            <tr>
+return;
 
-              <td
-                colspan="${colspan}"
-                style="
-                  text-align:center;
-                  padding:25px;
-                ">
+}
 
-                No activity recorded
-                in the last 7 days.
+tbody.innerHTML =
+data.map(
+renderRow
+).join("");
 
-                <br><br>
+}catch(error){
 
-                You can use
-                <strong>
-                  Search Activity by Date
-                </strong>
-                below to check your records.
+console.error(
+"RECENT ERROR:",
+error
+);
 
-              </td>
+tbody.innerHTML = `
 
-            </tr>
+<tr>
 
-          `;
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;padding:25px;">
 
-          return;
+Error loading recent activity:
+${escapeHtml(error.message)}
 
-        }
+</td>
 
+</tr>
 
-        tbody.innerHTML =
-          recentData
-            .map(
-              row =>
-                renderRow(
-                  row
-                )
-            )
-            .join("");
+`;
 
+}
 
-        /*
-         * Keep minimum 7 visible rows.
-         */
+}
 
-        const emptyRows =
-          Math.max(
-            0,
-            7 -
-            recentData.length
-          );
 
+/* ==========================================================
+   GREGORIAN ADD DAYS
+========================================================== */
 
-        for (
-          let i = 0;
-          i < emptyRows;
-          i++
-        ) {
+function addGregorianDays(
+dateString,
+days
+){
 
-          tbody.innerHTML += `
+const d =
+new Date(
+dateString +
+"T00:00:00"
+);
 
-            <tr class="empty-row">
+d.setDate(
+d.getDate() + days
+);
 
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+return (
+d.getFullYear() +
+"-" +
+String(
+d.getMonth()+1
+).padStart(2,"0") +
+"-" +
+String(
+d.getDate()
+).padStart(2,"0")
+);
 
-              ${
-                adminLoggedIn
-                  ? "<td>&nbsp;</td>"
-                  : ""
-              }
+}
 
-            </tr>
 
-          `;
+/* ==========================================================
+   TOTALS
+========================================================== */
 
-        }
+async function loadTotals(){
 
-      } catch (error) {
+const {
+data,
+error
+} =
+await supabaseClient
+.from(
+"warehouse_activities"
+)
+.select(
+"activity_type,load_count"
+);
 
-        console.error(
-          "RECENT EXCEPTION:",
-          error
-        );
+if(error){
 
+console.error(
+"TOTAL ERROR:",
+error
+);
 
-        tbody.innerHTML = `
+return;
 
-          <tr>
+}
 
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-                padding:25px;
-              ">
+let loaded=0;
 
-              Error:
-              ${escapeHtml(
-                error.message
-              )}
+let offloaded=0;
 
-            </td>
+(data || []).forEach(
+row=>{
 
-          </tr>
+const count =
+Number(
+row.load_count
+) || 0;
 
-        `;
+const type =
+String(
+row.activity_type || ""
+)
+.toLowerCase()
+.trim();
 
-      }
+if(
+type === "loaded"
+){
 
-    }
+loaded += count;
 
+}
 
-    /* =====================================================
-       TOTALS
-       ===================================================== */
+if(
+type === "offloaded"
+){
 
-    async function loadTotals() {
+offloaded += count;
 
-      try {
+}
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .select(
-              "activity_type, load_count"
-            );
+});
 
+document.getElementById(
+"loadedTotal"
+).textContent =
+loaded;
 
-        if (error) {
+document.getElementById(
+"offloadedTotal"
+).textContent =
+offloaded;
 
-          console.error(
-            "TOTAL ERROR:",
-            error
-          );
+}
 
-          return;
 
-        }
+/* ==========================================================
+   HUB SEARCH
+========================================================== */
 
+async function searchHub(){
 
-        let loaded =
-          0;
+const hub =
+document.getElementById(
+"hubSearch"
+).value;
 
+const fromEth =
+document.getElementById(
+"hubFromDate"
+).value.trim();
 
-        let offloaded =
-          0;
+const toEth =
+document.getElementById(
+"hubToDate"
+).value.trim();
 
+const tbody =
+document.getElementById(
+"historyResults"
+);
 
-        (
-          data || []
-        ).forEach(
-          row => {
+const colspan =
+adminLoggedIn
+? 7
+: 6;
 
-            const count =
-              Number(
-                row.load_count
-              ) || 0;
+if(!hub){
 
+tbody.innerHTML = `
 
-            const type =
-              String(
-                row.activity_type || ""
-              )
-                .trim()
-                .toLowerCase();
+<tr>
 
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
-            if (
-              type ===
-              "loaded"
-            ) {
+Please select a hub.
 
-              loaded +=
-                count;
+</td>
 
-            }
+</tr>
 
+`;
 
-            if (
-              type ===
-              "offloaded"
-            ) {
+return;
 
-              offloaded +=
-                count;
+}
 
-            }
+if(
+fromEth &&
+!validateEthDate(fromEth)
+){
 
-          }
-        );
+tbody.innerHTML = `
 
+<tr>
 
-        document.getElementById(
-          "loadedTotal"
-        ).textContent =
-          loaded;
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
+Invalid From Ethiopian date.
 
-        document.getElementById(
-          "offloadedTotal"
-        ).textContent =
-          offloaded;
+</td>
 
-      } catch (error) {
+</tr>
 
-        console.error(
-          "TOTAL EXCEPTION:",
-          error
-        );
+`;
 
-      }
+return;
 
-    }
+}
 
+if(
+toEth &&
+!validateEthDate(toEth)
+){
 
-    /* =====================================================
-       HUB SEARCH
-       ===================================================== */
+tbody.innerHTML = `
 
-    async function searchHub() {
+<tr>
 
-      const search =
-        document.getElementById(
-          "hubSearch"
-        ).value.trim();
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
+Invalid To Ethiopian date.
 
-      const fromDate =
-        document.getElementById(
-          "hubFromDate"
-        ).value;
+</td>
 
+</tr>
 
-      const toDate =
-        document.getElementById(
-          "hubToDate"
-        ).value;
+`;
 
+return;
 
-      const tbody =
-        document.getElementById(
-          "historyResults"
-        );
+}
 
+let query =
+supabaseClient
+.from(
+"warehouse_activities"
+)
+.select("*")
+.eq(
+"hub",
+hub
+);
 
-      const colspan =
-        adminLoggedIn
-          ? 8
-          : 7;
+if(fromEth){
 
+query =
+query.gte(
+"activity_date",
+ethiopianToGregorian(
+fromEth
+)
+);
 
-      if (!search) {
+}
 
-        tbody.innerHTML = `
+if(toEth){
 
-          <tr>
+query =
+query.lt(
+"activity_date",
+addGregorianDays(
+ethiopianToGregorian(
+toEth
+),
+1
+)
+);
 
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
+}
 
-              Please select a hub.
+const {
+data,
+error
+} =
+await query
+.order(
+"activity_date",
+{
+ascending:false
+}
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
-            </td>
+if(error){
 
-          </tr>
+tbody.innerHTML = `
 
-        `;
+<tr>
 
-        return;
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
-      }
+${escapeHtml(
+error.message
+)}
 
+</td>
 
-      if (
-        fromDate &&
-        toDate &&
-        fromDate > toDate
-      ) {
+</tr>
 
-        tbody.innerHTML = `
+`;
 
-          <tr>
+return;
 
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
+}
 
-              From Date cannot be later
-              than To Date.
+if(
+!data ||
+data.length === 0
+){
 
-            </td>
+tbody.innerHTML = `
 
-          </tr>
+<tr>
 
-        `;
+<td
+colspan="${colspan}"
+style="text-align:center;">
 
-        return;
+No history found.
 
-      }
+</td>
 
+</tr>
 
-      tbody.innerHTML = `
+`;
 
-        <tr>
+return;
 
-          <td
-            colspan="${colspan}"
-            style="text-align:center;">
+}
 
-            Searching history...
+tbody.innerHTML =
+data.map(
+renderRow
+).join("");
 
-          </td>
+}
 
-        </tr>
 
-      `;
+/* ==========================================================
+   DATE SEARCH
+========================================================== */
 
+async function searchByDate(){
 
-      try {
+const fromEth =
+document.getElementById(
+"dateFrom"
+).value.trim();
 
-        /*
-         * IMPORTANT:
-         * Database column is "hub".
-         */
+const toEth =
+document.getElementById(
+"dateTo"
+).value.trim();
 
-        let query =
-          supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .select("*")
-            .ilike(
-              "hub",
-              "%" +
-              search +
-              "%"
-            );
+const tbody =
+document.getElementById(
+"dateSearchResults"
+);
 
+const colspan =
+adminLoggedIn
+? 7
+: 6;
 
-        if (fromDate) {
+if(
+!fromEth &&
+!toEth
+){
 
-          query =
-            query.gte(
-              "activity_date",
-              fromDate
-            );
+tbody.innerHTML = `
 
-        }
+<tr>
 
+<td
+colspan="${colspan}"
+style="text-align:center;">
 
-        if (toDate) {
+Please enter an Ethiopian date.
 
-          query =
-            query.lt(
-              "activity_date",
-              getNextDate(
-                toDate
-              )
-            );
+</td>
 
-        }
+</tr>
 
+`;
 
-        const {
-          data,
-          error
-        } =
-          await query
-            .order(
-              "activity_date",
-              {
-                ascending: false
-              }
-            )
-            .order(
-              "created_at",
-              {
-                ascending: false
-              }
-            );
+return;
 
+}
 
-        if (error) {
+if(
+fromEth &&
+!validateEthDate(fromEth)
+){
 
-          tbody.innerHTML = `
+tbody.innerHTML = `
 
-            <tr>
+<tr>
 
-              <td
-                colspan="${colspan}"
-                style="
-                  text-align:center;
-                  color:#a51d1d;
-                ">
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
-                Error searching history:
-                ${escapeHtml(
-                  error.message
-                )}
+Invalid From Ethiopian date.
 
-              </td>
+</td>
 
-            </tr>
+</tr>
 
-          `;
+`;
 
-          return;
+return;
 
-        }
+}
 
+if(
+toEth &&
+!validateEthDate(toEth)
+){
 
-        if (
-          !data ||
-          data.length === 0
-        ) {
+tbody.innerHTML = `
 
-          tbody.innerHTML = `
+<tr>
 
-            <tr>
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
-              <td
-                colspan="${colspan}"
-                style="text-align:center;">
+Invalid To Ethiopian date.
 
-                No history found.
+</td>
 
-              </td>
+</tr>
 
-            </tr>
+`;
 
-          `;
+return;
 
-          return;
+}
 
-        }
+let query =
+supabaseClient
+.from(
+"warehouse_activities"
+)
+.select("*");
 
+if(fromEth){
 
-        tbody.innerHTML =
-          data
-            .map(
-              row =>
-                renderRow(
-                  row
-                )
-            )
-            .join("");
+query =
+query.gte(
+"activity_date",
+ethiopianToGregorian(
+fromEth
+)
+);
 
-      } catch (error) {
+}
 
-        console.error(
-          "HUB SEARCH ERROR:",
-          error
-        );
+if(toEth){
 
+query =
+query.lt(
+"activity_date",
+addGregorianDays(
+ethiopianToGregorian(
+toEth
+),
+1
+)
+);
 
-        tbody.innerHTML = `
+}
 
-          <tr>
+const {
+data,
+error
+} =
+await query
+.order(
+"activity_date",
+{
+ascending:false
+}
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
+if(error){
 
-              Search error:
-              ${escapeHtml(
-                error.message
-              )}
+tbody.innerHTML = `
 
-            </td>
+<tr>
 
-          </tr>
+<td
+colspan="${colspan}"
+style="text-align:center;color:#a51d1d;">
 
-        `;
+${escapeHtml(
+error.message
+)}
 
-      }
+</td>
 
-    }
+</tr>
 
+`;
 
-    /* =====================================================
-       DATE SEARCH
-       ===================================================== */
+return;
 
-    async function searchByDate() {
+}
 
-      const fromDate =
-        document.getElementById(
-          "dateFrom"
-        ).value;
+if(
+!data ||
+data.length === 0
+){
 
+tbody.innerHTML = `
 
-      const toDate =
-        document.getElementById(
-          "dateTo"
-        ).value;
+<tr>
 
+<td
+colspan="${colspan}"
+style="text-align:center;">
 
-      const tbody =
-        document.getElementById(
-          "dateSearchResults"
-        );
+No activity found.
 
+</td>
 
-      const colspan =
-        adminLoggedIn
-          ? 8
-          : 7;
+</tr>
 
+`;
 
-      if (
-        !fromDate &&
-        !toDate
-      ) {
+return;
 
-        tbody.innerHTML = `
+}
 
-          <tr>
+tbody.innerHTML =
+data.map(
+renderRow
+).join("");
 
-            <td
-              colspan="${colspan}"
-              style="text-align:center;">
+}
 
-              Please select a date.
 
-            </td>
+/* ==========================================================
+   REFRESH SEARCHES
+========================================================== */
 
-          </tr>
+async function refreshExistingSearches(){
 
-        `;
+const hub =
+document.getElementById(
+"hubSearch"
+).value;
 
-        return;
+const fromDate =
+document.getElementById(
+"dateFrom"
+).value;
 
-      }
+const toDate =
+document.getElementById(
+"dateTo"
+).value;
 
+if(hub){
 
-      if (
-        fromDate &&
-        toDate &&
-        toDate < fromDate
-      ) {
+await searchHub();
 
-        tbody.innerHTML = `
+}
 
-          <tr>
+if(
+fromDate ||
+toDate
+){
 
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
+await searchByDate();
 
-              To Date cannot be earlier
-              than From Date.
+}
 
-            </td>
+}
 
-          </tr>
 
-        `;
+/* ==========================================================
+   LOAD DASHBOARD
+========================================================== */
 
-        return;
+async function loadDashboard(){
 
-      }
+await Promise.all([
 
+loadRecentActivity(),
 
-      tbody.innerHTML = `
+loadTotals()
 
-        <tr>
+]);
 
-          <td
-            colspan="${colspan}"
-            style="text-align:center;">
+}
 
-            Searching...
 
-          </td>
+/* ==========================================================
+   INITIALIZE
+========================================================== */
 
-        </tr>
+async function initializeDashboard(){
 
-      `;
+/*
+ Today's Ethiopian date.
+*/
 
+document.getElementById(
+"activityDate"
+).value =
+getTodayEthiopian();
 
-      try {
 
-        let query =
-          supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .select("*");
+/*
+ Start with one entry row.
+*/
 
+clearDailyRows();
 
-        if (fromDate) {
 
-          query =
-            query.gte(
-              "activity_date",
-              fromDate
-            );
+/*
+ Buttons.
+*/
 
-        }
+document.getElementById(
+"adminLoginButton"
+).onclick =
+toggleAdminLogin;
 
+document.getElementById(
+"loginButton"
+).onclick =
+adminLogin;
 
-        if (toDate) {
+document.getElementById(
+"cancelLoginButton"
+).onclick =
+toggleAdminLogin;
 
-          query =
-            query.lt(
-              "activity_date",
-              getNextDate(
-                toDate
-              )
-            );
+document.getElementById(
+"addRowButton"
+).onclick =
+()=>addDailyRow();
 
-        }
+document.getElementById(
+"saveButton"
+).onclick =
+saveActivity;
 
+document.getElementById(
+"cancelEditButton"
+).onclick =
+cancelEdit;
 
-        const {
-          data,
-          error
-        } =
-          await query
-            .order(
-              "activity_date",
-              {
-                ascending: false
-              }
-            )
-            .order(
-              "created_at",
-              {
-                ascending: false
-              }
-            );
+document.getElementById(
+"hubSearchButton"
+).onclick =
+searchHub;
 
+document.getElementById(
+"dateSearchButton"
+).onclick =
+searchByDate;
 
-        if (error) {
 
-          tbody.innerHTML = `
+/*
+ Public mode first.
+*/
 
-            <tr>
+showAdminSection(
+null,
+false
+);
 
-              <td
-                colspan="${colspan}"
-                style="
-                  text-align:center;
-                  color:#a51d1d;
-                ">
 
-                Error searching activities:
-                ${escapeHtml(
-                  error.message
-                )}
+/*
+ Check Supabase login.
+*/
 
-              </td>
+await checkAdminSession();
 
-            </tr>
 
-          `;
+/*
+ Load data.
+*/
 
-          return;
+await loadDashboard();
 
-        }
+console.log(
+"EPSS DASHBOARD READY"
+);
 
+}
 
-        if (
-          !data ||
-          data.length === 0
-        ) {
 
-          tbody.innerHTML = `
+/* ==========================================================
+   START
+========================================================== */
 
-            <tr>
+if(
+document.readyState === "loading"
+){
 
-              <td
-                colspan="${colspan}"
-                style="text-align:center;">
+document.addEventListener(
+"DOMContentLoaded",
+initializeDashboard
+);
 
-                No activity found
-                for the selected date.
+}else{
 
-              </td>
+initializeDashboard();
 
-            </tr>
+}
 
-          `;
-
-          return;
-
-        }
-
-
-        tbody.innerHTML =
-          data
-            .map(
-              row =>
-                renderRow(
-                  row
-                )
-            )
-            .join("");
-
-      } catch (error) {
-
-        console.error(
-          "DATE SEARCH ERROR:",
-          error
-        );
-
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                color:#a51d1d;
-              ">
-
-              Search error:
-              ${escapeHtml(
-                error.message
-              )}
-
-            </td>
-
-          </tr>
-
-        `;
-
-      }
-
-    }
-
-
-    /* =====================================================
-       REFRESH EXISTING SEARCHES
-       ===================================================== */
-
-    async function refreshExistingSearches() {
-
-      const hub =
-        document.getElementById(
-          "hubSearch"
-        ).value;
-
-
-      const dateFrom =
-        document.getElementById(
-          "dateFrom"
-        ).value;
-
-
-      const dateTo =
-        document.getElementById(
-          "dateTo"
-        ).value;
-
-
-      if (hub) {
-
-        await searchHub();
-
-      }
-
-
-      if (
-        dateFrom ||
-        dateTo
-      ) {
-
-        await searchByDate();
-
-      }
-
-    }
-
-
-    /* =====================================================
-       LOAD DASHBOARD
-       ===================================================== */
-
-    async function loadDashboard() {
-
-      await Promise.all([
-        loadRecentActivity(),
-        loadTotals()
-      ]);
-
-    }
-
-
-    /* =====================================================
-       INITIALIZE APPLICATION
-       ===================================================== */
-
-    async function initializeDashboard() {
-
-      console.log(
-        "EPSS DASHBOARD STARTING..."
-      );
-
-
-      /*
-       * Set today's date.
-       */
-
-      document.getElementById(
-        "activityDate"
-      ).value =
-        getToday();
-
-
-      /*
-       * Button events.
-       */
-
-      document
-        .getElementById(
-          "adminLoginButton"
-        )
-        .onclick =
-        toggleAdminLogin;
-
-
-      document
-        .getElementById(
-          "loginButton"
-        )
-        .onclick =
-        adminLogin;
-
-
-      document
-        .getElementById(
-          "cancelLoginButton"
-        )
-        .onclick =
-        toggleAdminLogin;
-
-
-      document
-        .getElementById(
-          "saveButton"
-        )
-        .onclick =
-        saveActivity;
-
-
-      document
-        .getElementById(
-          "cancelEditButton"
-        )
-        .onclick =
-        cancelEdit;
-
-
-      document
-        .getElementById(
-          "hubSearchButton"
-        )
-        .onclick =
-        searchHub;
-
-
-      document
-        .getElementById(
-          "dateSearchButton"
-        )
-        .onclick =
-        searchByDate;
-
-
-      /*
-       * Start as public user.
-       */
-
-      showAdminSection(
-        null,
-        false
-      );
-
-
-      /*
-       * Check existing login session.
-       */
-
-      await checkAdminSession();
-
-
-      /*
-       * Load dashboard.
-       */
-
-      await loadDashboard();
-
-
-      console.log(
-        "EPSS DASHBOARD READY."
-      );
-
-    }
-
-
-    /* =====================================================
-       START ONCE
-       ===================================================== */
-
-    if (
-      document.readyState ===
-      "loading"
-    ) {
-
-      document.addEventListener(
-        "DOMContentLoaded",
-        initializeDashboard
-      );
-
-    } else {
-
-      initializeDashboard();
-
-    }
-
-  </script>
+</script>
 
 </body>
 
