@@ -503,11 +503,13 @@
       .admin-login-box {
         width: 94%;
       }
+
     }
 
   </style>
 
 </head>
+
 
 <body>
 
@@ -515,19 +517,23 @@
 
   <header class="header">
 
-    <h1>EPSS Warehouse Logistics Dashboard</h1>
+    <h1>
+      EPSS Warehouse Logistics Dashboard
+    </h1>
 
-    <p>Warehouse Activity Monitoring System</p>
+    <p>
+      Warehouse Activity Monitoring System
+    </p>
 
-<button
-  type="button"
-  id="adminLoginButton"
-  class="admin-button"
-  onclick="toggleAdminLogin()">
+    <button
+      type="button"
+      id="adminLoginButton"
+      class="admin-button">
 
-  🔐 Admin Login
+      🔐 Admin Login
 
-</button>
+    </button>
+
   </header>
 
 
@@ -543,12 +549,15 @@
         🔐
       </div>
 
-      <h2>Admin Login</h2>
+      <h2>
+        Admin Login
+      </h2>
 
-      <p>Authorized personnel only</p>
+      <p>
+        Authorized personnel only
+      </p>
 
     </div>
-
 
     <div class="admin-login-content">
 
@@ -584,8 +593,8 @@
 
       <button
         type="button"
-        class="login-button"
-        onclick="adminLogin()">
+        id="loginButton"
+        class="login-button">
 
         🔓 LOGIN
 
@@ -594,8 +603,8 @@
 
       <button
         type="button"
-        class="cancel-button"
-        onclick="toggleAdminLogin()">
+        id="cancelLoginButton"
+        class="cancel-button">
 
         CANCEL
 
@@ -616,7 +625,9 @@
 
     <section class="card plant-box">
 
-      <h2>Plant / Center</h2>
+      <h2>
+        Plant / Center
+      </h2>
 
       <select id="plantCenter">
 
@@ -653,7 +664,9 @@
 
         <div class="stat">
 
-          <h3>Loaded</h3>
+          <h3>
+            Loaded
+          </h3>
 
           <div
             class="stat-number"
@@ -668,7 +681,9 @@
 
         <div class="stat">
 
-          <h3>Offloaded</h3>
+          <h3>
+            Offloaded
+          </h3>
 
           <div
             class="stat-number"
@@ -719,6 +734,7 @@
 
         </thead>
 
+
         <tbody id="recentActivity">
 
           <tr>
@@ -727,7 +743,7 @@
               colspan="7"
               style="text-align:center;">
 
-              Loading...
+            Loading...
 
             </td>
 
@@ -752,7 +768,7 @@
 
         <div class="form-group">
 
-          <label>
+          <label for="hubSearch">
             Select Hub
           </label>
 
@@ -790,7 +806,7 @@
 
         <div class="form-group">
 
-          <label>
+          <label for="hubFromDate">
             From Date
           </label>
 
@@ -803,7 +819,7 @@
 
         <div class="form-group">
 
-          <label>
+          <label for="hubToDate">
             To Date
           </label>
 
@@ -818,9 +834,9 @@
 
       <button
         type="button"
+        id="hubSearchButton"
         class="search-button"
-        style="width:100%; margin-top:18px;"
-        onclick="searchHub()">
+        style="width:100%; margin-top:18px;">
 
         🔎 SEARCH HISTORY
 
@@ -857,6 +873,7 @@
 
           </thead>
 
+
           <tbody id="historyResults">
 
             <tr>
@@ -892,7 +909,7 @@
 
         <div class="form-group">
 
-          <label>
+          <label for="dateFrom">
             From Date
           </label>
 
@@ -905,7 +922,7 @@
 
         <div class="form-group">
 
-          <label>
+          <label for="dateTo">
             To Date
           </label>
 
@@ -920,8 +937,8 @@
 
       <button
         type="button"
-        class="search-button date-search-button"
-        onclick="searchByDate()">
+        id="dateSearchButton"
+        class="search-button date-search-button">
 
         🔎 SEARCH BY DATE
 
@@ -957,6 +974,7 @@
             </tr>
 
           </thead>
+
 
           <tbody id="dateSearchResults">
 
@@ -999,7 +1017,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="activityDate">
               Activity Date
             </label>
 
@@ -1012,7 +1030,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="activityType">
               Activity Type
             </label>
 
@@ -1033,7 +1051,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="loadCount">
               Load Count
             </label>
 
@@ -1047,7 +1065,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="hubs">
               Hub(s)
             </label>
 
@@ -1088,7 +1106,7 @@
 
           <div class="form-group full">
 
-            <label>
+            <label for="items">
               Items
             </label>
 
@@ -1101,7 +1119,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="vehicle">
               Vehicle
             </label>
 
@@ -1138,7 +1156,7 @@
 
           <div class="form-group">
 
-            <label>
+            <label for="challenges">
               Challenges
             </label>
 
@@ -1155,8 +1173,7 @@
         <button
           type="button"
           class="save-button"
-          id="saveButton"
-          onclick="saveActivity()">
+          id="saveButton">
 
           SAVE ACTIVITY
 
@@ -1166,8 +1183,7 @@
         <button
           type="button"
           class="cancel-edit-button"
-          id="cancelEditButton"
-          onclick="cancelEdit()">
+          id="cancelEditButton">
 
           CANCEL EDIT
 
@@ -1201,7 +1217,7 @@
   <script>
 
     /* =====================================================
-       SUPABASE
+       SUPABASE CONNECTION
        ===================================================== */
 
     const SUPABASE_URL =
@@ -1218,7 +1234,7 @@
 
 
     /* =====================================================
-       GLOBAL STATE
+       GLOBAL VARIABLES
        ===================================================== */
 
     let editingId = null;
@@ -1226,31 +1242,52 @@
 
 
     /* =====================================================
-       TODAY
+       DATE FUNCTIONS
        ===================================================== */
 
-    function getToday() {
-
-      const today = new Date();
+    function getLocalDateString(date) {
 
       const year =
-        today.getFullYear();
+        date.getFullYear();
 
       const month =
-        String(today.getMonth() + 1)
-          .padStart(2, "0");
+        String(
+          date.getMonth() + 1
+        ).padStart(2, "0");
 
       const day =
-        String(today.getDate())
-          .padStart(2, "0");
+        String(
+          date.getDate()
+        ).padStart(2, "0");
 
       return `${year}-${month}-${day}`;
+
     }
 
 
-    document.getElementById(
-      "activityDate"
-    ).value = getToday();
+    function getToday() {
+
+      return getLocalDateString(
+        new Date()
+      );
+
+    }
+
+
+    function getNextDate(dateString) {
+
+      const date =
+        new Date(
+          dateString + "T00:00:00"
+        );
+
+      date.setDate(
+        date.getDate() + 1
+      );
+
+      return getLocalDateString(date);
+
+    }
 
 
     /* =====================================================
@@ -1265,6 +1302,7 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
     }
 
 
@@ -1281,6 +1319,7 @@
 
       message.className =
         "message " + type;
+
     }
 
 
@@ -1291,7 +1330,9 @@
     function toggleAdminLogin() {
 
       const box =
-        document.getElementById("adminLoginBox");
+        document.getElementById(
+          "adminLoginBox"
+        );
 
       if (
         box.style.display === "block"
@@ -1308,6 +1349,7 @@
         ).focus();
 
       }
+
     }
 
 
@@ -1317,26 +1359,25 @@
 
     async function adminLogin() {
 
-      const emailInput =
-        document.getElementById("adminEmail");
-
-      const passwordInput =
-        document.getElementById("adminPassword");
-
-      const loginMessage =
-        document.getElementById("loginMessage");
-
       const email =
-        emailInput.value.trim();
+        document.getElementById(
+          "adminEmail"
+        ).value.trim();
 
       const password =
-        passwordInput.value;
+        document.getElementById(
+          "adminPassword"
+        ).value;
 
+      const loginMessage =
+        document.getElementById(
+          "loginMessage"
+        );
 
-      console.log("================================");
-      console.log("ADMIN LOGIN STARTED");
-      console.log("Email:", email);
-      console.log("================================");
+      const loginButton =
+        document.getElementById(
+          "loginButton"
+        );
 
 
       if (!email || !password) {
@@ -1348,8 +1389,14 @@
           "#a51d1d";
 
         return;
+
       }
 
+
+      loginButton.disabled = true;
+
+      loginButton.textContent =
+        "LOGGING IN...";
 
       loginMessage.textContent =
         "Connecting to Supabase...";
@@ -1374,18 +1421,12 @@
             });
 
 
-        console.log(
-          "SUPABASE LOGIN DATA:",
-          data
-        );
-
-        console.log(
-          "SUPABASE LOGIN ERROR:",
-          error
-        );
-
-
         if (error) {
+
+          console.error(
+            "LOGIN ERROR:",
+            error
+          );
 
           loginMessage.textContent =
             "Login failed: " +
@@ -1394,11 +1435,20 @@
           loginMessage.style.color =
             "#a51d1d";
 
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "🔓 LOGIN";
+
           return;
+
         }
 
 
-        if (!data || !data.user) {
+        if (
+          !data ||
+          !data.user
+        ) {
 
           loginMessage.textContent =
             "Login failed: No user returned.";
@@ -1406,13 +1456,21 @@
           loginMessage.style.color =
             "#a51d1d";
 
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "🔓 LOGIN";
+
           return;
+
         }
 
 
-        /* ===============================
-           SUCCESS
-           =============================== */
+        console.log(
+          "ADMIN LOGIN SUCCESS:",
+          data.user.email
+        );
+
 
         loginMessage.textContent =
           "Login successful! ✅";
@@ -1421,33 +1479,39 @@
           "#176b36";
 
 
-        console.log(
-          "ADMIN USER:",
-          data.user
-        );
-
-
         showAdminSection(
           data.user
         );
 
 
-        await refreshExistingSearches();
+        await loadDashboard();
 
 
-      } catch (err) {
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+          "🔓 LOGIN";
+
+
+      } catch (error) {
 
         console.error(
           "LOGIN EXCEPTION:",
-          err
+          error
         );
 
         loginMessage.textContent =
           "Login error: " +
-          err.message;
+          error.message;
 
         loginMessage.style.color =
           "#a51d1d";
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+          "🔓 LOGIN";
+
       }
 
     }
@@ -1458,11 +1522,6 @@
        ===================================================== */
 
     async function checkAdminSession() {
-
-      console.log(
-        "Checking existing Supabase session..."
-      );
-
 
       try {
 
@@ -1477,41 +1536,25 @@
         if (error) {
 
           console.error(
-            "SESSION CHECK ERROR:",
+            "SESSION ERROR:",
             error
           );
 
           showAdminSection(null);
 
           return;
-        }
-
-
-        const session =
-          data.session;
-
-
-        if (session && session.user) {
-
-          console.log(
-            "Existing admin session found:",
-            session.user.email
-          );
-
-          showAdminSection(
-            session.user
-          );
-
-        } else {
-
-          console.log(
-            "No admin session found."
-          );
-
-          showAdminSection(null);
 
         }
 
+
+        const user =
+          data &&
+          data.session
+            ? data.session.user
+            : null;
+
+
+        showAdminSection(user);
 
       } catch (error) {
 
@@ -1521,17 +1564,18 @@
         );
 
         showAdminSection(null);
+
       }
 
     }
 
 
     /* =====================================================
-       AUTH STATE LISTENER
+       AUTH STATE CHANGE
        ===================================================== */
 
     supabaseClient.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
 
         console.log(
           "AUTH EVENT:",
@@ -1595,26 +1639,18 @@
         );
 
         return;
+
       }
 
 
       adminLoggedIn = false;
-
       editingId = null;
 
 
-      const loginButton =
-        document.getElementById(
-          "adminLoginButton"
-        );
-
-
-      loginButton.textContent =
+      document.getElementById(
+        "adminLoginButton"
+      ).textContent =
         "🔐 Admin Login";
-
-
-      loginButton.onclick =
-        toggleAdminLogin;
 
 
       document.getElementById(
@@ -1631,7 +1667,8 @@
 
       updateActionHeaders();
 
-      loadRecentActivity();
+      await loadDashboard();
+
 
       alert(
         "Logged out successfully. ✅"
@@ -1641,7 +1678,7 @@
 
 
     /* =====================================================
-       SHOW / HIDE ADMIN
+       SHOW ADMIN SECTION
        ===================================================== */
 
     function showAdminSection(user) {
@@ -1711,8 +1748,6 @@
 
       updateActionHeaders();
 
-      loadRecentActivity();
-
     }
 
 
@@ -1749,7 +1784,7 @@
 
 
     /* =====================================================
-       CHECK IF ADMIN
+       CHECK LOGIN
        ===================================================== */
 
     async function isAdminLoggedIn() {
@@ -1765,27 +1800,33 @@
       if (error) {
 
         console.error(
-          "GET SESSION ERROR:",
+          "SESSION CHECK ERROR:",
           error
         );
 
         return false;
+
       }
 
 
-      return !!data.session;
+      return !!(
+        data &&
+        data.session
+      );
 
     }
 
 
     /* =====================================================
-       SELECTED HUBS
+       SELECT HUBS
        ===================================================== */
 
     function getSelectedHubs() {
 
       const select =
-        document.getElementById("hubs");
+        document.getElementById(
+          "hubs"
+        );
 
       const selected = [];
 
@@ -1819,11 +1860,15 @@
     ) {
 
       const select =
-        document.getElementById("hubs");
+        document.getElementById(
+          "hubs"
+        );
 
 
       const selectedHubs =
-        String(hubString || "")
+        String(
+          hubString || ""
+        )
           .split(",")
           .map(
             hub => hub.trim()
@@ -1858,13 +1903,17 @@
 
 
       const {
-        data: sessionData
+        data: sessionData,
+        error: sessionError
       } =
         await supabaseClient.auth
           .getSession();
 
 
-      if (!sessionData.session) {
+      if (
+        sessionError ||
+        !sessionData.session
+      ) {
 
         showMessage(
           "Please log in as Admin before saving.",
@@ -1872,6 +1921,7 @@
         );
 
         return;
+
       }
 
 
@@ -1915,6 +1965,8 @@
         ).value.trim();
 
 
+      /* ================= VALIDATION ================= */
+
       if (!activityDate) {
 
         showMessage(
@@ -1923,6 +1975,7 @@
         );
 
         return;
+
       }
 
 
@@ -1937,6 +1990,7 @@
         );
 
         return;
+
       }
 
 
@@ -1948,6 +2002,7 @@
         );
 
         return;
+
       }
 
 
@@ -1959,11 +2014,11 @@
         );
 
         return;
+
       }
 
 
-      saveButton.disabled =
-        true;
+      saveButton.disabled = true;
 
 
       saveButton.textContent =
@@ -1971,6 +2026,8 @@
           ? "UPDATING..."
           : "SAVING...";
 
+
+      /* ================= RECORD ================= */
 
       const record = {
 
@@ -2000,7 +2057,9 @@
 
       let result;
 
-⁷
+
+      /* ================= UPDATE ================= */
+
       if (editingId) {
 
         result =
@@ -2014,14 +2073,21 @@
               editingId
             );
 
-      } else {
+      }
+
+
+      /* ================= INSERT ================= */
+
+      else {
 
         result =
           await supabaseClient
             .from(
               "warehouse_activities"
             )
-            .insert([record]);
+            .insert([
+              record
+            ]);
 
       }
 
@@ -2039,50 +2105,51 @@
           "error"
         );
 
-      } else {
-
-        showMessage(
-          editingId
-            ? "Activity updated successfully! ✅"
-            : "Activity saved successfully! ✅",
-          "success"
-        );
-
-
-        clearActivityForm();
-
-        editingId = null;
-
-
-        document.getElementById(
-          "saveButton"
-        ).textContent =
-          "SAVE ACTIVITY";
-
-
-        document.getElementById(
-          "cancelEditButton"
-        ).style.display =
-          "none";
-
-
-        await loadDashboard();
-
-        await refreshExistingSearches();
-
-      }
-
-
-      saveButton.disabled =
-        false;
-
-
-      if (!editingId) {
+        saveButton.disabled = false;
 
         saveButton.textContent =
-          "SAVE ACTIVITY";
+          editingId
+            ? "UPDATE ACTIVITY"
+            : "SAVE ACTIVITY";
+
+        return;
 
       }
+
+
+      /* ================= SUCCESS ================= */
+
+      showMessage(
+        editingId
+          ? "Activity updated successfully! ✅"
+          : "Activity saved successfully! ✅",
+        "success"
+      );
+
+
+      editingId = null;
+
+      clearActivityForm();
+
+
+      saveButton.textContent =
+        "SAVE ACTIVITY";
+
+
+      document.getElementById(
+        "cancelEditButton"
+      ).style.display =
+        "none";
+
+
+      saveButton.disabled = false;
+
+
+      /* ================= REFRESH ================= */
+
+      await loadDashboard();
+
+      await refreshExistingSearches();
 
     }
 
@@ -2157,6 +2224,7 @@
         );
 
         return;
+
       }
 
 
@@ -2179,11 +2247,12 @@
       if (error) {
 
         alert(
-          "Unable to load activity:\n" +
+          "Unable to load activity:\n\n" +
           error.message
         );
 
         return;
+
       }
 
 
@@ -2193,7 +2262,11 @@
       document.getElementById(
         "activityDate"
       ).value =
-        data.activity_date || "";
+        data.activity_date
+          ? String(
+              data.activity_date
+            ).substring(0, 10)
+          : "";
 
 
       document.getElementById(
@@ -2255,17 +2328,13 @@
       );
 
 
-      window.scrollTo({
-
-        top:
-          document.getElementById(
-            "adminActivitySection"
-          ).offsetTop - 20,
-
-        behavior:
-          "smooth"
-
-      });
+      document
+        .getElementById(
+          "adminActivitySection"
+        )
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
     }
 
@@ -2310,7 +2379,7 @@
 
 
     /* =====================================================
-       DELETE
+       DELETE ACTIVITY
        ===================================================== */
 
     async function deleteActivity(id) {
@@ -2324,6 +2393,7 @@
         );
 
         return;
+
       }
 
 
@@ -2362,6 +2432,7 @@
         );
 
         return;
+
       }
 
 
@@ -2515,69 +2586,65 @@
         );
 
 
-      const {
-        data: sessionData
-      } =
-        await supabaseClient.auth
-          .getSession();
+      const colspan =
+        adminLoggedIn
+          ? 8
+          : 7;
 
 
-      const loggedIn =
-        !!sessionData.session;
-
+      /* ================= DATE RANGE ================= */
 
       const today =
         new Date();
 
 
-      const sevenDaysAgo =
-        new Date();
-
-
-      sevenDaysAgo.setDate(
-        today.getDate() - 6
-      );
-
-
-      function localDate(date) {
-
-        const year =
-          date.getFullYear();
-
-        const month =
-          String(
-            date.getMonth() + 1
-          ).padStart(2, "0");
-
-        const day =
-          String(
-            date.getDate()
-          ).padStart(2, "0");
-
-        return `${year}-${month}-${day}`;
-
-      }
-
-
-      const fromDate =
-        localDate(
-          sevenDaysAgo
-        );
-
-
       const toDate =
-        localDate(
+        getLocalDateString(
           today
         );
 
+
+      const fromDateObject =
+        new Date();
+
+
+      fromDateObject.setDate(
+        fromDateObject.getDate() - 6
+      );
+
+
+      const fromDate =
+        getLocalDateString(
+          fromDateObject
+        );
+
+
+      const nextDate =
+        getNextDate(
+          toDate
+        );
+
+
+      console.log(
+        "RECENT 7 DAYS:",
+        fromDate,
+        "TO",
+        toDate
+      );
+
+
+      /* ================= LOADING ================= */
 
       tbody.innerHTML = `
 
         <tr>
 
           <td
-            colspan="${loggedIn ? 8 : 7}"
-            style="text-align:center;">
+            colspan="${colspan}"
+            style="
+              text-align:center;
+              padding:25px;
+            ">
 
             Loading recent activities...
 
@@ -2588,6 +2655,8 @@
       `;
 
 
+      /* ================= QUERY ================= */
+
       const {
         data,
         error
@@ -2597,6 +2666,14 @@
             "warehouse_activities"
           )
           .select("*")
+          .gte(
+            "activity_date",
+            fromDate
+          )
+          .lt(
+            "activity_date",
+            nextDate
+          )
           .order(
             "activity_date",
             {
@@ -2608,9 +2685,10 @@
             {
               ascending: false
             }
-          )
-          .limit(100);
+          );
 
+
+      /* ================= ERROR ================= */
 
       if (error) {
 
@@ -2625,14 +2703,17 @@
           <tr>
 
             <td
-              colspan="${loggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 color:#a51d1d;
+                padding:25px;
               ">
 
               Error loading recent activities:
-              ${escapeHtml(error.message)}
+              ${escapeHtml(
+                error.message
+              )}
 
             </td>
 
@@ -2641,37 +2722,21 @@
         `;
 
         return;
+
       }
 
 
-      const recentData =
-        (data || []).filter(
-          row => {
-
-            if (
-              !row.activity_date
-            ) {
-              return false;
-            }
+      console.log(
+        "RECENT DATA:",
+        data
+      );
 
 
-            const activityDate =
-              String(
-                row.activity_date
-              ).substring(0, 10);
-
-
-            return (
-              activityDate >= fromDate &&
-              activityDate <= toDate
-            );
-
-          }
-        );
-
+      /* ================= NO DATA ================= */
 
       if (
-        recentData.length === 0
+        !data ||
+        data.length === 0
       ) {
 
         tbody.innerHTML = `
@@ -2679,7 +2744,7 @@
           <tr>
 
             <td
-              colspan="${loggedIn ? 8 : 7}"
+              colspan="${colspan}"
               style="
                 text-align:center;
                 padding:25px;
@@ -2695,11 +2760,14 @@
         `;
 
         return;
+
       }
 
 
+      /* ================= DISPLAY ================= */
+
       tbody.innerHTML =
-        recentData
+        data
           .map(
             row =>
               renderRow(
@@ -2710,6 +2778,8 @@
           .join("");
 
 
+      /* ================= EMPTY ROWS ================= */
+
       const minimumRows = 7;
 
 
@@ -2717,7 +2787,7 @@
         Math.max(
           0,
           minimumRows -
-          recentData.length
+          data.length
         );
 
 
@@ -2740,7 +2810,7 @@
             <td>&nbsp;</td>
 
             ${
-              loggedIn
+              adminLoggedIn
                 ? `<td>&nbsp;</td>`
                 : ""
             }
@@ -2781,6 +2851,7 @@
         );
 
         return;
+
       }
 
 
@@ -2801,7 +2872,9 @@
           const type =
             String(
               row.activity_type || ""
-            ).toLowerCase();
+            )
+              .trim()
+              .toLowerCase();
 
 
           if (
@@ -2838,276 +2911,7 @@
 
     }
 
-/* =====================================================
-   LOAD RECENT 7 DAYS
-   ===================================================== */
 
-async function loadRecentActivity() {
-
-  const tbody =
-    document.getElementById("recentActivity");
-
-  
-
-  /* ================= TODAY ================= */
-
-  const today =
-    new Date();
-
-  const toDate =
-    getLocalDateString(today);
-
-  /* ================= 6 DAYS BEFORE ================= */
-
-  const fromDateObj =
-    new Date();
-
-  fromDateObj.setDate(
-    fromDateObj.getDate() - 6
-  );
-
-  const fromDate =
-    getLocalDateString(fromDateObj);
-
-  const nextDate =
-    getNextDate(toDate);
-
-  console.log(
-    "RECENT 7 DAYS:",
-    fromDate,
-    "to",
-    toDate
-  );
-
-  /* ================= LOADING ================= */
-
-  tbody.innerHTML = `
-    <tr>
-      <td
-        colspan="${loggedIn ? 8 : 7}"
-        style="text-align:center;">
-        Loading recent activities...
-      </td>
-    </tr>
-  `;
-
-  /* ================= SUPABASE QUERY ================= */
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("warehouse_activities")
-      .select("*")
-      .gte(
-        "activity_date",
-        fromDate
-      )
-      .lt(
-        "activity_date",
-        nextDate
-      )
-      .order(
-        "activity_date",
-        {
-          ascending: false
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
-
-  /* ================= ERROR ================= */
-
-  if (error) {
-
-    console.error(
-      "RECENT ACTIVITY ERROR:",
-      error
-    );
-
-    tbody.innerHTML = `
-      <tr>
-        <td
-          colspan="${loggedIn ? 8 : 7}"
-          style="
-            text-align:center;
-            color:#a51d1d;
-            padding:25px;
-          ">
-          Error loading recent activities:
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>
-    `;
-
-    return;
-  }
-
-  console.log(
-    "RECENT DATA FROM SUPABASE:",
-    data
-  );
-
-  /* ================= NO DATA ================= */
-
-  if (
-    !data ||
-    data.length === 0
-  ) {
-
-    tbody.innerHTML = `
-      <tr>
-        <td
-          colspan="${loggedIn ? 8 : 7}"
-          style="
-            text-align:center;
-            padding:25px;
-          ">
-          No activity recorded in the last 7 days.
-        </td>
-      </tr>
-    `;
-
-    return;
-  }
-
-  /* ================= DISPLAY DATA ================= */
-
-  tbody.innerHTML =
-    data
-      .map(row => {
-
-        return `
-          <tr>
-
-            <td>
-              ${escapeHtml(
-                String(
-                  row.activity_date || "-"
-                ).substring(0, 10)
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.activity_type || "-"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                String(
-                  row.load_count ?? "-"
-                )
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.hubs || "-"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.items || "-"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.vehicle || "-"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.challenges || "-"
-              )}
-            </td>
-
-            ${
-              loggedIn
-                ? `
-                  <td>
-                    ${actionButtons(row.id)}
-                  </td>
-                `
-                : ""
-            }
-
-          </tr>
-        `;
-
-      })
-      .join("");
-
-  /* ================= KEEP 7 ROWS VISIBLE ================= */
-
-  const minimumRows = 7;
-
-  const emptyRows =
-    Math.max(
-      0,
-      minimumRows - data.length
-    );
-
-  for (
-    let i = 0;
-    i < emptyRows;
-    i++
-  ) {
-
-    tbody.innerHTML += `
-      <tr class="empty-row">
-
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-
-        ${
-          loggedIn
-            ? `<td>&nbsp;</td>`
-            : ""
-        }
-
-      </tr>
-    `;
-  }
-
-}
-
-
-/* =====================================================
-   LOCAL DATE STRING
-   ===================================================== */
-
-function getLocalDateString(date) {
-
-  const year =
-    date.getFullYear();
-
-  const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(2, "0");
-
-  const day =
-    String(
-      date.getDate()
-    ).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-    }
     /* =====================================================
        HUB SEARCH
        ===================================================== */
@@ -3166,6 +2970,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3196,6 +3001,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3224,7 +3030,9 @@ function getLocalDateString(date) {
           .select("*")
           .ilike(
             "hubs",
-            "%" + search + "%"
+            "%" +
+            search +
+            "%"
           );
 
 
@@ -3244,7 +3052,9 @@ function getLocalDateString(date) {
         query =
           query.lt(
             "activity_date",
-            getNextDate(toDate)
+            getNextDate(
+              toDate
+            )
           );
 
       }
@@ -3289,7 +3099,9 @@ function getLocalDateString(date) {
               ">
 
               Error searching history:
-              ${escapeHtml(error.message)}
+              ${escapeHtml(
+                error.message
+              )}
 
             </td>
 
@@ -3298,6 +3110,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3323,6 +3136,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3392,6 +3206,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3422,6 +3237,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3466,7 +3282,9 @@ function getLocalDateString(date) {
         query =
           query.lt(
             "activity_date",
-            getNextDate(toDate)
+            getNextDate(
+              toDate
+            )
           );
 
       }
@@ -3511,7 +3329,9 @@ function getLocalDateString(date) {
               ">
 
               Error searching activities:
-              ${escapeHtml(error.message)}
+              ${escapeHtml(
+                error.message
+              )}
 
             </td>
 
@@ -3520,6 +3340,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3546,6 +3367,7 @@ function getLocalDateString(date) {
         `;
 
         return;
+
       }
 
 
@@ -3559,47 +3381,6 @@ function getLocalDateString(date) {
               )
           )
           .join("");
-
-    }
-
-
-    /* =====================================================
-       NEXT DATE
-       ===================================================== */
-
-    function getNextDate(
-      dateString
-    ) {
-
-      const date =
-        new Date(
-          dateString +
-          "T00:00:00"
-        );
-
-
-      date.setDate(
-        date.getDate() + 1
-      );
-
-
-      const year =
-        date.getFullYear();
-
-
-      const month =
-        String(
-          date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-      const day =
-        String(
-          date.getDate()
-        ).padStart(2, "0");
-
-
-      return `${year}-${month}-${day}`;
 
     }
 
@@ -3653,76 +3434,184 @@ function getLocalDateString(date) {
 
     async function loadDashboard() {
 
-      await loadRecentActivity();
+      /*
+       IMPORTANT:
+       Loading the dashboard only READS data.
+       It does NOT delete or modify any records.
+      */
 
-      await loadTotals();
+      await Promise.all([
+        loadRecentActivity(),
+        loadTotals()
+      ]);
 
     }
 
 
     /* =====================================================
-       START APPLICATION
+       EVENT LISTENERS
        ===================================================== */
 
-    console.log(
-      "EPSS DASHBOARD STARTING..."
-    );
+    document
+      .getElementById(
+        "adminLoginButton"
+      )
+      .addEventListener(
+        "click",
+        toggleAdminLogin
+      );
 
 
-    updateActionHeaders();
+    document
+      .getElementById(
+        "loginButton"
+      )
+      .addEventListener(
+        "click",
+        adminLogin
+      );
 
 
-    checkAdminSession();
+    document
+      .getElementById(
+        "cancelLoginButton"
+      )
+      .addEventListener(
+        "click",
+        toggleAdminLogin
+      );
 
-/* =====================================================
-   CHECK ADMIN SESSION
-   ===================================================== */
 
-async function checkAdminSession() {
+    document
+      .getElementById(
+        "saveButton"
+      )
+      .addEventListener(
+        "click",
+        saveActivity
+      );
 
-  const {
-    data,
-    error
-  } = await supabaseClient.auth.getSession();
 
-  if (error) {
+    document
+      .getElementById(
+        "cancelEditButton"
+      )
+      .addEventListener(
+        "click",
+        cancelEdit
+      );
 
-    console.error(
-      "SESSION CHECK ERROR:",
-      error
-    );
 
-    showAdminSection(null);
+    document
+      .getElementById(
+        "hubSearchButton"
+      )
+      .addEventListener(
+        "click",
+        searchHub
+      );
 
-    return;
 
-  }
+    document
+      .getElementById(
+        "dateSearchButton"
+      )
+      .addEventListener(
+        "click",
+        searchByDate
+      );
 
-  const user =
-    data.session
-      ? data.session.user
-      : null;
 
-  showAdminSection(user);
+    /* =====================================================
+       ENTER KEY LOGIN
+       ===================================================== */
 
-}
-    loadDashboard();
+    document
+      .getElementById(
+        "adminPassword"
+      )
+      .addEventListener(
+        "keydown",
+        function(event) {
 
-/* =====================================================
-   START DASHBOARD
-   ===================================================== */
+          if (
+            event.key === "Enter"
+          ) {
 
-document.addEventListener("DOMContentLoaded", async function () {
+            adminLogin();
 
-  console.log("Dashboard starting...");
+          }
 
-  await checkAdminSession();
+        }
+      );
 
-  await loadDashboard();
 
-});
+    /* =====================================================
+       APPLICATION START
+       ===================================================== */
+
+    async function startApplication() {
+
+      console.log(
+        "================================"
+      );
+
+      console.log(
+        "EPSS DASHBOARD STARTING"
+      );
+
+      console.log(
+        "================================"
+      );
+
+
+      /* Set today's date */
+
+      document.getElementById(
+        "activityDate"
+      ).value =
+        getToday();
+
+
+      /* Check existing login */
+
+      await checkAdminSession();
+
+
+      /* Load dashboard */
+
+      await loadDashboard();
+
+
+      console.log(
+        "EPSS DASHBOARD READY ✅"
+      );
+
+    }
+
+
+    /* =====================================================
+       START ON PAGE LOAD
+       ===================================================== */
+
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        startApplication
+      );
+
+    } else {
+
+      startApplication();
+
+    }
+
   </script>
 
 </body>
 
-            </html>
+  </html>
