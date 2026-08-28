@@ -2001,7 +2001,7 @@
 
       let result;
 
-
+⁷
       if (editingId) {
 
         result =
@@ -2839,7 +2839,284 @@
 
     }
 
+/* =====================================================
+   LOAD RECENT 7 DAYS
+   ===================================================== */
 
+async function loadRecentActivity() {
+
+  const tbody =
+    document.getElementById("recentActivity");
+
+  /* ================= ADMIN STATUS ================= */
+
+  const {
+    data: sessionData
+  } =
+    await supabaseClient.auth.getSession();
+
+  const loggedIn =
+    !!sessionData.session;
+
+  /* ================= TODAY ================= */
+
+  const today =
+    new Date();
+
+  const toDate =
+    getLocalDateString(today);
+
+  /* ================= 6 DAYS BEFORE ================= */
+
+  const fromDateObj =
+    new Date();
+
+  fromDateObj.setDate(
+    fromDateObj.getDate() - 6
+  );
+
+  const fromDate =
+    getLocalDateString(fromDateObj);
+
+  const nextDate =
+    getNextDate(toDate);
+
+  console.log(
+    "RECENT 7 DAYS:",
+    fromDate,
+    "to",
+    toDate
+  );
+
+  /* ================= LOADING ================= */
+
+  tbody.innerHTML = `
+    <tr>
+      <td
+        colspan="${loggedIn ? 8 : 7}"
+        style="text-align:center;">
+        Loading recent activities...
+      </td>
+    </tr>
+  `;
+
+  /* ================= SUPABASE QUERY ================= */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("warehouse_activities")
+      .select("*")
+      .gte(
+        "activity_date",
+        fromDate
+      )
+      .lt(
+        "activity_date",
+        nextDate
+      )
+      .order(
+        "activity_date",
+        {
+          ascending: false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+  /* ================= ERROR ================= */
+
+  if (error) {
+
+    console.error(
+      "RECENT ACTIVITY ERROR:",
+      error
+    );
+
+    tbody.innerHTML = `
+      <tr>
+        <td
+          colspan="${loggedIn ? 8 : 7}"
+          style="
+            text-align:center;
+            color:#a51d1d;
+            padding:25px;
+          ">
+          Error loading recent activities:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  console.log(
+    "RECENT DATA FROM SUPABASE:",
+    data
+  );
+
+  /* ================= NO DATA ================= */
+
+  if (
+    !data ||
+    data.length === 0
+  ) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td
+          colspan="${loggedIn ? 8 : 7}"
+          style="
+            text-align:center;
+            padding:25px;
+          ">
+          No activity recorded in the last 7 days.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  /* ================= DISPLAY DATA ================= */
+
+  tbody.innerHTML =
+    data
+      .map(row => {
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                String(
+                  row.activity_date || "-"
+                ).substring(0, 10)
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.activity_type || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                String(
+                  row.load_count ?? "-"
+                )
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.hubs || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.items || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.vehicle || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.challenges || "-"
+              )}
+            </td>
+
+            ${
+              loggedIn
+                ? `
+                  <td>
+                    ${actionButtons(row.id)}
+                  </td>
+                `
+                : ""
+            }
+
+          </tr>
+        `;
+
+      })
+      .join("");
+
+  /* ================= KEEP 7 ROWS VISIBLE ================= */
+
+  const minimumRows = 7;
+
+  const emptyRows =
+    Math.max(
+      0,
+      minimumRows - data.length
+    );
+
+  for (
+    let i = 0;
+    i < emptyRows;
+    i++
+  ) {
+
+    tbody.innerHTML += `
+      <tr class="empty-row">
+
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+
+        ${
+          loggedIn
+            ? `<td>&nbsp;</td>`
+            : ""
+        }
+
+      </tr>
+    `;
+  }
+
+}
+
+
+/* =====================================================
+   LOCAL DATE STRING
+   ===================================================== */
+
+function getLocalDateString(date) {
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+    }
     /* =====================================================
        HUB SEARCH
        ===================================================== */
