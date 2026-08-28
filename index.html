@@ -133,7 +133,7 @@ textarea:focus{
 
 table{
   width:100%;
-  min-width:950px;
+  min-width:1100px;
   border-collapse:collapse;
 }
 
@@ -403,7 +403,7 @@ textarea{
 ========================================================== */
 
 .daily-entry-table{
-  min-width:950px;
+  min-width:1100px;
 }
 
 .daily-entry-table th{
@@ -416,7 +416,7 @@ textarea{
 
 .daily-entry-table input,
 .daily-entry-table select{
-  min-width:150px;
+  min-width:140px;
 }
 
 .remove-row-button{
@@ -506,7 +506,7 @@ footer{
   }
 
   table{
-    min-width:950px;
+    min-width:1100px;
   }
 
   .admin-login-box{
@@ -522,10 +522,6 @@ footer{
 
 <body>
 
-
-<!-- ==========================================================
-     HEADER
-========================================================== -->
 
 <header class="header">
 
@@ -731,7 +727,10 @@ Recent 7 Days Activity
 
 <th>Date</th>
 <th>Activity</th>
+<th>Start Time</th>
+<th>End Time</th>
 <th>Vehicle</th>
+<th>Vehicle Count</th>
 <th>Hub</th>
 <th>Items</th>
 <th>Challenges</th>
@@ -753,7 +752,7 @@ Actions
 <tr>
 
 <td
-colspan="6"
+colspan="10"
 style="text-align:center;">
 
 Loading...
@@ -868,7 +867,10 @@ style="margin-top:20px;">
 
 <th>Date</th>
 <th>Activity</th>
+<th>Start Time</th>
+<th>End Time</th>
 <th>Vehicle</th>
+<th>Vehicle Count</th>
 <th>Hub</th>
 <th>Items</th>
 <th>Challenges</th>
@@ -890,7 +892,7 @@ Actions
 <tr>
 
 <td
-colspan="6"
+colspan="10"
 style="text-align:center;">
 
 Select a hub to search
@@ -970,7 +972,10 @@ style="margin-top:20px;">
 
 <th>Date</th>
 <th>Activity</th>
+<th>Start Time</th>
+<th>End Time</th>
 <th>Vehicle</th>
+<th>Vehicle Count</th>
 <th>Hub</th>
 <th>Items</th>
 <th>Challenges</th>
@@ -992,7 +997,7 @@ Actions
 <tr>
 
 <td
-colspan="6"
+colspan="10"
 style="text-align:center;">
 
 Enter date and search
@@ -1063,6 +1068,40 @@ Offloaded
 </div>
 
 
+<!-- ========================================================
+     STARTING TIME
+========================================================= -->
+
+<div class="form-group">
+
+<label>
+Starting Time
+</label>
+
+<input
+type="time"
+id="startTime">
+
+</div>
+
+
+<!-- ========================================================
+     ENDING TIME
+========================================================= -->
+
+<div class="form-group">
+
+<label>
+Ending Time
+</label>
+
+<input
+type="time"
+id="endTime">
+
+</div>
+
+
 </div>
 
 
@@ -1086,6 +1125,10 @@ Hub
 
 <th>
 Vehicle
+</th>
+
+<th>
+Vehicle Count
 </th>
 
 <th>
@@ -1252,11 +1295,6 @@ const VEHICLES = [
    DATE CONVERSION
 ========================================================== */
 
-
-/* ----------------------------------------------------------
-   Gregorian -> JDN
----------------------------------------------------------- */
-
 function gregorianToJDN(
 year,
 month,
@@ -1288,10 +1326,6 @@ Math.floor(y / 400) -
 
 }
 
-
-/* ----------------------------------------------------------
-   JDN -> Gregorian
----------------------------------------------------------- */
 
 function jdnToGregorian(jdn){
 
@@ -1364,10 +1398,6 @@ day:d
 }
 
 
-/* ----------------------------------------------------------
-   Ethiopian -> JDN
----------------------------------------------------------- */
-
 function ethiopianToJDN(
 year,
 month,
@@ -1384,10 +1414,6 @@ Math.floor(year / 4) +
 
 }
 
-
-/* ----------------------------------------------------------
-   JDN -> Ethiopian
----------------------------------------------------------- */
 
 function jdnToEthiopian(jdn){
 
@@ -1441,10 +1467,6 @@ day
 
 }
 
-
-/* ----------------------------------------------------------
-   Ethiopian -> Gregorian
----------------------------------------------------------- */
 
 function ethiopianToGregorian(
 ethDate
@@ -1520,10 +1542,6 @@ String(g.day).padStart(2,"0")
 }
 
 
-/* ----------------------------------------------------------
-   Gregorian -> Ethiopian
----------------------------------------------------------- */
-
 function gregorianToEthiopian(
 gregDate
 ){
@@ -1572,10 +1590,6 @@ String(eth.day).padStart(2,"0")
 }
 
 
-/* ----------------------------------------------------------
-   Today's date
----------------------------------------------------------- */
-
 function getTodayEthiopian(){
 
 const now =
@@ -1602,10 +1616,6 @@ day
 
 }
 
-
-/* ----------------------------------------------------------
-   Add/subtract Ethiopian days
----------------------------------------------------------- */
 
 function addEthiopianDays(
 ethDate,
@@ -1648,10 +1658,6 @@ return gregorianToEthiopian(g);
 }
 
 
-/* ----------------------------------------------------------
-   Add Gregorian days
----------------------------------------------------------- */
-
 function addGregorianDays(
 dateString,
 days
@@ -1680,10 +1686,6 @@ d.getDate()
 
 }
 
-
-/* ----------------------------------------------------------
-   Validate Ethiopian date
----------------------------------------------------------- */
 
 function validateEthDate(
 value
@@ -1830,14 +1832,10 @@ document.getElementById(
 "loginButton"
 );
 
-
-/* Clear old message */
-
 showLoginMessage(
 "",
 ""
 );
-
 
 if(!email || !password){
 
@@ -1849,7 +1847,6 @@ showLoginMessage(
 return;
 
 }
-
 
 button.disabled =
 true;
@@ -1909,24 +1906,13 @@ return;
 
 }
 
-
-/*
- Login successful
-*/
-
 adminLoggedIn =
 true;
-
 
 showAdminSection(
 data.user,
 false
 );
-
-
-/*
- Hide login box
-*/
 
 document
 .getElementById(
@@ -1935,22 +1921,12 @@ document
 .style.display =
 "none";
 
-
-/*
- Clear password
-*/
-
 document
 .getElementById(
 "adminPassword"
 )
 .value =
 "";
-
-
-/*
- Refresh dashboard
-*/
 
 await loadDashboard();
 
@@ -2014,7 +1990,6 @@ false
 return;
 
 }
-
 
 const session =
 data?.session || null;
@@ -2243,7 +2218,6 @@ throw error;
 
 }
 
-
 editingId =
 null;
 
@@ -2402,6 +2376,23 @@ ${createVehicleOptions()}
 </td>
 
 
+<!-- ======================================================
+     NEW: VEHICLE COUNT
+======================================================= -->
+
+<td>
+
+<input
+type="number"
+class="row-count"
+min="1"
+step="1"
+value="${Number(data.load_count) > 0 ? Number(data.load_count) : 1}"
+placeholder="Count">
+
+</td>
+
+
 <td>
 
 <input
@@ -2498,7 +2489,7 @@ updateVehicleTotal();
 
 
 /* ==========================================================
-   TOTAL VEHICLE ROWS
+   TOTAL VEHICLES
 ========================================================== */
 
 function updateVehicleTotal(){
@@ -2509,10 +2500,28 @@ document.querySelectorAll(
 );
 
 
+let total = 0;
+
+
+rows.forEach(
+row => {
+
+const count =
+Number(
+row.querySelector(
+".row-count"
+)?.value
+) || 0;
+
+total += count;
+
+});
+
+
 document.getElementById(
 "vehicleTotal"
 ).textContent =
-rows.length;
+total;
 
 }
 
@@ -2567,6 +2576,16 @@ row.querySelector(
 ).value;
 
 
+/* NEW: vehicle count */
+
+const load_count =
+Number(
+row.querySelector(
+".row-count"
+).value
+);
+
+
 const items =
 row.querySelector(
 ".row-items"
@@ -2586,6 +2605,11 @@ hub,
 
 vehicle:
 vehicle,
+
+load_count:
+load_count > 0
+? load_count
+: 1,
 
 items:
 items || "-",
@@ -2657,6 +2681,20 @@ document.getElementById(
 ).value;
 
 
+/* NEW: TIMES */
+
+const startTime =
+document.getElementById(
+"startTime"
+).value || null;
+
+
+const endTime =
+document.getElementById(
+"endTime"
+).value || null;
+
+
 const plantCenter =
 document.getElementById(
 "plantCenter"
@@ -2666,10 +2704,6 @@ document.getElementById(
 const rows =
 getDailyRows();
 
-
-/*
- At least one row
-*/
 
 if(rows.length === 0){
 
@@ -2724,6 +2758,41 @@ return;
 
 }
 
+
+/* NEW: validate count */
+
+if(
+!Number.isInteger(row.load_count) ||
+row.load_count < 1
+){
+
+showMessage(
+"Vehicle count must be at least 1 for row " +
+(i + 1) +
+".",
+"error"
+);
+
+return;
+
+}
+
+}
+
+
+if(
+startTime &&
+endTime &&
+startTime > endTime
+){
+
+showMessage(
+"Ending time cannot be earlier than starting time.",
+"error"
+);
+
+return;
+
 }
 
 
@@ -2756,10 +2825,6 @@ try{
 
 if(editingId){
 
-/*
- Editing represents ONE database record.
-*/
-
 const row =
 rows[0];
 
@@ -2779,8 +2844,18 @@ gregDate,
 activity_type:
 activityType,
 
+/* NEW */
+
+start_time:
+startTime,
+
+end_time:
+endTime,
+
+/* NEW */
+
 load_count:
-1,
+row.load_count,
 
 hub:
 row.hub,
@@ -2842,23 +2917,6 @@ clearDailyRows();
 else{
 
 
-/*
- IMPORTANT:
-
- Every row is saved as a separate
- database record.
-
- Example:
-
- Nekemte + Iveco
- Jimma + Lowbed
- Adama + Tesabi
- Hawasa + Iveco
-
- = 4 database records.
-*/
-
-
 const records =
 rows.map(
 row => ({
@@ -2869,8 +2927,18 @@ gregDate,
 activity_type:
 activityType,
 
+/* NEW */
+
+start_time:
+startTime,
+
+end_time:
+endTime,
+
+/* VEHICLE COUNT */
+
 load_count:
-1,
+row.load_count,
 
 hub:
 row.hub,
@@ -3018,10 +3086,6 @@ editingId =
 id;
 
 
-/*
- Convert date to displayed date
-*/
-
 document.getElementById(
 "activityDate"
 ).value =
@@ -3032,10 +3096,6 @@ data.activity_date
 );
 
 
-/*
- Activity type
-*/
-
 document.getElementById(
 "activityType"
 ).value =
@@ -3043,9 +3103,23 @@ data.activity_type ||
 "Loaded";
 
 
-/*
- Plant
-*/
+/* NEW: LOAD TIMES */
+
+document.getElementById(
+"startTime"
+).value =
+data.start_time
+? String(data.start_time).substring(0,5)
+: "";
+
+
+document.getElementById(
+"endTime"
+).value =
+data.end_time
+? String(data.end_time).substring(0,5)
+: "";
+
 
 document.getElementById(
 "plantCenter"
@@ -3054,19 +3128,11 @@ data.plant_center ||
 "";
 
 
-/*
- Clear existing rows
-*/
-
 document.getElementById(
 "dailyRows"
 ).innerHTML =
 "";
 
-
-/*
- Load selected record
-*/
 
 addDailyRow({
 
@@ -3076,6 +3142,9 @@ data.hub,
 vehicle:
 data.vehicle,
 
+load_count:
+data.load_count,
+
 items:
 data.items,
 
@@ -3084,10 +3153,6 @@ data.challenges
 
 });
 
-
-/*
- Change button
-*/
 
 document.getElementById(
 "saveButton"
@@ -3107,10 +3172,6 @@ id,
 "success"
 );
 
-
-/*
- Scroll to entry section
-*/
 
 window.scrollTo({
 
@@ -3138,6 +3199,18 @@ null;
 
 
 clearDailyRows();
+
+
+document.getElementById(
+"startTime"
+).value =
+"";
+
+
+document.getElementById(
+"endTime"
+).value =
+"";
 
 
 document.getElementById(
@@ -3302,6 +3375,20 @@ row.activity_date || ""
 );
 
 
+/* NEW: TIME DISPLAY */
+
+const startTime =
+row.start_time
+? String(row.start_time).substring(0,5)
+: "-";
+
+
+const endTime =
+row.end_time
+? String(row.end_time).substring(0,5)
+: "-";
+
+
 return `
 
 <tr>
@@ -3322,7 +3409,28 @@ row.activity_type || "-"
 
 <td>
 ${escapeHtml(
+startTime
+)}
+</td>
+
+
+<td>
+${escapeHtml(
+endTime
+)}
+</td>
+
+
+<td>
+${escapeHtml(
 row.vehicle || "-"
+)}
+</td>
+
+
+<td>
+${escapeHtml(
+Number(row.load_count) || 0
 )}
 </td>
 
@@ -3381,22 +3489,13 @@ document.getElementById(
 
 const colspan =
 adminLoggedIn
-? 7
-: 6;
+? 10
+: 9;
 
-
-/*
- Today in displayed calendar
-*/
 
 const ethToday =
 getTodayEthiopian();
 
-
-/*
- Six days before today.
- Total = 7 days.
-*/
 
 const ethFrom =
 addEthiopianDays(
@@ -3663,8 +3762,8 @@ document.getElementById(
 
 const colspan =
 adminLoggedIn
-? 7
-: 6;
+? 10
+: 9;
 
 
 if(!hub){
@@ -3689,10 +3788,6 @@ return;
 
 }
 
-
-/*
- Validate dates
-*/
 
 if(
 fromEth &&
@@ -3745,10 +3840,6 @@ return;
 
 }
 
-
-/*
- Query
-*/
 
 let query =
 supabaseClient
@@ -3895,8 +3986,8 @@ document.getElementById(
 
 const colspan =
 adminLoggedIn
-? 7
-: 6;
+? 10
+: 9;
 
 
 if(
@@ -4237,6 +4328,31 @@ addDailyRow();
 
 
 /*
+ Update vehicle total when count changes
+*/
+
+document
+.getElementById(
+"dailyRows"
+)
+.addEventListener(
+"input",
+function(event){
+
+if(
+event.target.classList.contains(
+"row-count"
+)
+){
+
+updateVehicleTotal();
+
+}
+
+});
+
+
+/*
  Save
 */
 
@@ -4330,4 +4446,4 @@ initializeDashboard();
 
 </body>
 
-  </html>
+   </html>
