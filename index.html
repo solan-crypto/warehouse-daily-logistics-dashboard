@@ -2848,15 +2848,7 @@ async function loadRecentActivity() {
   const tbody =
     document.getElementById("recentActivity");
 
-  /* ================= ADMIN STATUS ================= */
-
-  const {
-    data: sessionData
-  } =
-    await supabaseClient.auth.getSession();
-
-  const loggedIn =
-    !!sessionData.session;
+  
 
   /* ================= TODAY ================= */
 
