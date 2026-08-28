@@ -2,13 +2,20 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
   <title>EPSS Warehouse Logistics Dashboard</title>
 
+
   <!-- ================= SUPABASE ================= -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
   <style>
 
@@ -18,6 +25,7 @@
       padding: 0;
     }
 
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f7fb;
@@ -25,30 +33,40 @@
       line-height: 1.5;
     }
 
+
     /* ================= HEADER ================= */
 
     .header {
-      background: linear-gradient(135deg, #09245f, #1746b0);
+      background: linear-gradient(
+        135deg,
+        #09245f,
+        #1746b0
+      );
+
       color: white;
       text-align: center;
       padding: 28px 15px;
     }
+
 
     .header h1 {
       font-size: 28px;
       margin-bottom: 8px;
     }
 
+
     .header p {
       font-size: 15px;
       opacity: 0.9;
     }
+
 
     .container {
       width: 94%;
       max-width: 1200px;
       margin: 20px auto;
     }
+
 
     /* ================= CARDS ================= */
 
@@ -58,14 +76,17 @@
       border-radius: 14px;
       padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
     }
+
 
     .section-title {
       color: #123a91;
       margin: 25px 0 12px;
       font-size: 21px;
     }
+
 
     /* ================= PLANT ================= */
 
@@ -74,6 +95,7 @@
       margin-bottom: 12px;
       font-size: 20px;
     }
+
 
     /* ================= INPUTS ================= */
 
@@ -88,13 +110,22 @@
       background: white;
     }
 
+
     input:focus,
     select:focus,
     textarea:focus {
       outline: none;
       border-color: #1746b0;
-      box-shadow: 0 0 0 2px rgba(23, 70, 176, 0.1);
+
+      box-shadow:
+        0 0 0 2px rgba(
+          23,
+          70,
+          176,
+          0.1
+        );
     }
+
 
     /* ================= TOTAL ACTIVITY ================= */
 
@@ -104,6 +135,7 @@
       gap: 15px;
     }
 
+
     .stat {
       text-align: center;
       padding: 20px;
@@ -111,16 +143,19 @@
       background: #f5f7fc;
     }
 
+
     .stat h3 {
       font-size: 16px;
       margin-bottom: 8px;
     }
+
 
     .stat-number {
       font-size: 34px;
       font-weight: bold;
       color: #123a91;
     }
+
 
     /* ================= TABLE ================= */
 
@@ -129,14 +164,24 @@
       border-radius: 14px;
       padding: 0;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+      box-shadow:
+        0 4px 15px rgba(
+          0,
+          0,
+          0,
+          0.08
+        );
+
       overflow: auto;
     }
+
 
     .recent-table-card {
       max-height: 470px;
       overflow: auto;
     }
+
 
     table {
       width: 100%;
@@ -144,16 +189,19 @@
       border-collapse: collapse;
     }
 
+
     th {
       background: #123a91;
       color: white;
       padding: 13px;
       text-align: left;
       white-space: nowrap;
+
       position: sticky;
       top: 0;
       z-index: 2;
     }
+
 
     td {
       padding: 12px;
@@ -161,18 +209,22 @@
       vertical-align: top;
     }
 
+
     tr:hover td {
       background: #f7f9fd;
     }
+
 
     .empty-row td {
       height: 55px;
       background: #ffffff;
     }
 
+
     .empty-row:hover td {
       background: #ffffff;
     }
+
 
     /* ================= FORM ================= */
 
@@ -182,14 +234,17 @@
       gap: 16px;
     }
 
+
     .form-group {
       display: flex;
       flex-direction: column;
     }
 
+
     .full {
       grid-column: 1 / -1;
     }
+
 
     label {
       font-weight: bold;
@@ -197,10 +252,12 @@
       color: #34405a;
     }
 
+
     textarea {
       min-height: 90px;
       resize: vertical;
     }
+
 
     /* ================= HUB ================= */
 
@@ -208,11 +265,13 @@
       min-height: 170px;
     }
 
+
     .help-text {
       font-size: 12px;
       color: #667085;
       margin-top: 6px;
     }
+
 
     /* ================= BUTTONS ================= */
 
@@ -226,6 +285,7 @@
       cursor: pointer;
     }
 
+
     .save-button {
       width: 100%;
       margin-top: 18px;
@@ -233,69 +293,115 @@
       font-size: 16px;
     }
 
+
     .save-button:hover,
     .search-button:hover {
       background: #0b2d78;
     }
+
 
     .save-button:disabled {
       background: #8b96aa;
       cursor: not-allowed;
     }
 
+
     .search-button {
       padding: 12px 22px;
     }
+
 
     /* ================= ADMIN BUTTON ================= */
 
     .admin-button {
       margin-top: 15px;
       padding: 11px 22px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
+
+      border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.7
+      );
+
       border-radius: 10px;
+
       background: white;
       color: #123a91;
+
       font-weight: bold;
       font-size: 15px;
+
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+      box-shadow:
+        0 3px 10px rgba(
+          0,
+          0,
+          0,
+          0.15
+        );
     }
+
 
     .admin-button:hover {
       background: #eef3ff;
     }
 
+
     /* ================= ADMIN LOGIN ================= */
 
     .admin-login-box {
       display: none;
+
       width: 94%;
       max-width: 450px;
+
       margin: 22px auto;
+
       padding: 0;
+
       background: white;
+
       border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+
+      box-shadow:
+        0 8px 28px rgba(
+          0,
+          0,
+          0,
+          0.14
+        );
+
       overflow: hidden;
+
       border: 1px solid #e1e6ef;
     }
 
+
     .admin-login-header {
-      background: linear-gradient(135deg, #09245f, #1746b0);
+      background: linear-gradient(
+        135deg,
+        #09245f,
+        #1746b0
+      );
+
       color: white;
       padding: 20px;
       text-align: center;
     }
+
 
     .admin-login-icon {
       font-size: 34px;
       margin-bottom: 5px;
     }
 
+
     .admin-login-header h2 {
       font-size: 22px;
     }
+
 
     .admin-login-header p {
       margin-top: 4px;
@@ -303,18 +409,22 @@
       opacity: 0.9;
     }
 
+
     .admin-login-content {
       padding: 22px;
     }
+
 
     .admin-input-group {
       margin-bottom: 14px;
     }
 
+
     .admin-input-group label {
       display: block;
       margin-bottom: 6px;
     }
+
 
     .admin-login-box input {
       margin-bottom: 0;
@@ -322,37 +432,46 @@
       border-radius: 9px;
     }
 
+
     .login-button,
     .cancel-button,
     .logout-button {
       width: 100%;
       padding: 13px;
+
       border: none;
       border-radius: 9px;
+
       font-weight: bold;
       cursor: pointer;
+
       margin-top: 9px;
       font-size: 15px;
     }
+
 
     .login-button {
       background: #123a91;
       color: white;
     }
 
+
     .login-button:hover {
       background: #0b2d78;
     }
+
 
     .cancel-button {
       background: #edf0f5;
       color: #34405a;
     }
 
+
     .logout-button {
       background: #a51d1d;
       color: white;
     }
+
 
     #loginMessage {
       margin-top: 13px;
@@ -360,6 +479,7 @@
       text-align: center;
       min-height: 20px;
     }
+
 
     /* ================= EDIT DELETE ================= */
 
@@ -369,38 +489,50 @@
       flex-wrap: wrap;
     }
 
+
     .edit-button,
     .delete-button {
       border: none;
       border-radius: 6px;
+
       padding: 8px 11px;
+
       font-weight: bold;
       cursor: pointer;
+
       white-space: nowrap;
     }
+
 
     .edit-button {
       background: #e8f0ff;
       color: #123a91;
     }
 
+
     .delete-button {
       background: #fdecec;
       color: #a51d1d;
     }
 
+
     .cancel-edit-button {
       width: 100%;
       margin-top: 10px;
       padding: 12px;
+
       border: none;
       border-radius: 8px;
+
       background: #e5e8ee;
       color: #34405a;
+
       font-weight: bold;
       cursor: pointer;
+
       display: none;
     }
+
 
     /* ================= MESSAGE ================= */
 
@@ -412,17 +544,20 @@
       font-weight: bold;
     }
 
+
     .success {
       display: block;
       background: #e7f7ed;
       color: #176b36;
     }
 
+
     .error {
       display: block;
       background: #fdecec;
       color: #a51d1d;
     }
+
 
     /* ================= DATE SEARCH ================= */
 
@@ -433,10 +568,12 @@
       margin-bottom: 8px;
     }
 
+
     .date-search-button {
       width: 100%;
       margin-top: 18px;
     }
+
 
     /* ================= FOOTER ================= */
 
@@ -447,6 +584,7 @@
       font-size: 14px;
     }
 
+
     /* ================= MOBILE ================= */
 
     @media (max-width: 700px) {
@@ -455,50 +593,62 @@
         padding: 22px 12px;
       }
 
+
       .header h1 {
         font-size: 22px;
       }
+
 
       .header p {
         font-size: 13px;
       }
 
+
       .container {
         width: 94%;
       }
+
 
       .card,
       .activity-card {
         padding: 16px;
       }
 
+
       .form-grid {
         grid-template-columns: 1fr;
       }
+
 
       .full {
         grid-column: auto;
       }
 
+
       .activity-stats {
         grid-template-columns: 1fr 1fr;
       }
+
 
       .stat {
         padding: 15px 8px;
       }
 
+
       .stat-number {
         font-size: 28px;
       }
+
 
       .date-search-grid {
         grid-template-columns: 1fr;
       }
 
+
       table {
         min-width: 900px;
       }
+
 
       .admin-login-box {
         width: 94%;
@@ -513,7 +663,10 @@
 
 <body>
 
-  <!-- ================= HEADER ================= -->
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
   <header class="header">
 
@@ -524,6 +677,7 @@
     <p>
       Warehouse Activity Monitoring System
     </p>
+
 
     <button
       type="button"
@@ -537,11 +691,14 @@
   </header>
 
 
-  <!-- ================= ADMIN LOGIN ================= -->
+  <!-- =====================================================
+       ADMIN LOGIN
+       ===================================================== -->
 
   <div
     id="adminLoginBox"
     class="admin-login-box">
+
 
     <div class="admin-login-header">
 
@@ -559,7 +716,9 @@
 
     </div>
 
+
     <div class="admin-login-content">
+
 
       <div class="admin-input-group">
 
@@ -621,13 +780,16 @@
   <main class="container">
 
 
-    <!-- ================= PLANT ================= -->
+    <!-- =====================================================
+         PLANT
+         ===================================================== -->
 
     <section class="card plant-box">
 
       <h2>
         Plant / Center
       </h2>
+
 
       <select id="plantCenter">
 
@@ -652,15 +814,19 @@
     </section>
 
 
-    <!-- ================= TOTAL ACTIVITY ================= -->
+    <!-- =====================================================
+         TOTAL ACTIVITY
+         ===================================================== -->
 
     <h2 class="section-title">
       Total Activity
     </h2>
 
+
     <section class="activity-card">
 
       <div class="activity-stats">
+
 
         <div class="stat">
 
@@ -695,16 +861,20 @@
 
         </div>
 
+
       </div>
 
     </section>
 
 
-    <!-- ================= RECENT 7 DAYS ================= -->
+    <!-- =====================================================
+         RECENT 7 DAYS
+         ===================================================== -->
 
     <h2 class="section-title">
       Recent 7 Days Activity
     </h2>
+
 
     <section class="table-card recent-table-card">
 
@@ -743,7 +913,7 @@
               colspan="7"
               style="text-align:center;">
 
-            Loading...
+              Loading...
 
             </td>
 
@@ -756,21 +926,27 @@
     </section>
 
 
-    <!-- ================= HUB HISTORY ================= -->
+    <!-- =====================================================
+         HUB HISTORY
+         ===================================================== -->
 
     <h2 class="section-title">
       Search Hub History
     </h2>
 
+
     <section class="card">
+
 
       <div class="form-grid">
 
+
         <div class="form-group">
 
-          <label for="hubSearch">
+          <label>
             Select Hub
           </label>
+
 
           <select id="hubSearch">
 
@@ -806,7 +982,7 @@
 
         <div class="form-group">
 
-          <label for="hubFromDate">
+          <label>
             From Date
           </label>
 
@@ -819,7 +995,7 @@
 
         <div class="form-group">
 
-          <label for="hubToDate">
+          <label>
             To Date
           </label>
 
@@ -897,19 +1073,24 @@
     </section>
 
 
-    <!-- ================= DATE SEARCH ================= -->
+    <!-- =====================================================
+         DATE SEARCH
+         ===================================================== -->
 
     <h2 class="section-title">
       Search Activity by Date
     </h2>
 
+
     <section class="card">
+
 
       <div class="date-search-grid">
 
+
         <div class="form-group">
 
-          <label for="dateFrom">
+          <label>
             From Date
           </label>
 
@@ -922,7 +1103,7 @@
 
         <div class="form-group">
 
-          <label for="dateTo">
+          <label>
             To Date
           </label>
 
@@ -931,6 +1112,7 @@
             id="dateTo">
 
         </div>
+
 
       </div>
 
@@ -999,11 +1181,14 @@
     </section>
 
 
-    <!-- ================= ADMIN ACTIVITY ================= -->
+    <!-- =====================================================
+         ADMIN ACTIVITY ENTRY
+         ===================================================== -->
 
     <div
       id="adminActivitySection"
       style="display:none;">
+
 
       <h2 class="section-title">
         Daily Activity Entry
@@ -1012,12 +1197,13 @@
 
       <section class="card">
 
+
         <div class="form-grid">
 
 
           <div class="form-group">
 
-            <label for="activityDate">
+            <label>
               Activity Date
             </label>
 
@@ -1030,7 +1216,7 @@
 
           <div class="form-group">
 
-            <label for="activityType">
+            <label>
               Activity Type
             </label>
 
@@ -1051,7 +1237,7 @@
 
           <div class="form-group">
 
-            <label for="loadCount">
+            <label>
               Load Count
             </label>
 
@@ -1065,9 +1251,10 @@
 
           <div class="form-group">
 
-            <label for="hubs">
+            <label>
               Hub(s)
             </label>
+
 
             <select
               id="hubs"
@@ -1097,6 +1284,7 @@
 
             </select>
 
+
             <div class="help-text">
               Select one or more hubs.
             </div>
@@ -1106,9 +1294,10 @@
 
           <div class="form-group full">
 
-            <label for="items">
+            <label>
               Items
             </label>
+
 
             <textarea
               id="items"
@@ -1119,9 +1308,10 @@
 
           <div class="form-group">
 
-            <label for="vehicle">
+            <label>
               Vehicle
             </label>
+
 
             <select id="vehicle">
 
@@ -1156,9 +1346,10 @@
 
           <div class="form-group">
 
-            <label for="challenges">
+            <label>
               Challenges
             </label>
+
 
             <input
               type="text"
@@ -1166,6 +1357,7 @@
               placeholder="Enter challenges if any">
 
           </div>
+
 
         </div>
 
@@ -1196,14 +1388,18 @@
 
         </div>
 
+
       </section>
 
     </div>
 
+
   </main>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
   <footer>
 
@@ -1212,19 +1408,24 @@
   </footer>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
   <script>
 
+
     /* =====================================================
-       SUPABASE CONNECTION
+       SUPABASE
        ===================================================== */
 
     const SUPABASE_URL =
       "https://uxtrykyvivhejqfojiwm.supabase.co";
 
+
     const SUPABASE_ANON_KEY =
       "sb_publishable_OG-mweEpzMaqihaba0Bfxg_TRUjjYtD";
+
 
     const supabaseClient =
       window.supabase.createClient(
@@ -1234,15 +1435,16 @@
 
 
     /* =====================================================
-       GLOBAL VARIABLES
+       GLOBAL STATE
        ===================================================== */
 
     let editingId = null;
+
     let adminLoggedIn = false;
 
 
     /* =====================================================
-       DATE FUNCTIONS
+       DATE HELPERS
        ===================================================== */
 
     function getLocalDateString(date) {
@@ -1250,17 +1452,26 @@
       const year =
         date.getFullYear();
 
+
       const month =
         String(
           date.getMonth() + 1
         ).padStart(2, "0");
+
 
       const day =
         String(
           date.getDate()
         ).padStart(2, "0");
 
-      return `${year}-${month}-${day}`;
+
+      return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+      );
 
     }
 
@@ -1278,14 +1489,19 @@
 
       const date =
         new Date(
-          dateString + "T00:00:00"
+          dateString +
+          "T00:00:00"
         );
+
 
       date.setDate(
         date.getDate() + 1
       );
 
-      return getLocalDateString(date);
+
+      return getLocalDateString(
+        date
+      );
 
     }
 
@@ -1296,12 +1512,29 @@
 
     function escapeHtml(value) {
 
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      return String(
+        value ?? ""
+      )
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
@@ -1310,15 +1543,49 @@
        MESSAGE
        ===================================================== */
 
-    function showMessage(text, type) {
+    function showMessage(
+      text,
+      type
+    ) {
 
       const message =
-        document.getElementById("message");
+        document.getElementById(
+          "message"
+        );
 
-      message.textContent = text;
+
+      message.textContent =
+        text;
+
 
       message.className =
-        "message " + type;
+        "message " +
+        type;
+
+    }
+
+
+    /* =====================================================
+       LOGIN MESSAGE
+       ===================================================== */
+
+    function showLoginMessage(
+      text,
+      color
+    ) {
+
+      const box =
+        document.getElementById(
+          "loginMessage"
+        );
+
+
+      box.textContent =
+        text;
+
+
+      box.style.color =
+        color;
 
     }
 
@@ -1334,19 +1601,26 @@
           "adminLoginBox"
         );
 
+
       if (
-        box.style.display === "block"
+        box.style.display ===
+        "block"
       ) {
 
-        box.style.display = "none";
+        box.style.display =
+          "none";
 
       } else {
 
-        box.style.display = "block";
+        box.style.display =
+          "block";
 
-        document.getElementById(
-          "adminEmail"
-        ).focus();
+
+        document
+          .getElementById(
+            "adminEmail"
+          )
+          .focus();
 
       }
 
@@ -1360,19 +1634,33 @@
     async function adminLogin() {
 
       const email =
-        document.getElementById(
-          "adminEmail"
-        ).value.trim();
+        document
+          .getElementById(
+            "adminEmail"
+          )
+          .value
+          .trim();
+
 
       const password =
-        document.getElementById(
-          "adminPassword"
-        ).value;
+        document
+          .getElementById(
+            "adminPassword"
+          )
+          .value;
 
-      const loginMessage =
-        document.getElementById(
-          "loginMessage"
+
+      if (!email || !password) {
+
+        showLoginMessage(
+          "Please enter email and password.",
+          "#a51d1d"
         );
+
+        return;
+
+      }
+
 
       const loginButton =
         document.getElementById(
@@ -1380,29 +1668,18 @@
         );
 
 
-      if (!email || !password) {
+      loginButton.disabled =
+        true;
 
-        loginMessage.textContent =
-          "Please enter email and password.";
-
-        loginMessage.style.color =
-          "#a51d1d";
-
-        return;
-
-      }
-
-
-      loginButton.disabled = true;
 
       loginButton.textContent =
         "LOGGING IN...";
 
-      loginMessage.textContent =
-        "Connecting to Supabase...";
 
-      loginMessage.style.color =
-        "#667085";
+      showLoginMessage(
+        "Connecting to Supabase...",
+        "#667085"
+      );
 
 
       try {
@@ -1414,9 +1691,11 @@
           await supabaseClient.auth
             .signInWithPassword({
 
-              email: email,
+              email:
+                email,
 
-              password: password
+              password:
+                password
 
             });
 
@@ -1428,17 +1707,13 @@
             error
           );
 
-          loginMessage.textContent =
+
+          showLoginMessage(
             "Login failed: " +
-            error.message;
+            error.message,
+            "#a51d1d"
+          );
 
-          loginMessage.style.color =
-            "#a51d1d";
-
-          loginButton.disabled = false;
-
-          loginButton.textContent =
-            "🔓 LOGIN";
 
           return;
 
@@ -1450,16 +1725,11 @@
           !data.user
         ) {
 
-          loginMessage.textContent =
-            "Login failed: No user returned.";
+          showLoginMessage(
+            "Login failed: no user returned.",
+            "#a51d1d"
+          );
 
-          loginMessage.style.color =
-            "#a51d1d";
-
-          loginButton.disabled = false;
-
-          loginButton.textContent =
-            "🔓 LOGIN";
 
           return;
 
@@ -1472,26 +1742,39 @@
         );
 
 
-        loginMessage.textContent =
-          "Login successful! ✅";
-
-        loginMessage.style.color =
-          "#176b36";
-
+        /*
+         * IMPORTANT:
+         * Set admin mode immediately.
+         */
 
         showAdminSection(
-          data.user
+          data.user,
+          false
         );
 
+
+        showLoginMessage(
+          "Login successful! ✅",
+          "#176b36"
+        );
+
+
+        document
+          .getElementById(
+            "adminLoginBox"
+          )
+          .style.display =
+          "none";
+
+
+        /*
+         * Refresh dashboard after login.
+         */
 
         await loadDashboard();
 
 
-        loginButton.disabled = false;
-
-        loginButton.textContent =
-          "🔓 LOGIN";
-
+        await refreshExistingSearches();
 
       } catch (error) {
 
@@ -1500,14 +1783,18 @@
           error
         );
 
-        loginMessage.textContent =
+
+        showLoginMessage(
           "Login error: " +
-          error.message;
+          error.message,
+          "#a51d1d"
+        );
 
-        loginMessage.style.color =
-          "#a51d1d";
+      } finally {
 
-        loginButton.disabled = false;
+        loginButton.disabled =
+          false;
+
 
         loginButton.textContent =
           "🔓 LOGIN";
@@ -1518,7 +1805,7 @@
 
 
     /* =====================================================
-       CHECK ADMIN SESSION
+       CHECK SESSION
        ===================================================== */
 
     async function checkAdminSession() {
@@ -1536,11 +1823,16 @@
         if (error) {
 
           console.error(
-            "SESSION ERROR:",
+            "SESSION CHECK ERROR:",
             error
           );
 
-          showAdminSection(null);
+
+          showAdminSection(
+            null,
+            false
+          );
+
 
           return;
 
@@ -1554,16 +1846,23 @@
             : null;
 
 
-        showAdminSection(user);
+        showAdminSection(
+          user,
+          false
+        );
 
       } catch (error) {
 
         console.error(
-          "SESSION EXCEPTION:",
+          "SESSION CHECK EXCEPTION:",
           error
         );
 
-        showAdminSection(null);
+
+        showAdminSection(
+          null,
+          false
+        );
 
       }
 
@@ -1571,7 +1870,7 @@
 
 
     /* =====================================================
-       AUTH STATE CHANGE
+       AUTH STATE LISTENER
        ===================================================== */
 
     supabaseClient.auth.onAuthStateChange(
@@ -1583,13 +1882,20 @@
         );
 
 
+        /*
+         * Do NOT reload the whole dashboard
+         * repeatedly here.
+         */
+
         if (
           event === "SIGNED_IN" &&
-          session
+          session &&
+          session.user
         ) {
 
           showAdminSection(
-            session.user
+            session.user,
+            false
           );
 
         }
@@ -1599,7 +1905,10 @@
           event === "SIGNED_OUT"
         ) {
 
-          showAdminSection(null);
+          showAdminSection(
+            null,
+            false
+          );
 
         }
 
@@ -1608,90 +1917,25 @@
 
 
     /* =====================================================
-       ADMIN LOGOUT
+       SHOW / HIDE ADMIN
        ===================================================== */
 
-    async function adminLogout() {
-
-      const confirmed =
-        confirm(
-          "Do you want to logout from Admin?"
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      const {
-        error
-      } =
-        await supabaseClient.auth
-          .signOut();
-
-
-      if (error) {
-
-        alert(
-          "Logout failed:\n\n" +
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      adminLoggedIn = false;
-      editingId = null;
-
-
-      document.getElementById(
-        "adminLoginButton"
-      ).textContent =
-        "🔐 Admin Login";
-
-
-      document.getElementById(
-        "adminActivitySection"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "adminLoginBox"
-      ).style.display =
-        "none";
-
-
-      updateActionHeaders();
-
-      await loadDashboard();
-
-
-      alert(
-        "Logged out successfully. ✅"
-      );
-
-    }
-
-
-    /* =====================================================
-       SHOW ADMIN SECTION
-       ===================================================== */
-
-    function showAdminSection(user) {
+    function showAdminSection(
+      user,
+      reloadRecent = true
+    ) {
 
       const adminSection =
         document.getElementById(
           "adminActivitySection"
         );
 
+
       const loginButton =
         document.getElementById(
           "adminLoginButton"
         );
+
 
       const loginBox =
         document.getElementById(
@@ -1721,10 +1965,6 @@
           "none";
 
 
-        console.log(
-          "ADMIN MODE ENABLED"
-        );
-
       } else {
 
         adminSection.style.display =
@@ -1738,21 +1978,28 @@
         loginButton.onclick =
           toggleAdminLogin;
 
-
-        console.log(
-          "ADMIN MODE DISABLED"
-        );
-
       }
 
 
       updateActionHeaders();
 
+
+      /*
+       * Only reload recent activity when requested.
+       * This prevents login/session race conditions.
+       */
+
+      if (reloadRecent) {
+
+        loadRecentActivity();
+
+      }
+
     }
 
 
     /* =====================================================
-       ACTION HEADERS
+       UPDATE ACTION HEADERS
        ===================================================== */
 
     function updateActionHeaders() {
@@ -1763,62 +2010,166 @@
           : "none";
 
 
-      document.getElementById(
-        "recentActionsHeader"
-      ).style.display =
+      document
+        .getElementById(
+          "recentActionsHeader"
+        )
+        .style.display =
         display;
 
 
-      document.getElementById(
-        "historyActionsHeader"
-      ).style.display =
+      document
+        .getElementById(
+          "historyActionsHeader"
+        )
+        .style.display =
         display;
 
 
-      document.getElementById(
-        "dateActionsHeader"
-      ).style.display =
+      document
+        .getElementById(
+          "dateActionsHeader"
+        )
+        .style.display =
         display;
 
     }
 
 
     /* =====================================================
-       CHECK LOGIN
+       ADMIN LOGOUT
+       ===================================================== */
+
+    async function adminLogout() {
+
+      const confirmed =
+        confirm(
+          "Do you want to logout from Admin?"
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient.auth
+            .signOut();
+
+
+        if (error) {
+
+          alert(
+            "Logout failed:\n\n" +
+            error.message
+          );
+
+
+          return;
+
+        }
+
+
+        editingId =
+          null;
+
+
+        clearActivityForm();
+
+
+        showAdminSection(
+          null,
+          false
+        );
+
+
+        await loadDashboard();
+
+
+        await refreshExistingSearches();
+
+
+        alert(
+          "Logged out successfully. ✅"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "LOGOUT ERROR:",
+          error
+        );
+
+
+        alert(
+          "Logout error:\n\n" +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CHECK ADMIN
        ===================================================== */
 
     async function isAdminLoggedIn() {
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth
-          .getSession();
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .getSession();
 
 
-      if (error) {
+        if (error) {
+
+          console.error(
+            "GET SESSION ERROR:",
+            error
+          );
+
+
+          return false;
+
+        }
+
+
+        return !!(
+          data &&
+          data.session &&
+          data.session.user
+        );
+
+      } catch (error) {
 
         console.error(
-          "SESSION CHECK ERROR:",
+          "ADMIN CHECK ERROR:",
           error
         );
+
 
         return false;
 
       }
 
-
-      return !!(
-        data &&
-        data.session
-      );
-
     }
 
 
     /* =====================================================
-       SELECT HUBS
+       SELECTED HUBS
        ===================================================== */
 
     function getSelectedHubs() {
@@ -1827,6 +2178,7 @@
         document.getElementById(
           "hubs"
         );
+
 
       const selected = [];
 
@@ -1846,13 +2198,15 @@
       }
 
 
-      return selected.join(", ");
+      return selected.join(
+        ", "
+      );
 
     }
 
 
     /* =====================================================
-       SET HUBS
+       SET SELECTED HUBS
        ===================================================== */
 
     function setSelectedHubs(
@@ -1871,7 +2225,8 @@
         )
           .split(",")
           .map(
-            hub => hub.trim()
+            hub =>
+              hub.trim()
           )
           .filter(Boolean);
 
@@ -1891,34 +2246,22 @@
 
 
     /* =====================================================
-       SAVE ACTIVITY
+       SAVE / UPDATE ACTIVITY
        ===================================================== */
 
     async function saveActivity() {
 
-      const saveButton =
-        document.getElementById(
-          "saveButton"
-        );
+      const loggedIn =
+        await isAdminLoggedIn();
 
 
-      const {
-        data: sessionData,
-        error: sessionError
-      } =
-        await supabaseClient.auth
-          .getSession();
-
-
-      if (
-        sessionError ||
-        !sessionData.session
-      ) {
+      if (!loggedIn) {
 
         showMessage(
           "Please log in as Admin before saving.",
           "error"
         );
+
 
         return;
 
@@ -1965,14 +2308,13 @@
         ).value.trim();
 
 
-      /* ================= VALIDATION ================= */
-
       if (!activityDate) {
 
         showMessage(
           "Please select the activity date.",
           "error"
         );
+
 
         return;
 
@@ -1989,6 +2331,7 @@
           "error"
         );
 
+
         return;
 
       }
@@ -2000,6 +2343,7 @@
           "Please select at least one hub.",
           "error"
         );
+
 
         return;
 
@@ -2013,12 +2357,20 @@
           "error"
         );
 
+
         return;
 
       }
 
 
-      saveButton.disabled = true;
+      const saveButton =
+        document.getElementById(
+          "saveButton"
+        );
+
+
+      saveButton.disabled =
+        true;
 
 
       saveButton.textContent =
@@ -2026,8 +2378,6 @@
           ? "UPDATING..."
           : "SAVING...";
 
-
-      /* ================= RECORD ================= */
 
       const record = {
 
@@ -2055,101 +2405,130 @@
       };
 
 
-      let result;
+      try {
+
+        let result;
 
 
-      /* ================= UPDATE ================= */
+        if (editingId) {
 
-      if (editingId) {
+          result =
+            await supabaseClient
+              .from(
+                "warehouse_activities"
+              )
+              .update(record)
+              .eq(
+                "id",
+                editingId
+              );
 
-        result =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .update(record)
-            .eq(
-              "id",
-              editingId
-            );
+        } else {
 
-      }
+          result =
+            await supabaseClient
+              .from(
+                "warehouse_activities"
+              )
+              .insert([
+                record
+              ]);
 
-
-      /* ================= INSERT ================= */
-
-      else {
-
-        result =
-          await supabaseClient
-            .from(
-              "warehouse_activities"
-            )
-            .insert([
-              record
-            ]);
-
-      }
+        }
 
 
-      if (result.error) {
+        if (result.error) {
+
+          console.error(
+            "SAVE/UPDATE ERROR:",
+            result.error
+          );
+
+
+          showMessage(
+            "Error: " +
+            result.error.message,
+            "error"
+          );
+
+
+          return;
+
+        }
+
+
+        const wasEditing =
+          !!editingId;
+
+
+        editingId =
+          null;
+
+
+        clearActivityForm();
+
+
+        document
+          .getElementById(
+            "saveButton"
+          )
+          .textContent =
+          "SAVE ACTIVITY";
+
+
+        document
+          .getElementById(
+            "cancelEditButton"
+          )
+          .style.display =
+          "none";
+
+
+        showMessage(
+          wasEditing
+            ? "Activity updated successfully! ✅"
+            : "Activity saved successfully! ✅",
+          "success"
+        );
+
+
+        /*
+         * Refresh everything from Supabase.
+         */
+
+        await loadDashboard();
+
+
+        await refreshExistingSearches();
+
+      } catch (error) {
 
         console.error(
-          "SAVE ERROR:",
-          result.error
+          "SAVE EXCEPTION:",
+          error
         );
+
 
         showMessage(
           "Error: " +
-          result.error.message,
+          error.message,
           "error"
         );
 
-        saveButton.disabled = false;
+      } finally {
 
-        saveButton.textContent =
-          editingId
-            ? "UPDATE ACTIVITY"
-            : "SAVE ACTIVITY";
+        saveButton.disabled =
+          false;
 
-        return;
+
+        if (!editingId) {
+
+          saveButton.textContent =
+            "SAVE ACTIVITY";
+
+        }
 
       }
-
-
-      /* ================= SUCCESS ================= */
-
-      showMessage(
-        editingId
-          ? "Activity updated successfully! ✅"
-          : "Activity saved successfully! ✅",
-        "success"
-      );
-
-
-      editingId = null;
-
-      clearActivityForm();
-
-
-      saveButton.textContent =
-        "SAVE ACTIVITY";
-
-
-      document.getElementById(
-        "cancelEditButton"
-      ).style.display =
-        "none";
-
-
-      saveButton.disabled = false;
-
-
-      /* ================= REFRESH ================= */
-
-      await loadDashboard();
-
-      await refreshExistingSearches();
 
     }
 
@@ -2202,7 +2581,10 @@
         )
         .forEach(
           option => {
-            option.selected = false;
+
+            option.selected =
+              false;
+
           }
         );
 
@@ -2223,118 +2605,158 @@
           "Please log in as Admin to edit."
         );
 
+
         return;
 
       }
 
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*")
-          .eq(
-            "id",
-            id
-          )
-          .single();
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from(
+              "warehouse_activities"
+            )
+            .select("*")
+            .eq(
+              "id",
+              id
+            )
+            .single();
 
 
-      if (error) {
+        if (error) {
+
+          alert(
+            "Unable to load activity:\n\n" +
+            error.message
+          );
+
+
+          return;
+
+        }
+
+
+        if (!data) {
+
+          alert(
+            "Activity record was not found."
+          );
+
+
+          return;
+
+        }
+
+
+        editingId =
+          id;
+
+
+        document.getElementById(
+          "activityDate"
+        ).value =
+          String(
+            data.activity_date || ""
+          ).substring(
+            0,
+            10
+          );
+
+
+        document.getElementById(
+          "activityType"
+        ).value =
+          data.activity_type ||
+          "Loaded";
+
+
+        document.getElementById(
+          "loadCount"
+        ).value =
+          data.load_count ||
+          "";
+
+
+        setSelectedHubs(
+          data.hubs || ""
+        );
+
+
+        document.getElementById(
+          "items"
+        ).value =
+          data.items === "-"
+            ? ""
+            : data.items || "";
+
+
+        document.getElementById(
+          "vehicle"
+        ).value =
+          data.vehicle || "";
+
+
+        document.getElementById(
+          "challenges"
+        ).value =
+          data.challenges === "-"
+            ? ""
+            : data.challenges || "";
+
+
+        document.getElementById(
+          "saveButton"
+        ).textContent =
+          "UPDATE ACTIVITY";
+
+
+        document.getElementById(
+          "cancelEditButton"
+        ).style.display =
+          "block";
+
+
+        showMessage(
+          "Editing activity #" +
+          id,
+          "success"
+        );
+
+
+        window.scrollTo({
+
+          top:
+            document
+              .getElementById(
+                "adminActivitySection"
+              )
+              .offsetTop - 20,
+
+          behavior:
+            "smooth"
+
+        });
+
+      } catch (error) {
+
+        console.error(
+          "EDIT ERROR:",
+          error
+        );
+
 
         alert(
-          "Unable to load activity:\n\n" +
+          "Edit error:\n\n" +
           error.message
         );
 
-        return;
-
       }
-
-
-      editingId = id;
-
-
-      document.getElementById(
-        "activityDate"
-      ).value =
-        data.activity_date
-          ? String(
-              data.activity_date
-            ).substring(0, 10)
-          : "";
-
-
-      document.getElementById(
-        "activityType"
-      ).value =
-        data.activity_type ||
-        "Loaded";
-
-
-      document.getElementById(
-        "loadCount"
-      ).value =
-        data.load_count || "";
-
-
-      setSelectedHubs(
-        data.hubs || ""
-      );
-
-
-      document.getElementById(
-        "items"
-      ).value =
-        data.items === "-"
-          ? ""
-          : data.items || "";
-
-
-      document.getElementById(
-        "vehicle"
-      ).value =
-        data.vehicle || "";
-
-
-      document.getElementById(
-        "challenges"
-      ).value =
-        data.challenges === "-"
-          ? ""
-          : data.challenges || "";
-
-
-      document.getElementById(
-        "saveButton"
-      ).textContent =
-        "UPDATE ACTIVITY";
-
-
-      document.getElementById(
-        "cancelEditButton"
-      ).style.display =
-        "block";
-
-
-      showMessage(
-        "Editing activity #" +
-        id,
-        "success"
-      );
-
-
-      document
-        .getElementById(
-          "adminActivitySection"
-        )
-        .scrollIntoView({
-          behavior: "smooth"
-        });
 
     }
 
@@ -2345,7 +2767,9 @@
 
     function cancelEdit() {
 
-      editingId = null;
+      editingId =
+        null;
+
 
       clearActivityForm();
 
@@ -2392,6 +2816,7 @@
           "Please log in as Admin."
         );
 
+
         return;
 
       }
@@ -2406,51 +2831,80 @@
 
 
       if (!confirmed) {
+
         return;
+
       }
 
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .delete()
-          .eq(
-            "id",
-            id
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from(
+              "warehouse_activities"
+            )
+            .delete()
+            .eq(
+              "id",
+              id
+            );
+
+
+        if (error) {
+
+          console.error(
+            "DELETE ERROR:",
+            error
           );
 
 
-      if (error) {
+          alert(
+            "Delete failed:\n\n" +
+            error.message
+          );
+
+
+          return;
+
+        }
+
+
+        if (
+          editingId === id
+        ) {
+
+          cancelEdit();
+
+        }
+
+
+        await loadDashboard();
+
+
+        await refreshExistingSearches();
+
 
         alert(
-          "Delete failed:\n\n" +
+          "Activity deleted successfully. ✅"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "DELETE EXCEPTION:",
+          error
+        );
+
+
+        alert(
+          "Delete error:\n\n" +
           error.message
         );
 
-        return;
-
       }
-
-
-      if (editingId === id) {
-
-        cancelEdit();
-
-      }
-
-
-      alert(
-        "Activity deleted successfully. ✅"
-      );
-
-
-      await loadDashboard();
-
-      await refreshExistingSearches();
 
     }
 
@@ -2462,7 +2916,9 @@
     function actionButtons(id) {
 
       if (!adminLoggedIn) {
+
         return "";
+
       }
 
 
@@ -2478,6 +2934,7 @@
             ✏️ Edit
 
           </button>
+
 
           <button
             type="button"
@@ -2499,10 +2956,19 @@
        RENDER ROW
        ===================================================== */
 
-    function renderRow(
-      row,
-      includeActions = true
-    ) {
+    function renderRow(row) {
+
+      const actions =
+        adminLoggedIn
+          ? `
+            <td>
+              ${actionButtons(
+                row.id
+              )}
+            </td>
+          `
+          : "";
+
 
       return `
 
@@ -2512,15 +2978,20 @@
             ${escapeHtml(
               String(
                 row.activity_date || "-"
-              ).substring(0, 10)
+              ).substring(
+                0,
+                10
+              )
             )}
           </td>
+
 
           <td>
             ${escapeHtml(
               row.activity_type || "-"
             )}
           </td>
+
 
           <td>
             ${escapeHtml(
@@ -2530,11 +3001,13 @@
             )}
           </td>
 
+
           <td>
             ${escapeHtml(
               row.hubs || "-"
             )}
           </td>
+
 
           <td>
             ${escapeHtml(
@@ -2542,11 +3015,13 @@
             )}
           </td>
 
+
           <td>
             ${escapeHtml(
               row.vehicle || "-"
             )}
           </td>
+
 
           <td>
             ${escapeHtml(
@@ -2554,18 +3029,8 @@
             )}
           </td>
 
-          ${
-            includeActions &&
-            adminLoggedIn
-              ? `
-                <td>
-                  ${actionButtons(
-                    row.id
-                  )}
-                </td>
-              `
-              : ""
-          }
+
+          ${actions}
 
         </tr>
 
@@ -2592,8 +3057,6 @@
           : 7;
 
 
-      /* ================= DATE RANGE ================= */
-
       const today =
         new Date();
 
@@ -2604,18 +3067,18 @@
         );
 
 
-      const fromDateObject =
+      const fromDateObj =
         new Date();
 
 
-      fromDateObject.setDate(
-        fromDateObject.getDate() - 6
+      fromDateObj.setDate(
+        fromDateObj.getDate() - 6
       );
 
 
       const fromDate =
         getLocalDateString(
-          fromDateObject
+          fromDateObj
         );
 
 
@@ -2625,26 +3088,13 @@
         );
 
 
-      console.log(
-        "RECENT 7 DAYS:",
-        fromDate,
-        "TO",
-        toDate
-      );
-
-
-      /* ================= LOADING ================= */
-
       tbody.innerHTML = `
 
         <tr>
 
           <td
             colspan="${colspan}"
-            style="
-              text-align:center;
-              padding:25px;
-            ">
+            style="text-align:center;">
 
             Loading recent activities...
 
@@ -2655,45 +3105,167 @@
       `;
 
 
-      /* ================= QUERY ================= */
+      try {
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*")
-          .gte(
-            "activity_date",
-            fromDate
-          )
-          .lt(
-            "activity_date",
-            nextDate
-          )
-          .order(
-            "activity_date",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from(
+              "warehouse_activities"
+            )
+            .select("*")
+            .gte(
+              "activity_date",
+              fromDate
+            )
+            .lt(
+              "activity_date",
+              nextDate
+            )
+            .order(
+              "activity_date",
+              {
+                ascending: false
+              }
+            )
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        if (error) {
+
+          console.error(
+            "RECENT ACTIVITY ERROR:",
+            error
           );
 
 
-      /* ================= ERROR ================= */
+          tbody.innerHTML = `
 
-      if (error) {
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="
+                  text-align:center;
+                  color:#a51d1d;
+                  padding:25px;
+                ">
+
+                Error loading recent activities:
+                ${escapeHtml(
+                  error.message
+                )}
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        const recentData =
+          data || [];
+
+
+        if (
+          recentData.length === 0
+        ) {
+
+          tbody.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="
+                  text-align:center;
+                  padding:25px;
+                ">
+
+                No activity recorded
+                in the last 7 days.
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        tbody.innerHTML =
+          recentData
+            .map(
+              row =>
+                renderRow(
+                  row
+                )
+            )
+            .join("");
+
+
+        /*
+         * Keep minimum 7 visible rows.
+         */
+
+        const emptyRows =
+          Math.max(
+            0,
+            7 -
+            recentData.length
+          );
+
+
+        for (
+          let i = 0;
+          i < emptyRows;
+          i++
+        ) {
+
+          tbody.innerHTML += `
+
+            <tr class="empty-row">
+
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+
+              ${
+                adminLoggedIn
+                  ? "<td>&nbsp;</td>"
+                  : ""
+              }
+
+            </tr>
+
+          `;
+
+        }
+
+      } catch (error) {
 
         console.error(
-          "RECENT ACTIVITY ERROR:",
+          "RECENT EXCEPTION:",
           error
         );
 
@@ -2710,110 +3282,12 @@
                 padding:25px;
               ">
 
-              Error loading recent activities:
+              Error:
               ${escapeHtml(
                 error.message
               )}
 
             </td>
-
-          </tr>
-
-        `;
-
-        return;
-
-      }
-
-
-      console.log(
-        "RECENT DATA:",
-        data
-      );
-
-
-      /* ================= NO DATA ================= */
-
-      if (
-        !data ||
-        data.length === 0
-      ) {
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${colspan}"
-              style="
-                text-align:center;
-                padding:25px;
-              ">
-
-              No activity recorded
-              in the last 7 days.
-
-            </td>
-
-          </tr>
-
-        `;
-
-        return;
-
-      }
-
-
-      /* ================= DISPLAY ================= */
-
-      tbody.innerHTML =
-        data
-          .map(
-            row =>
-              renderRow(
-                row,
-                true
-              )
-          )
-          .join("");
-
-
-      /* ================= EMPTY ROWS ================= */
-
-      const minimumRows = 7;
-
-
-      const emptyRows =
-        Math.max(
-          0,
-          minimumRows -
-          data.length
-        );
-
-
-      for (
-        let i = 0;
-        i < emptyRows;
-        i++
-      ) {
-
-        tbody.innerHTML += `
-
-          <tr class="empty-row">
-
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            ${
-              adminLoggedIn
-                ? `<td>&nbsp;</td>`
-                : ""
-            }
 
           </tr>
 
@@ -2830,84 +3304,105 @@
 
     async function loadTotals() {
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select(
-            "activity_type, load_count"
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from(
+              "warehouse_activities"
+            )
+            .select(
+              "activity_type, load_count"
+            );
+
+
+        if (error) {
+
+          console.error(
+            "TOTAL ERROR:",
+            error
           );
 
 
-      if (error) {
+          return;
+
+        }
+
+
+        let loaded =
+          0;
+
+
+        let offloaded =
+          0;
+
+
+        (
+          data || []
+        ).forEach(
+          row => {
+
+            const count =
+              Number(
+                row.load_count
+              ) || 0;
+
+
+            const type =
+              String(
+                row.activity_type || ""
+              )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+              type ===
+              "loaded"
+            ) {
+
+              loaded +=
+                count;
+
+            }
+
+
+            if (
+              type ===
+              "offloaded"
+            ) {
+
+              offloaded +=
+                count;
+
+            }
+
+          }
+        );
+
+
+        document.getElementById(
+          "loadedTotal"
+        ).textContent =
+          loaded;
+
+
+        document.getElementById(
+          "offloadedTotal"
+        ).textContent =
+          offloaded;
+
+      } catch (error) {
 
         console.error(
-          "TOTAL ERROR:",
+          "TOTAL EXCEPTION:",
           error
         );
 
-        return;
-
       }
-
-
-      let loaded = 0;
-
-      let offloaded = 0;
-
-
-      (data || []).forEach(
-        row => {
-
-          const count =
-            Number(
-              row.load_count
-            ) || 0;
-
-
-          const type =
-            String(
-              row.activity_type || ""
-            )
-              .trim()
-              .toLowerCase();
-
-
-          if (
-            type === "loaded"
-          ) {
-
-            loaded += count;
-
-          }
-
-
-          if (
-            type === "offloaded"
-          ) {
-
-            offloaded += count;
-
-          }
-
-        }
-      );
-
-
-      document.getElementById(
-        "loadedTotal"
-      ).textContent =
-        loaded;
-
-
-      document.getElementById(
-        "offloadedTotal"
-      ).textContent =
-        offloaded;
 
     }
 
@@ -2969,6 +3464,7 @@
 
         `;
 
+
         return;
 
       }
@@ -3000,6 +3496,7 @@
 
         `;
 
+
         return;
 
       }
@@ -3022,64 +3519,133 @@
       `;
 
 
-      let query =
-        supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*")
-          .ilike(
-            "hubs",
-            "%" +
-            search +
-            "%"
-          );
+      try {
 
-
-      if (fromDate) {
-
-        query =
-          query.gte(
-            "activity_date",
-            fromDate
-          );
-
-      }
-
-
-      if (toDate) {
-
-        query =
-          query.lt(
-            "activity_date",
-            getNextDate(
-              toDate
+        let query =
+          supabaseClient
+            .from(
+              "warehouse_activities"
             )
-          );
-
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await query
-          .order(
-            "activity_date",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+            .select("*")
+            .ilike(
+              "hubs",
+              "%" +
+              search +
+              "%"
+            );
 
 
-      if (error) {
+        if (fromDate) {
+
+          query =
+            query.gte(
+              "activity_date",
+              fromDate
+            );
+
+        }
+
+
+        if (toDate) {
+
+          query =
+            query.lt(
+              "activity_date",
+              getNextDate(
+                toDate
+              )
+            );
+
+        }
+
+
+        const {
+          data,
+          error
+        } =
+          await query
+            .order(
+              "activity_date",
+              {
+                ascending: false
+              }
+            )
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        if (error) {
+
+          tbody.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="
+                  text-align:center;
+                  color:#a51d1d;
+                ">
+
+                Error searching history:
+                ${escapeHtml(
+                  error.message
+                )}
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        if (
+          !data ||
+          data.length === 0
+        ) {
+
+          tbody.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="text-align:center;">
+
+                No history found.
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        tbody.innerHTML =
+          data
+            .map(
+              row =>
+                renderRow(
+                  row
+                )
+            )
+            .join("");
+
+      } catch (error) {
 
         console.error(
           "HUB SEARCH ERROR:",
@@ -3098,7 +3664,7 @@
                 color:#a51d1d;
               ">
 
-              Error searching history:
+              Search error:
               ${escapeHtml(
                 error.message
               )}
@@ -3109,47 +3675,7 @@
 
         `;
 
-        return;
-
       }
-
-
-      if (
-        !data ||
-        data.length === 0
-      ) {
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${colspan}"
-              style="text-align:center;">
-
-              No history found.
-
-            </td>
-
-          </tr>
-
-        `;
-
-        return;
-
-      }
-
-
-      tbody.innerHTML =
-        data
-          .map(
-            row =>
-              renderRow(
-                row,
-                true
-              )
-          )
-          .join("");
 
     }
 
@@ -3205,6 +3731,7 @@
 
         `;
 
+
         return;
 
       }
@@ -3236,6 +3763,7 @@
 
         `;
 
+
         return;
 
       }
@@ -3258,58 +3786,128 @@
       `;
 
 
-      let query =
-        supabaseClient
-          .from(
-            "warehouse_activities"
-          )
-          .select("*");
+      try {
 
-
-      if (fromDate) {
-
-        query =
-          query.gte(
-            "activity_date",
-            fromDate
-          );
-
-      }
-
-
-      if (toDate) {
-
-        query =
-          query.lt(
-            "activity_date",
-            getNextDate(
-              toDate
+        let query =
+          supabaseClient
+            .from(
+              "warehouse_activities"
             )
-          );
-
-      }
+            .select("*");
 
 
-      const {
-        data,
-        error
-      } =
-        await query
-          .order(
-            "activity_date",
-            {
-              ascending: false
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+        if (fromDate) {
+
+          query =
+            query.gte(
+              "activity_date",
+              fromDate
+            );
+
+        }
 
 
-      if (error) {
+        if (toDate) {
+
+          query =
+            query.lt(
+              "activity_date",
+              getNextDate(
+                toDate
+              )
+            );
+
+        }
+
+
+        const {
+          data,
+          error
+        } =
+          await query
+            .order(
+              "activity_date",
+              {
+                ascending: false
+              }
+            )
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        if (error) {
+
+          tbody.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="
+                  text-align:center;
+                  color:#a51d1d;
+                ">
+
+                Error searching activities:
+                ${escapeHtml(
+                  error.message
+                )}
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        if (
+          !data ||
+          data.length === 0
+        ) {
+
+          tbody.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="${colspan}"
+                style="text-align:center;">
+
+                No activity found
+                for the selected date.
+
+              </td>
+
+            </tr>
+
+          `;
+
+
+          return;
+
+        }
+
+
+        tbody.innerHTML =
+          data
+            .map(
+              row =>
+                renderRow(
+                  row
+                )
+            )
+            .join("");
+
+      } catch (error) {
 
         console.error(
           "DATE SEARCH ERROR:",
@@ -3328,7 +3926,7 @@
                 color:#a51d1d;
               ">
 
-              Error searching activities:
+              Search error:
               ${escapeHtml(
                 error.message
               )}
@@ -3339,54 +3937,13 @@
 
         `;
 
-        return;
-
       }
-
-
-      if (
-        !data ||
-        data.length === 0
-      ) {
-
-        tbody.innerHTML = `
-
-          <tr>
-
-            <td
-              colspan="${colspan}"
-              style="text-align:center;">
-
-              No activity found
-              for the selected date.
-
-            </td>
-
-          </tr>
-
-        `;
-
-        return;
-
-      }
-
-
-      tbody.innerHTML =
-        data
-          .map(
-            row =>
-              renderRow(
-                row,
-                true
-              )
-          )
-          .join("");
 
     }
 
 
     /* =====================================================
-       REFRESH SEARCHES
+       REFRESH SEARCH RESULTS
        ===================================================== */
 
     async function refreshExistingSearches() {
@@ -3429,16 +3986,15 @@
 
 
     /* =====================================================
-       DASHBOARD
+       LOAD DASHBOARD
        ===================================================== */
 
     async function loadDashboard() {
 
       /*
-       IMPORTANT:
-       Loading the dashboard only READS data.
-       It does NOT delete or modify any records.
-      */
+       * Run both independently.
+       * One failure will not stop the other.
+       */
 
       await Promise.all([
         loadRecentActivity(),
@@ -3449,123 +4005,19 @@
 
 
     /* =====================================================
-       EVENT LISTENERS
+       INITIALIZE APPLICATION
        ===================================================== */
 
-    document
-      .getElementById(
-        "adminLoginButton"
-      )
-      .addEventListener(
-        "click",
-        toggleAdminLogin
-      );
-
-
-    document
-      .getElementById(
-        "loginButton"
-      )
-      .addEventListener(
-        "click",
-        adminLogin
-      );
-
-
-    document
-      .getElementById(
-        "cancelLoginButton"
-      )
-      .addEventListener(
-        "click",
-        toggleAdminLogin
-      );
-
-
-    document
-      .getElementById(
-        "saveButton"
-      )
-      .addEventListener(
-        "click",
-        saveActivity
-      );
-
-
-    document
-      .getElementById(
-        "cancelEditButton"
-      )
-      .addEventListener(
-        "click",
-        cancelEdit
-      );
-
-
-    document
-      .getElementById(
-        "hubSearchButton"
-      )
-      .addEventListener(
-        "click",
-        searchHub
-      );
-
-
-    document
-      .getElementById(
-        "dateSearchButton"
-      )
-      .addEventListener(
-        "click",
-        searchByDate
-      );
-
-
-    /* =====================================================
-       ENTER KEY LOGIN
-       ===================================================== */
-
-    document
-      .getElementById(
-        "adminPassword"
-      )
-      .addEventListener(
-        "keydown",
-        function(event) {
-
-          if (
-            event.key === "Enter"
-          ) {
-
-            adminLogin();
-
-          }
-
-        }
-      );
-
-
-    /* =====================================================
-       APPLICATION START
-       ===================================================== */
-
-    async function startApplication() {
+    async function initializeDashboard() {
 
       console.log(
-        "================================"
-      );
-
-      console.log(
-        "EPSS DASHBOARD STARTING"
-      );
-
-      console.log(
-        "================================"
+        "EPSS DASHBOARD STARTING..."
       );
 
 
-      /* Set today's date */
+      /*
+       * Set today's date.
+       */
 
       document.getElementById(
         "activityDate"
@@ -3573,25 +4025,99 @@
         getToday();
 
 
-      /* Check existing login */
+      /*
+       * Button events.
+       */
+
+      document
+        .getElementById(
+          "adminLoginButton"
+        )
+        .onclick =
+        toggleAdminLogin;
+
+
+      document
+        .getElementById(
+          "loginButton"
+        )
+        .onclick =
+        adminLogin;
+
+
+      document
+        .getElementById(
+          "cancelLoginButton"
+        )
+        .onclick =
+        toggleAdminLogin;
+
+
+      document
+        .getElementById(
+          "saveButton"
+        )
+        .onclick =
+        saveActivity;
+
+
+      document
+        .getElementById(
+          "cancelEditButton"
+        )
+        .onclick =
+        cancelEdit;
+
+
+      document
+        .getElementById(
+          "hubSearchButton"
+        )
+        .onclick =
+        searchHub;
+
+
+      document
+        .getElementById(
+          "dateSearchButton"
+        )
+        .onclick =
+        searchByDate;
+
+
+      /*
+       * Start as normal/public user.
+       */
+
+      showAdminSection(
+        null,
+        false
+      );
+
+
+      /*
+       * Check existing Supabase session.
+       */
 
       await checkAdminSession();
 
 
-      /* Load dashboard */
+      /*
+       * Finally load dashboard data.
+       */
 
       await loadDashboard();
 
 
       console.log(
-        "EPSS DASHBOARD READY ✅"
+        "EPSS DASHBOARD READY."
       );
 
     }
 
 
     /* =====================================================
-       START ON PAGE LOAD
+       START ONCE
        ===================================================== */
 
     if (
@@ -3601,14 +4127,15 @@
 
       document.addEventListener(
         "DOMContentLoaded",
-        startApplication
+        initializeDashboard
       );
 
     } else {
 
-      startApplication();
+      initializeDashboard();
 
     }
+
 
   </script>
 
